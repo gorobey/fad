@@ -1,0 +1,11 @@
+# Per tutti i motori di ricerca:
+User-Agent: *
+# abilitare l'indicizzazione delle seguenti directory:
+#Allow:
+# disabilitare l'indicizzazione delle seguenti directory:
+Disallow: /admin/*
+Disallow: /system/*
+Disallow: /login/*
+Disallow: /templates/*
+Disallow: /install/*
+Disallow: /.*

@@ -1,0 +1,198 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: test\n"
+"POT-Creation-Date: 2015-06-29 16:45+0100\n"
+"PO-Revision-Date: 2015-06-29 16:52+0100\n"
+"Last-Translator: Giulio Gorobey <giulio@gorobey.it>\n"
+"Language-Team: test <tlx83@yahoo.it>\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: /home/tlx83/Scrivania/fad\n"
+
+#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:280
+msgid "just now"
+msgstr "Ora"
+
+#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:282
+msgid " minutes ago"
+msgstr " minuti fa"
+
+#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:283
+msgid "1 hour ago"
+msgstr "1 ora fa"
+
+#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:284
+msgid " hours ago"
+msgstr " ore fa"
+
+#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:286
+msgid "Yesterday"
+msgstr "Ieri"
+
+#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:287
+msgid " days ago"
+msgstr " giorni fa"
+
+#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:289
+msgid "last month"
+msgstr "lo scorso mese"
+
+#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:298
+msgid "in a minute"
+msgstr "in un minuto"
+
+#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:299
+msgid " minutes"
+msgstr "minuti"
+
+#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:301
+msgid " hours"
+msgstr "ore"
+
+#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:306
+msgid " weeks"
+msgstr "settimane"
+
+#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:307
+msgid "next month"
+msgstr "prossimo mese"
+
+#: /home/tlx83/Scrivania/fad/system/includes/auth.lib.php:6
+msgid "Logout"
+msgstr "Esci"
+
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:151
+msgid "Go to your e-mail box for reset instruction!"
+msgstr "Visita la tua posta elettronica per le informazioni di recupero!"
+
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:153
+msgid "Error! Contact the admin!"
+msgstr "Errore! contattare l'amministratore!"
+
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:157
+msgid "Error: Invalid address!"
+msgstr "Errore: indirizzo non valido!"
+
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:175
+msgid "Ok, now your new password is"
+msgstr "Ok, la tua nuova password è"
+
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:177
+msgid "Error: password not reset!"
+msgstr "Errore: password non modificata!"
+
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:198
+msgid "User Delete!"
+msgstr "Utente Eliminato!"
+
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:200
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:205
+#, fuzzy
+msgid "Error: Contact the admin!"
+msgstr "Errore! contattare l'amministratore!"
+
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:203
+msgid "Error: Selected user can't be deleted!"
+msgstr "Errore: l'utente selezionato non può essere modificato!"
+
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:264
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:288
+msgid "E-Mail Edited!"
+msgstr "E-Mail Modificata!"
+
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:266
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:290
+msgid "Error: E-Mail Error!"
+msgstr "Errore: Errore E-Mail!"
+
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:276
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:300
+msgid "Password Edited!"
+msgstr "Password Modificata!"
+
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:278
+#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:302
+#, fuzzy
+msgid "Error: Password Don't Match!"
+msgstr "Errore: password non modificata!"
+
+#: /home/tlx83/Scrivania/fad/admin/header.php:43
+msgid "Dashboard"
+msgstr "Pannello"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:40
+msgid "Your registration has been confirmed, you can now login!"
+msgstr "Registrazione confermata, ora puoi effettuare il login!"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:42
+#, fuzzy
+msgid "Registration can not be confirmed, as has expired!"
+msgstr "Registrazione confermata, ora puoi effettuare il login!"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:44
+msgid "Logout successfully performed!"
+msgstr "Disconnesso con successo!"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:46
+msgid "Login Failed: you have entered invalid data!"
+msgstr "Accesso fallito: sono stati inseriti dati non validi!"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:48
+msgid "Internal Error: the system may be unavailable, please try again later!"
+msgstr "Errore interno: il sistema non risponde, riprovare più tardi!"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:50
+msgid "Enter your e-mail for recover your password!"
+msgstr "Inserisci la tua E-mail per recuperare la password!"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:52
+msgid "Create a new account!"
+msgstr "Crea un nuovo account!"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:54
+msgid "Too many attempts, user temporarily suspended!"
+msgstr "Troppi tentatitvi, utente temporaneamente sospeso!"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:62
+#, fuzzy
+msgid "Error: mail can't be empty!"
+msgstr "Errore: l'utente selezionato non può essere modificato!"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:72
+msgid "New User? Register now!"
+msgstr "Nuovo utente? Registrati ora!"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:83
+msgid "Lost password?"
+msgstr "Password smarrita?"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:91
+msgid "Send New password"
+msgstr "Invia nuova password"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:92
+#: /home/tlx83/Scrivania/fad/login/connect.php:102
+msgid "Login"
+msgstr "Accedi"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:101
+msgid "Register"
+msgstr "Registrati"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:110
+msgid "This Software is licensed under"
+msgstr "Questo software è concesso sotto licenza"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:111
+msgid "Please! Help to develop"
+msgstr "Aiuta lo sviluppo di questo software"
+
+#: /home/tlx83/Scrivania/fad/login/connect.php:111
+msgid "Report Bugs"
+msgstr "Sgnala errori"

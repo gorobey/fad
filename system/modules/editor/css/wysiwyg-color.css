@@ -1,0 +1,14 @@
+.wysiwyg-color-black {color: black} .wysiwyg-color-silver {color: silver} .wysiwyg-color-gray {color: gray} .wysiwyg-color-white {color: white} .wysiwyg-color-maroon {color: maroon} .wysiwyg-color-red {color: red} .wysiwyg-color-purple {color: purple} .wysiwyg-color-fuchsia {color: fuchsia} .wysiwyg-color-green {color: green} .wysiwyg-color-lime {color: lime} .wysiwyg-color-olive {color: olive} .wysiwyg-color-yellow {color: yellow} .wysiwyg-color-navy {color: navy} .wysiwyg-color-blue {color: blue} .wysiwyg-color-teal {color: teal} .wysiwyg-color-aqua {color: aqua} .wysiwyg-color-orange {color: orange}
+
+
+.wysiwyg-text-align-center{text-align:center !important;}
+.wysiwyg-text-align-justify{text-align:justify !important;}
+.wysiwyg-text-align-left{text-align:left !important;}
+.wysiwyg-text-align-right{text-align:right !important;}
+.textatrea.wysihtml5-editor blockquote{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 50px;
+  padding-left: 15px;
+  border-left: 3px solid #ccc;
+} 
