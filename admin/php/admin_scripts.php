@@ -12,8 +12,6 @@ $(document).ready(function () {
 			var exp_url = (url.split('?'));
 			var vars={} , hash="";
 				var hashes = url.slice(url.indexOf('?') + 1).split('&');
-				//alert(exp_url[0]);
-				//alert(hashes.length);
 				for(var i = 0; i < hashes.length; i++) {
 				hash = hashes[i].split('=');
 				vars[hash[0]] = hash[1];
