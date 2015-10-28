@@ -2,6 +2,7 @@
 if (session_id() == '') {
     session_start();
 }
+
 //DEV
 $_SESSION['DEV'] = FALSE;
 $_CONFIG["MAINTENANCE_MODE"] = TRUE;
