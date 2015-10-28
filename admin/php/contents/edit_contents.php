@@ -10,19 +10,27 @@ print_r($_POST);
 echo "<br />";
 print_r($_SESSION);
 if(isset($_POST['action']) && $_POST['action']!=""){
-	if($_POST['level'] < 2){
+	if($_POST['level'] == 1){
 		if($_POST['action'] == "n"){
-			$affected = mysqli_query($db_conn, "INSERT INTO ".$_CONFIG['t_taxonomy']." (type) VALUES ('".mysqli_real_escape_string($db_conn, $_POPT['filter'])."'");
-			if(mysqli_num_rows($affected)==1){
-			//$affected = mysqli_query($db_conn, "INSERT INTO ".$_CONFIG['t_tlocale']." (type) VALUES ('".mysqli_real_escape_string($db_conn, $_POPT['filter'])."'");				
+			$insert_taxonomy = mysqli_multi_query($db_conn,
+			"INSERT INTO ".$_CONFIG['t_taxonomy']." (`type`) VALUES ('".mysqli_real_escape_string($db_conn, $_POST['filter'])."');
+			INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `lang`, `key`, `value`) VALUES (LAST_INSERT_ID(), '1', '".$_POST['locale']."', 'taxonomy', '".$_POST['name']."')");
+			if($insert_taxonomy === true){
+				echo "New filter created";
+			}else{
+				echo "Fuck it!";
 			}
-	
 		}elseif($_POST['action'] == "e"){
 			$query = "UPDATE";
 		}elseif($_POST['action'] == "d"){//vedere come spostare contenuti in nuova taxonomy //la query va sistemata è solo un esempio rubato su stackoverflow
-			$query = "DELETE s.* FROM spawnlist s
-						INNER JOIN npc n ON s.npc_templateid = n.idTemplate
-						WHERE (n.type = 'monster')";
+			$delte_taxonomy = mysqli_query(
+			"DELETE ".$_CONFIG['t_taxonomy'].", ".$_CONFIG['t_item'].", ".$_CONFIG['t_locale']."
+			FROM ".$_CONFIG['t_taxonomy']."
+			INNER JOIN ".$_CONFIG['t_locale']." ON ".$_CONFIG['t_taxonomy'].".id = ".$_CONFIG['t_locale'].".rel
+			INNER JOIN ".$_CONFIG['t_item']." ON ".$_CONFIG['t_taxonomy'].".id = ".$_CONFIG['t_item'].".rel
+			WHERE ".$_CONFIG['t_taxonomy'].".id = '".mysqli_real_escape_string($db_conn, $_POST['id'])."'
+			AND ".$_CONFIG['t_item'].".rel = '".mysqli_real_escape_string($db_conn, $_POST['id'])."'
+			AND ".$_CONFIG['t_locale'].".rel = '".mysqli_real_escape_string($db_conn, $_POST['id'])."'");
 		}
 		
 	}elseif($_POST['level'] >= 2){
