@@ -3,8 +3,10 @@ require_once( "../config.php");
 require_once( "../system/includes/auth.lib.php");
 require_once( "../system/includes/license.lib.php");
 require_once("../system/includes/utils.lib.php");
-list($status, $user) = auth_get_status();
-if($status !== AUTH_LOGGED){ die(); }
+if(!isset($status)){
+	list($status, $user) = auth_get_status();
+	if($status !== AUTH_LOGGED){ die(); }
+}
 ?>
 <div class="row">
 	<div class="col-md-12" id="dashboard">
