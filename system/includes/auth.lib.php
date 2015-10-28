@@ -75,7 +75,6 @@ function auth_get_status(){
 		mysqli_query($db_conn, "UPDATE ".$_CONFIG['t_session']." SET uid='".$uid."' WHERE user_id='".$user_data['id']."'");
 		mysqli_query($db_conn, "UPDATE ".$_CONFIG['t_analytics']." SET `end_time` = NOW() WHERE uid = '".mysqli_real_escape_string($db_conn, $user_data['id'])."' AND end_time = 0");
 		mysqli_query($db_conn, 'INSERT INTO '.$_CONFIG['t_analytics'].' (uid) VALUES ("'.mysqli_real_escape_string($db_conn, $user_data['id']).'")');
-		
 		setcookie('uid', $uid, time()+$_CONFIG['expire'], '/');
 		return array(99, array_merge($user_data, array('uid' => $uid)));
 	}

@@ -351,6 +351,11 @@ function formatBytes($bytes, $precision = 2) {
 
 
 //CONTENTS
+function get_taxonomy($type){
+global $_CONFIG, $db_conn;	
+
+}
+
 function get_contents($type, $lang=''){ //da riparare!!
 global $_CONFIG, $db_conn;
 $query = "SELECT 
