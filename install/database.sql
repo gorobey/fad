@@ -87,54 +87,42 @@ CREATE TABLE `login_sessions` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
---  Table structure for `content_taxonomy`
+--  Table structure for `analytics`
 -- ----------------------------
-DROP TABLE IF EXISTS `content_taxonomy`;
-CREATE TABLE `content_taxonomy` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
---  Table structure for `content_items`
--- ----------------------------
-DROP TABLE IF EXISTS `content_item`;
-CREATE TABLE `content_item` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `rel` int(11) NOT NULL,
-  `level` int(11) NOT NULL,
-  `author` int(9) NOT NULL,
-  `publish` int(1) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
---  Table structure for `content_modules`
--- ----------------------------
-DROP TABLE IF EXISTS `content_module`;
-CREATE TABLE `content_modules` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `rel` int(11) NOT NULL,
-  `level` int(11) NOT NULL,
-  `lang` varchar(5) NOT NULL,
-  `key` text NOT NULL,
-  `value` longtext,
-  PRIMARY KEY (`id`)
+CREATE TABLE IF NOT EXISTS `analytics` (
+`id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `content` int(11) NOT NULL,
+  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
---  Table structure for `content_locale`
+--  Table structure for `taxonomy`
 -- ----------------------------
-DROP TABLE IF EXISTS `content_locale`;
-CREATE TABLE `content_modules` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `taxonomy` (
+`id` int(11) NOT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Table structure for `item`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `item` (
+`id` int(11) NOT NULL,
+  `rel` int(11) NOT NULL,
+  `author` int(9) NOT NULL,
+  `publish` tinyint(1) NOT NULL DEFAULT '0',
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+-- ----------------------------
+--  Table structure for `locale`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `locale` (
+`id` int(11) NOT NULL,
   `rel` int(11) NOT NULL,
   `level` int(11) NOT NULL,
-  `lang` varchar(5) NOT NULL,
-  `key` text NOT NULL,
-  `value` longtext,
-  PRIMARY KEY (`id`)
+  `lang` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `key` text COLLATE utf8_unicode_ci NOT NULL,
+  `value` longtext COLLATE utf8_unicode_ci
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
