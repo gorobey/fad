@@ -18,4 +18,4 @@ if(file_exists("./install/")){
 		break;
 	}
 }
-?>
+//ciao
