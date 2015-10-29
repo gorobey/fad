@@ -11,9 +11,7 @@ if(file_exists("../install/")){
 		require_once('../login/connect.php');
 	}elseif($status === AUTH_LOGGED){
 		$user_id = $user['id'];
-		if(is_admin($user_id)
-		|| in_group($user_id, 'writer')
-		|| in_group($user_id, 'teacher')){
+		if(can_access($user_id, 'admin')){
 			require('header.php');
 			require('dashboard.php');
 			require('footer.php');

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <contents>
-	<node tree="admin" home="">
+	<node tree="admin" group="admin">
 		<section name="fad" icon="university" group="admin,teacher">
 			<taxonomy name="courses">
 				<item name="lessions">
