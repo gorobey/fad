@@ -67,8 +67,21 @@ function arr_roles(){//debugged
 	return $data;
 }
 
+function can_access($user_id, $tree){
+	$xml = simplexml_load_file(ROOT.'/system/structure.xml');
+	foreach($xml->children() as $item){
+		if($item->attributes()->tree == $tree){
+			$groups = explode(",", str_replace(" ", "", $item->attributes()->group));
+			foreach($groups as $group){
+				if(in_group($user_id, $group) === true){
+					return true;
+					break;
+				}
+			}
+		}
 
-
+	}
+}
 
 //questi qui sotto sono da sistemare
 function license_change($userid, $perms){//da sistemare (da buttare?)
