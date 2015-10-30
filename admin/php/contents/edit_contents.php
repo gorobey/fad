@@ -4,11 +4,13 @@ require_once( "../../../system/includes/auth.lib.php");
 require_once( "../../../system/includes/license.lib.php");
 require_once("../../../system/includes/utils.lib.php");
 list($status, $user) = auth_get_status();
-if($status !== AUTH_LOGGED || !ctype_digit($_GET['level'])){ die(); }
+if($status !== AUTH_LOGGED || !ctype_digit($_POST['level'])){ die(); }
 $user_id = $user['id'];
 if(isset($_POST['action']) && $_POST['action']!=""){
 	if($_POST['level'] == 1){
 		if($_POST['action'] == "n"){
+			echo "INSERT INTO ".$_CONFIG['t_taxonomy']." (`type`) VALUES ('".mysqli_real_escape_string($db_conn, $_POST['filter'])."');
+			INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `lang`, `key`, `value`) VALUES (LAST_INSERT_ID(), '1', '".$_POST['locale']."', 'taxonomy', '".$_POST['name']."')";
 			$insert_taxonomy = mysqli_multi_query($db_conn,
 			"INSERT INTO ".$_CONFIG['t_taxonomy']." (`type`) VALUES ('".mysqli_real_escape_string($db_conn, $_POST['filter'])."');
 			INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `lang`, `key`, `value`) VALUES (LAST_INSERT_ID(), '1', '".$_POST['locale']."', 'taxonomy', '".$_POST['name']."')");

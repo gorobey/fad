@@ -46,13 +46,18 @@ $(document).ready(function () {
 			url: action,
 			data: data,
 			dataType: "html",
+			beforeSend: function(){
+				$(".content-box-message").empty();
+				$(".content-box-message").addClass('preload-comfirm');
+				$(".comfirm-box").slideDown('fast');
+			},
 			error: function(){
+				$(".content-box-message").removeClass('preload-comfirm');
 				$(".content-box-message").html('<div class="alert alert-danger" role="alert"><?php echo _('Error: Contact system administrator!');?></div>');
-				$(".comfirm-box").slideDown('fast');
-			},					
+			},
 			success: function (result) {
+				$(".content-box-message").removeClass('preload-comfirm');
 				$(".content-box-message").html(result);
-				$(".comfirm-box").slideDown('fast');
 			}
 		});
 		$('.modal').modal('hide');
