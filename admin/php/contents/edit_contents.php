@@ -4,20 +4,18 @@ require_once( "../../../system/includes/auth.lib.php");
 require_once( "../../../system/includes/license.lib.php");
 require_once("../../../system/includes/utils.lib.php");
 list($status, $user) = auth_get_status();
-if($status !== AUTH_LOGGED || !ctype_digit($_POST['level'])){ die(); }
+if($status !== AUTH_LOGGED){ die(); }
 $user_id = $user['id'];
-if(isset($_POST['action']) && $_POST['action']!=""){
+if($_POST['action']=="n" || $_POST['action']=="e" || $_POST['action']=="d" && ctype_digit($_POST['level'])){
 	if($_POST['level'] == 1){
-		if($_POST['action'] == "n"){
-			echo "INSERT INTO ".$_CONFIG['t_taxonomy']." (`type`) VALUES ('".mysqli_real_escape_string($db_conn, $_POST['filter'])."');
-			INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `lang`, `key`, `value`) VALUES (LAST_INSERT_ID(), '1', '".$_POST['locale']."', 'taxonomy', '".$_POST['name']."')";
+		if($_POST['action'] == "n" && $_POST['filter'] != ""){
 			$insert_taxonomy = mysqli_multi_query($db_conn,
 			"INSERT INTO ".$_CONFIG['t_taxonomy']." (`type`) VALUES ('".mysqli_real_escape_string($db_conn, $_POST['filter'])."');
 			INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `lang`, `key`, `value`) VALUES (LAST_INSERT_ID(), '1', '".$_POST['locale']."', 'taxonomy', '".$_POST['name']."')");
 			if($insert_taxonomy === true){
 				echo '<div class="alert alert-success" role="alert">'._("New").' '._("filter created!").'</div>';
 			}else{
-				echo('<div class="text-center alert alert-danger" role="alert">'._("Error:")." "._("filter can't be creaded!").'</div>');
+				echo '<div class="text-center alert alert-danger" role="alert">'._("Error:")." "._("filter can't be creaded!").'</div>';
 			}
 		}elseif($_POST['action'] == "e"){
 			$query = "UPDATE";
@@ -45,8 +43,7 @@ if(isset($_POST['action']) && $_POST['action']!=""){
 						WHERE (n.type = 'monster')";
 		}
 	}
-	exit;
-}else{
+}elseif($_GET['action'] == "a" && ctype_digit($_GET['level']) && isset($_GET['type'])){
 ?>
 <div class="row">
 	<div class="col-md-12" id="dashboard">
@@ -73,5 +70,7 @@ if(isset($_POST['action']) && $_POST['action']!=""){
 	</form>
 </div><!-- /. ROW  -->
 	<?php
+}else{
+		echo "Error: contact the admin!";
 }
 ?>
