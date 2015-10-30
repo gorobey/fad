@@ -15,7 +15,7 @@
 			</taxonomy>
 		</section>
 		<section name="blog" icon="pencil" group="admin,teacher,writer">
-			<taxonomy name="posts">
+			<taxonomy name="category">
 				<item name="articles">
 					<module role="" script="video"></module>
 					<module role="" script="datetime"></module>
