@@ -4,11 +4,8 @@ require_once( "../../../system/includes/auth.lib.php");
 require_once( "../../../system/includes/license.lib.php");
 require_once("../../../system/includes/utils.lib.php");
 list($status, $user) = auth_get_status();
-if($status !== AUTH_LOGGED){ die(); }
+if($status !== AUTH_LOGGED || !ctype_digit($_GET['level'])){ die(); }
 $user_id = $user['id'];
-print_r($_POST);
-echo "<br />";
-print_r($_SESSION);
 if(isset($_POST['action']) && $_POST['action']!=""){
 	if($_POST['level'] == 1){
 		if($_POST['action'] == "n"){
@@ -16,9 +13,9 @@ if(isset($_POST['action']) && $_POST['action']!=""){
 			"INSERT INTO ".$_CONFIG['t_taxonomy']." (`type`) VALUES ('".mysqli_real_escape_string($db_conn, $_POST['filter'])."');
 			INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `lang`, `key`, `value`) VALUES (LAST_INSERT_ID(), '1', '".$_POST['locale']."', 'taxonomy', '".$_POST['name']."')");
 			if($insert_taxonomy === true){
-				echo "New filter created";
+				echo '<div class="alert alert-success" role="alert">'._("New").' '._("filter created!").'</div>';
 			}else{
-				echo "Fuck it!";
+				echo('<div class="text-center alert alert-danger" role="alert">'._("Error:")." "._("filter can't be creaded!").'</div>');
 			}
 		}elseif($_POST['action'] == "e"){
 			$query = "UPDATE";
@@ -33,7 +30,7 @@ if(isset($_POST['action']) && $_POST['action']!=""){
 			AND ".$_CONFIG['t_locale'].".rel = '".mysqli_real_escape_string($db_conn, $_POST['id'])."'");
 		}
 		
-	}elseif($_POST['level'] >= 2){
+	}elseif($_POST['level'] == 2){
 		if($_POST['action'] == "n"){
 			$query = "INSERT INTO ".$_CONFIG['t_item'];
 			$query = "INSERT INTO ".$_CONFIG['t_module'];

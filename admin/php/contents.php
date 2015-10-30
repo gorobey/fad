@@ -4,11 +4,15 @@ require_once( "../../system/includes/auth.lib.php");
 require_once( "../../system/includes/license.lib.php");
 require_once("../../system/includes/utils.lib.php");
 list($status, $user) = auth_get_status();
-if($status !== AUTH_LOGGED){ die(); } ?>
+if($status !== AUTH_LOGGED || !ctype_digit($_GET['level'])){ die(); } ?>
 <div class="row">
 	<div class="col-md-12" id="dashboard">
 	     <h2><?php echo ucfirst($_GET['type']); ?></h2>
-	     <div class="comfirm-box fa fa-times"></div>
+	     <div class="comfirm-box">
+   		     <span class="fa fa-times"></span>
+		     <div class="content-box-message">
+		     </div>
+	     </div>
 		 <hr />
 	</div>
 
@@ -17,10 +21,8 @@ if($status !== AUTH_LOGGED){ die(); } ?>
         <div class="panel-heading">
             <?php echo _('List')." ".ucfirst(_($_GET['type']));
 	            
-	        if($_GET['level']<2){ ?>
+	        if($_GET['level'] == 1){ ?>
             	<button data-toggle="modal" data-target="#new-filter" class="right btn btn-primary btn-xs"><?php echo _('New')." "._('content filter'); ?></button>
-            <?php } elseif($_GET['level']>=2){ ?>
-	            <a href="php/contents/edit_contents.php?type=<?php echo $_GET['type'].'&action=n&level='.$_GET['level'].'&type='.$_GET['type']; ?>" class="right btn btn-primary btn-xs ajax"><?php echo _('New')." "._('content'); ?></a><!--bug plural form--> 
             <?php } ?>
         </div>
         <div class="panel-body">
@@ -42,6 +44,7 @@ if($status !== AUTH_LOGGED){ die(); } ?>
 		            <input type="hidden" name="action" value="n">
 		            <input type="hidden" name="filter" value="<?php echo $_GET['type']; ?>">
 		            <input type="hidden" name="level" value="<?php echo $_GET['level']; ?>">
+		            <input type="hidden" name="locale" value="<?php echo $_SESSION['locale']; ?>">
 				</div>
 	      </div>
 	      <div class="modal-footer">
@@ -55,3 +58,4 @@ if($status !== AUTH_LOGGED){ die(); } ?>
         </div>
     </div>
 </div>
+<?php require('admin_scripts.php');
