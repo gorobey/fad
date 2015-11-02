@@ -38,37 +38,58 @@ function menu($tree, $user_id){
 	}
 }
 
-function render_page($tree, $type, $user_id, $content_id = null){
+function arr_item($tree, $taxonomy){
+	$xml = simplexml_load_file(ROOT.'/system/structure.xml');
+	$data = array();
+	foreach($xml->children() as $node){
+		if($node->attributes()->tree == $tree){
+			foreach($node as $first){
+				foreach($first->children() as $second){
+					if($second->attributes()->name == $taxonomy){
+						foreach($second->children() as $third){
+							if(!empty($third->attributes()->name)){
+							array_push($data, (string) $third->attributes()->name);
+							}
+						}
+					}						
+				}
+			}
+		}	
+	}
+	return $data;
+}
+
+
+function render_page($tree, $type, $subtype, $user_id, $content_id = null){
 	global $_CONFIG;
 	$user_group = get_user_attr($user_id, "g");
 	$user_roles = get_user_attr($user_id, "r");
 	$xml = simplexml_load_file(ROOT.'/system/structure.xml');
 	foreach($xml->children() as $node){ 
 		if($node->attributes()->tree == $tree){
-			foreach($node as $first){ echo $first;
+			foreach($node as $first){ 
 				if(in_array($user_group, explode(",", $first->attributes()->group))){
-					foreach($first->children() as $second){
-						foreach($second->children() as $taxonomy){
-							if($taxonomy->attributes()->name == $type){
-								// print("<pre>".print_r($taxonomy->children(),true)."</pre>");
-								foreach($taxonomy->children() as $modules){
-									foreach($modules->attributes() as $key => $val){
-										$module ="";
-										if($key == "role"){
-											$can_interact = count(array_intersect(explode(",", $val), $user_roles));
-										}
-										if($key == "script"){
-											$module = ROOT.'/system/modules/'.$val.'/'.$tree.'.php';
-											$JSmodule = ROOT."/system/modules/".$val."/js/";
-											$CSSmodule = ROOT."/system/modules/".$val."/css/";
-										}									
-										if(($can_interact > 0 || is_admin($user_id) || ($key =="role" && $val=="")) && file_exists($module)){
-											require($module);
+					foreach($first->children() as $taxonomy){
+						foreach($taxonomy->children() as $item){
+								if($item->attributes()->name == $subtype){
+									foreach($item->children() as $modules){
+										foreach($modules->attributes() as $key => $val){
+											$module ="";
+											if($key == "role"){
+												$can_interact = count(array_intersect(explode(",", $val), $user_roles));
+											}
+											if($key == "script"){
+												$module = ROOT.'/system/modules/'.$val.'/'.$tree.'.php';
+												$JSmodule = ROOT."/system/modules/".$val."/js/";
+												$CSSmodule = ROOT."/system/modules/".$val."/css/";
+											}									
+											if(($can_interact > 0 || is_admin($user_id) || ($key =="role" && $val=="")) && file_exists($module)){
+												require($module);
+											}
 										}
 									}
 								}
 							}
-						}
 					}
 				}
 			}
@@ -352,8 +373,20 @@ function formatBytes($bytes, $precision = 2) {
 
 //CONTENTS
 function get_taxonomy($type){
-global $_CONFIG, $db_conn;	
-
+	global $_CONFIG, $db_conn;
+	$result = mysqli_query($db_conn, "SELECT distinct(`".$_CONFIG['t_locale']."`.rel), `".$_CONFIG['t_taxonomy']."`.id, `".$_CONFIG['t_taxonomy']."`.subtype, `".$_CONFIG['t_locale']."`.key, `".$_CONFIG['t_locale']."`.value
+				FROM `".$_CONFIG['t_taxonomy']."` 
+				INNER JOIN `".$_CONFIG['t_locale']."`
+				WHERE `".$_CONFIG['t_locale']."`.level = 1
+				AND `".$_CONFIG['t_taxonomy']."`.id = `".$_CONFIG['t_locale']."`.rel
+				AND `".$_CONFIG['t_locale']."`.value != ''
+				AND `".$_CONFIG['t_taxonomy']."`.type =  '".$type."'");
+	$data = array();
+	while($tmp = mysqli_fetch_assoc($result)){
+		array_push($data, $tmp);
+	}
+	
+	return $data;
 }
 
 function get_contents($type, $lang=''){ //da riparare!!
