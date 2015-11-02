@@ -8,9 +8,9 @@ if($status !== AUTH_LOGGED){ die(); }
 $user_id = $user['id'];
 if($_POST['action']=="n" || $_POST['action']=="e" || $_POST['action']=="d" && ctype_digit($_POST['level'])){
 	if($_POST['level'] == 1){
-		if($_POST['action'] == "n" && $_POST['filter'] != ""){
+		if($_POST['action'] == "n" && in_array($_POST['subfilter'], arr_item('admin', $_POST['filter']))){
 			$insert_taxonomy = mysqli_multi_query($db_conn,
-			"INSERT INTO ".$_CONFIG['t_taxonomy']." (`type`) VALUES ('".mysqli_real_escape_string($db_conn, $_POST['filter'])."');
+			"INSERT INTO ".$_CONFIG['t_taxonomy']." (`type`, `subtype`) VALUES ('".mysqli_real_escape_string($db_conn, $_POST['filter'])."', '".mysqli_real_escape_string($db_conn, $_POST['subfilter'])."');
 			INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `lang`, `key`, `value`) VALUES (LAST_INSERT_ID(), '1', '".$_POST['locale']."', 'taxonomy', '".$_POST['name']."')");
 			if($insert_taxonomy === true){
 				echo '<div class="alert alert-success" role="alert">'._("New").' '._("filter created!").'</div>';
@@ -28,23 +28,23 @@ if($_POST['action']=="n" || $_POST['action']=="e" || $_POST['action']=="d" && ct
 			WHERE ".$_CONFIG['t_taxonomy'].".id = '".mysqli_real_escape_string($db_conn, $_POST['id'])."'
 			AND ".$_CONFIG['t_item'].".rel = '".mysqli_real_escape_string($db_conn, $_POST['id'])."'
 			AND ".$_CONFIG['t_locale'].".rel = '".mysqli_real_escape_string($db_conn, $_POST['id'])."'");
-		}
-		
+		}else{
+				echo '<div class="text-center alert alert-danger" role="alert">'._("Error:")." "._("Contant the admin!").'</div>';
+		}		
 	}elseif($_POST['level'] == 2){
 		if($_POST['action'] == "n"){
 			$query = "INSERT INTO ".$_CONFIG['t_item'];
-			$query = "INSERT INTO ".$_CONFIG['t_module'];
+			$query = "INSERT INTO ".$_CONFIG['t_locale'];
 		}elseif($_POST['action'] == "e"){
 			$query = "UPDATE ".$_CONFIG['t_item'];	
-			$query = "UPDATE ".$_CONFIG['t_module'];
+			$query = "UPDATE ".$_CONFIG['t_locale'];
 		}elseif($_POST['action'] == "d"){//la query va sistemata è solo un esempio rubato su stackoverflow
 			$query = "DELETE s.* FROM spawnlist s
 						INNER JOIN npc n ON s.npc_templateid = n.idTemplate
 						WHERE (n.type = 'monster')";
 		}
 	}
-}elseif($_GET['action'] == "a" && ctype_digit($_GET['level']) && isset($_GET['type'])){
-?>
+}elseif($_GET['action'] == "a" && ctype_digit($_GET['level']) && isset($_GET['type'])){ ?>
 <div class="row">
 	<div class="col-md-12" id="dashboard">
 	     <h2><?php echo ucfirst($_GET['type']); ?></h2>
@@ -62,7 +62,7 @@ if($_POST['action']=="n" || $_POST['action']=="e" || $_POST['action']=="d" && ct
 			    	<?php lang_menu("tab"); ?>
 			    </ul>
 			    <br />
-					<?php echo render_page('admin', $_GET['type'], $user_id); ?>
+					<?php echo render_page('admin', $_GET['type'], $_GET['subtype'], $user_id, $_GET['id']); ?>
 					<input type="hidden" name="action" value="<?php echo $_GET['action'];?>" />
 					<input type="hidden" name="lang" value="<?php echo $_SESSION['locale'];?>" />
 	        </div>

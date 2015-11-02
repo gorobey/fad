@@ -102,7 +102,8 @@ CREATE TABLE IF NOT EXISTS `analytics` (
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `taxonomy` (
 `id` int(11) NOT NULL,
-  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `subtype` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------

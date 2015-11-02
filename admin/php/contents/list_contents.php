@@ -34,11 +34,11 @@ if($status !== AUTH_LOGGED || !ctype_digit($_GET['level'])){ die(); } ?>
 						<span class="fa fa-trash-o"></span>
 					</a>
 				</td>
-				<td><a href="php/contents/edit_contents.php?action=a&level=1&id=<?php echo $single_content['id']; ?>&type=<?php echo $_GET['type']; ?>" class="ajax"><?php echo $single_content['value'];?></a></td>
-				<td><a href="php/contents/edit_contents.php?action=a&level=1&id=<?php echo $single_content['id']; ?>&type=<?php echo $_GET['type']; ?>" class="ajax">Count</a></td>				
+				<td><a href="php/contents/edit_contents.php?action=a&level=1&id=<?php echo $single_content['id']; ?>&type=<?php echo $_GET['type']."&subtype=".$single_content['subtype']; ?>" class="ajax"><?php echo $single_content['value'];?></a></td>
+				<td><a href="php/contents/edit_contents.php?action=a&level=1&id=<?php echo $single_content['id']; ?>&type=<?php echo $_GET['type']."&subtype=".$single_content['subtype'];; ?>" class="ajax">Count</a></td>				
 			<?php } elseif($_GET['level'] == 2) { ?>
 				<td class="text-center">
-					<a class="delete" data-toggle="confirmation" data-placement="right" data-href="php/contents/edit_content.php?aaction=d&id=<?php echo $single_content['rel']; ?>">
+					<a class="delete" data-toggle="confirmation" data-placement="right" data-href="php/contents/edit_content.php?action=d&id=<?php echo $single_content['rel']; ?>">
 						<span class="fa fa-trash-o"></span>
 					</a>
 				</td>

@@ -7,10 +7,12 @@
 <div class="form-group">
 	<textarea class="textarea" placeholder="" style="width: 100%; height: 500px; font-size: 14px; line-height: 18px;"></textarea>
 </div>
-
-<script src="../system/modules/editor/js/wysihtml5x-toolbar.min.js"></script>
+<!--http://www.lucaromano.net/workin/bootstrap3-wysihtml5/-->
+<!--<script src="../system/modules/editor/js/wysihtml5x-toolbar.min.js"></script>
 <script src="../system/modules/editor/js/handlebars.runtime.min.js"></script>
-<script src="../system/modules/editor/js/bootstrap3-wysihtml5.min.js"></script>
+<script src="../system/modules/editor/js/bootstrap3-wysihtml5.min.js"></script>-->
+<script src="../system/modules/editor/js/bootstrap3-wysihtml5-advanced.js"></script>
+<script src="../system/modules/editor/js/bootstrap3-wysihtml5.all.min.js"></script>
 
 <script>
 function load_image_gallery(obj) {
@@ -75,7 +77,6 @@ function load_image_gallery(obj) {
           };
 
 $('.textarea').wysihtml5({
-  toolbar: {
     custom: true,
     "font-styles":true,
 	'textAlign': true, // custom defined buttons to align text see myCustomTemplates variable above
@@ -88,13 +89,13 @@ $('.textarea').wysihtml5({
 	"blockquote":true,
 	"outdent":true,
 	"indent":true,
-	"size": 'lg',
+	"size": 'md',
 	'resize': true,
 	'justify': true,
-	"fa": true
-  },
+	"fa": true,
   customTemplates: buttons,
   "stylesheets": ["../system/modules/editor/css/wysiwyg-color.css"],
+  parserRules:    wysihtml5ParserRules
 }); 
 
   $('.textarea').html('Some text dynamically set.');//DbToHtml
