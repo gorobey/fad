@@ -13,7 +13,7 @@ if(file_exists("../install/")){
 		$user_id = $user['id'];
 		if(can_access($user_id, 'admin')){
 			require('header.php');
-			require('dashboard.php');
+			require('php/dashboard.php');
 			require('footer.php');
 		}else{
 			header("Location:../");
