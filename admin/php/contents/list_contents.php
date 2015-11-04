@@ -1,12 +1,9 @@
 <?php
-require_once( "../../config.php");
-require_once( "../../system/includes/auth.lib.php");
-require_once( "../../system/includes/license.lib.php");
-require_once("../../system/includes/utils.lib.php");
-list($status, $user) = auth_get_status();
-
-if($status !== AUTH_LOGGED || !ctype_digit($_GET['level'])){ die(); } ?>
-
+if(!isset($status)){
+	list($status, $user) = auth_get_status();
+	if($status !== AUTH_LOGGED){ die(); }
+}
+if(!ctype_digit($_GET['level'])){ die(); } ?>
 <table class="table table-striped table-bordered table-hover" id="table">
     <thead>
         <tr>

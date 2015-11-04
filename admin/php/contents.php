@@ -1,10 +1,13 @@
 <?php
-require_once( "../../config.php");
-require_once( "../../system/includes/auth.lib.php");
-require_once( "../../system/includes/license.lib.php");
-require_once("../../system/includes/utils.lib.php");
-list($status, $user) = auth_get_status();
-if($status !== AUTH_LOGGED || !ctype_digit($_GET['level'])){ die(); } ?>
+if(!isset($status)){
+	require_once( "../../config.php");
+	require_once( "../../system/includes/auth.lib.php");
+	require_once( "../../system/includes/license.lib.php");
+	require_once("../../system/includes/utils.lib.php");
+	list($status, $user) = auth_get_status();
+	if($status !== AUTH_LOGGED){ die(); }
+}
+if(!ctype_digit($_GET['level'])){ die(); } ?>
 <div class="row">
 	<div class="col-md-12" id="dashboard">
 	     <h2><?php echo ucfirst($_GET['type']); ?></h2>
