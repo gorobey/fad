@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <contents>
-	<node tree="admin" home="">
+	<node tree="admin" group="admin">
 		<section name="fad" icon="university" group="admin,teacher">
 			<taxonomy name="courses">
 				<item name="lessions">
@@ -15,7 +15,7 @@
 			</taxonomy>
 		</section>
 		<section name="blog" icon="pencil" group="admin,teacher,writer">
-			<taxonomy name="posts">
+			<taxonomy name="publications">
 				<item name="articles">
 					<module role="" script="video"></module>
 					<module role="" script="datetime"></module>

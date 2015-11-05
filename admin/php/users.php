@@ -122,7 +122,7 @@ $user_id = $user['id']; ?>
   </div>
 </div>
 <div class="modal fade" id="view_user" tabindex="-1" role="dialog" aria-labelledby="UserView">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content"></div>
 	</div>
 </div>

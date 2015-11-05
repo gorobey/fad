@@ -1,22 +1,62 @@
 <?php $inc = hash_equals($_CONFIG['tabasco'], crypt($_CONFIG['pepper'], $_CONFIG['tabasco'])) or die(); ?>
-<link rel="stylesheet" type="text/css" href="../system/modules/editor/css/bootstrap3-wysihtml5.min.css"></link>
+<link rel="stylesheet" type="text/css" href="../system/modules/<?php echo $val; ?>/css/bootstrap3-wysihtml5.min.css"></link>
+<link rel="stylesheet" type="text/css" href="../system/modules/<?php echo $val; ?>/css/bootstrap-datetimepicker.min.css"></link>
 <style>
 .wysihtml5-sandbox{  border: 1px solid #ccc !important; border-radius: 5px !important; padding: 10px !important}
+textarea{resize:vertical;}
 </style>
-
-<div class="form-group">
-	<textarea class="textarea" placeholder="" style="width: 100%; height: 500px; font-size: 14px; line-height: 18px;"></textarea>
+<div class="col-xs-12">
+    <ul class="nav nav-tabs">
+    	<?php lang_menu("tab"); ?>
+    </ul>
+    <br />
 </div>
 
-<script src="../system/modules/editor/js/wysihtml5x-toolbar.min.js"></script>
-<script src="../system/modules/editor/js/handlebars.runtime.min.js"></script>
-<script src="../system/modules/editor/js/bootstrap3-wysihtml5.min.js"></script>
+<div class="col-xs-12 col-sm-6 col-md-8 col-lg-9 form-group">			
+	<input type="text" name="content[title]" placeholder="<?php echo _('Title');?>" class="form-control" />
+	<input type="hidden" name="rel" value="<?php intval($_GET['rel']); ?>" />
+</div>
+
+<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-group">
+    <div class='input-append input-group date' id='datetimepicker'>
+        <input name="data" type="text" class="form-control" data-format="dd/MM/yyyy hh:mm:ss" />
+        <span class="input-group-addon add-on">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </div>
+</div>
+
+<div class="col-xs-12 form-group">
+	<textarea name="content[content]" class="textarea" placeholder="" style="width: 100%; height: 500px; font-size: 14px; line-height: 18px;"></textarea>
+</div>
+<script src="../system/modules/editor/js/bootstrap3-wysihtml5-advanced.js"></script>
+<script src="../system/modules/editor/js/bootstrap3-wysihtml5.all.min.js"></script>
+
+<script type="text/javascript" src="../system/modules/<?php echo $val; ?>/js/moment.min.js"></script>
+<script type="text/javascript" src="../system/modules/<?php echo $val; ?>/js/bootstrap-datetimepicker.min.js"></script>
 
 <script>
-function load_image_gallery(obj) {
-        var container = $(obj).closest('.bootstrap-wysihtml5-insert-image-modal.in');
-        var library = container.find(".img-library");
+$(function() {
+	$('#datetimepicker').datetimepicker({
+	    pickDate: true,                 //en/disables the date picker
+	    pickTime: true,                 //en/disables the time picker
+	    useMinutes: true,               //en/disables the minutes picker
+	    useSeconds: true,               //en/disables the seconds picker
+	    useCurrent: true,               //when true, picker will set the value to the current date/time
+	    minuteStepping:1,               //set the minute stepping
+	    minDate:"1/1/1900",               //set a minimum date
+	  //  maxDate: ,     //set a maximum date (defaults to today +100 years)
+	    language:'en',                  //sets language locale
+	    defaultDate:"",                 //sets a default date, accepts js dates, strings and moment objects
+	    disabledDates:[],               //an array of dates that cannot be selected
+	    enabledDates:[],                //an array of dates that can be selected
+	    useStrict: false,               //use "strict" when validating dates  
+	    sideBySide: true,              //show the date and time picker side by side
+	    daysOfWeekDisabled:[]          //for example use daysOfWeekDisabled: [0,6] to disable weekends
+	});
+});
 
+function load_image_gallery(obj) {
         $(".bootstrap-wysihtml5-insert-image-modal .img-library").load("../admin/php/media/view_media.php?include");
         $("#ModalMedia").modal({
 	        show: true
@@ -25,13 +65,6 @@ function load_image_gallery(obj) {
         $('#ModalMedia').on('hidden', function(){
 			$(this).data('modal', null);
 		});
-        
-		$('.wysihtml5-sandbox').contents().find(".wysihtml5-editor").bind("change", function(){
-			//$(this).contents().find('img').on('click', function () {
-				alert("click!");
-			//});
-		})
-
       }
       
       var buttons = {
@@ -75,7 +108,6 @@ function load_image_gallery(obj) {
           };
 
 $('.textarea').wysihtml5({
-  toolbar: {
     custom: true,
     "font-styles":true,
 	'textAlign': true, // custom defined buttons to align text see myCustomTemplates variable above
@@ -88,13 +120,22 @@ $('.textarea').wysihtml5({
 	"blockquote":true,
 	"outdent":true,
 	"indent":true,
-	"size": 'lg',
+	"size": 'md',
 	'resize': true,
 	'justify': true,
-	"fa": true
-  },
+	"fa": true,
   customTemplates: buttons,
-  "stylesheets": ["../system/modules/editor/css/wysiwyg-color.css"],
+  "stylesheets": [
+  "../system/style/css/bootstrap.min.css",
+  "../system/modules/editor/css/wysiwyg-color.css",
+//"../system/modules/editor/css/bootstrap-debug.css"
+  ],
+  parserRules: wysihtml5ParserRules,
+  hotKeys: {
+    'ctrl+z meta+z': 'undo',
+    'ctrl+y meta+y meta+shift+z': 'redo'
+  }
+
 }); 
 
   $('.textarea').html('Some text dynamically set.');//DbToHtml

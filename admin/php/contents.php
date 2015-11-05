@@ -1,14 +1,21 @@
 <?php
-require_once( "../../config.php");
-require_once( "../../system/includes/auth.lib.php");
-require_once( "../../system/includes/license.lib.php");
-require_once("../../system/includes/utils.lib.php");
-list($status, $user) = auth_get_status();
-if($status !== AUTH_LOGGED){ die(); } ?>
+if(!isset($status)){
+	require_once( "../../config.php");
+	require_once( "../../system/includes/auth.lib.php");
+	require_once( "../../system/includes/license.lib.php");
+	require_once("../../system/includes/utils.lib.php");
+	list($status, $user) = auth_get_status();
+	if($status !== AUTH_LOGGED){ die(); }
+}
+if(!ctype_digit($_GET['level'])){ die(); } ?>
 <div class="row">
 	<div class="col-md-12" id="dashboard">
 	     <h2><?php echo ucfirst($_GET['type']); ?></h2>
-	     <div class="comfirm-box fa fa-times"></div>
+	     <div class="comfirm-box">
+   		     <span class="fa fa-times"></span>
+		     <div class="content-box-message">
+		     </div>
+	     </div>
 		 <hr />
 	</div>
 
@@ -17,10 +24,8 @@ if($status !== AUTH_LOGGED){ die(); } ?>
         <div class="panel-heading">
             <?php echo _('List')." ".ucfirst(_($_GET['type']));
 	            
-	        if($_GET['level']<2){ ?>
+	        if($_GET['level'] == 1){ ?>
             	<button data-toggle="modal" data-target="#new-filter" class="right btn btn-primary btn-xs"><?php echo _('New')." "._('content filter'); ?></button>
-            <?php } elseif($_GET['level']>=2){ ?>
-	            <a href="php/contents/edit_contents.php?type=<?php echo $_GET['type'].'&action=n&level='.$_GET['level'].'&type='.$_GET['type']; ?>" class="right btn btn-primary btn-xs ajax"><?php echo _('New')." "._('content'); ?></a><!--bug plural form--> 
             <?php } ?>
         </div>
         <div class="panel-body">
@@ -32,16 +37,24 @@ if($status !== AUTH_LOGGED){ die(); } ?>
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="NewFilter"><?php echo _('New')." "._('filter');?></h4>
+        <h4 class="modal-title" id="NewFilter"><?php echo _('New')." "._('filter')." for ".ucfirst(_($_GET['type']));?></h4>
       </div>
       <form name="new_content_filter" id="new_content_filter" method="POST" action="php/contents/edit_contents.php">
 	      <div class="modal-body">
 		        <div class="form-group">
-		        	<label for="name"><?php echo _('Name')?>:</label>
+		        	<label for="name"><?php echo _('Name'); ?>:</label>
 		            <input type="text" name="name" placeholder="<?php echo _('Name');?>" class="form-control">
+					<label for="group"><?php echo _('type'); ?>:</label><!--forse meglio con check box...-->
+					<select class="form-control selectpicker show-tick" id="subfilter" name="subfilter">
+					<?php
+					foreach(arr_item('admin',$_GET['type']) AS $single_item){
+						echo "<option value='".$single_item."'>".ucfirst($single_item)."</option>";
+					} ?>
+					</select>
 		            <input type="hidden" name="action" value="n">
 		            <input type="hidden" name="filter" value="<?php echo $_GET['type']; ?>">
 		            <input type="hidden" name="level" value="<?php echo $_GET['level']; ?>">
+		            <input type="hidden" name="locale" value="<?php echo $_SESSION['locale']; ?>">
 				</div>
 	      </div>
 	      <div class="modal-footer">
@@ -55,3 +68,4 @@ if($status !== AUTH_LOGGED){ die(); } ?>
         </div>
     </div>
 </div>
+<?php require('admin_scripts.php');

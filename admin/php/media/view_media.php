@@ -76,14 +76,10 @@ exit;
 	}
 	exit;
 }
-if(!isset($_POST['do'])){
-	if(!isset($_GET['include'])){ ?>
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<h4 class="modal-title" id="ModalMediaTitle"><?php echo _('Media');?></h4>
-	</div>
+if(!isset($_POST['do'])){ ?>
+
 	<div class="modal-body">
-	<?php } ?>
+
 	    <div class="panel panel-default">
 	        <div class="panel-heading">		
 		
@@ -178,21 +174,18 @@ if(!isset($_POST['do'])){
 			} ?>
 		</tbody>
 	</table>
-<?php if(!isset($_GET['include'])){ ?>
 </div>
-<?php } ?>
-	
 <script type="text/javascript">
 $(function() {
 	var table;
-	table = $('#MediaTable<?php echo "Inc";?>').DataTable({
+	table = $('#MediaTableInc').DataTable({
 		"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 0 ] }],
 		"drawCallback": function() {
         	draw_delete();
 		}
 	});
 
-	var MAX_UPLOAD_SIZE = <?php echo $MAX_UPLOAD_SIZE ?>;
+	var MAX_UPLOAD_SIZE = <?php echo $MAX_UPLOAD_SIZE; ?>;
 	
 	// file upload stuff
 	$('#file_drop_target').on('dragover',function(){
@@ -302,6 +295,7 @@ $(function() {
 			},
 			
 			beforeSend: function(){
+				table.destroy();
 	            load_here.empty();
 				load_here.addClass('preload-content');
 			},
@@ -394,7 +388,7 @@ $(function() {
 	draw_delete();
 	
 	
-	$('#ModalMedia, #ModalFile').on('hide.bs.modal', function () {//bug fix (http://datatables.net/manual/tech-notes/3)
+	$('#ModalFile').on('hide.bs.modal', function () {//bug fix (http://datatables.net/manual/tech-notes/3)
 	   table.destroy();
 	});
 });

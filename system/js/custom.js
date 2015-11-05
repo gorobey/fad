@@ -34,7 +34,9 @@ $(document).ready(function () {
 	            }
 	        }
 		}).submit();
-	});	    
+	});	  
+
+	$('#table').dataTable({"pageLength": 50});  
 }); //$(document).ready
 
 $(document).on('click', 'a.ajax', function(e) {
@@ -77,8 +79,6 @@ $('.scrollup').click(function () {
     }, 600);
     return false;
 });
-
-
 
 $(window).bind("load resize", function () {
 	if ($(this).width() < 768) {

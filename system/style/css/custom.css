@@ -23,6 +23,7 @@ a {cursor: pointer !important;}
 #page-wrapper {border-left: 1px solid #ccc;padding: 15px 15px;min-height: 600px;background:#F3F3F3;}
 #page-inner {width:100%;background-color:#fff!important;padding:15px;min-height:1200px;}
 .preload-content{background-image: url(../imgs/loading.gif);background-position: center 20%;background-repeat: no-repeat;}
+.preload-comfirm{background-image: url("../imgs/comfirm.gif");background-position: center center;background-repeat: no-repeat;background-size: 70px auto;display: block;min-height: 50px;}
 
 .text-zero{font-size:0;color:transparent;}
 
@@ -215,7 +216,7 @@ opacity:.5;
 }
 
 /*online user status php ok, html non implementato*/
-.useronline, .useroffline{border-radius:10px;height:10px;width:10px;display:inline-block;margin:0 0 0 10px;}
+.useronline, .useroffline{border-radius:10px;height:10px;width:10px;display:inline-block;margin:0 10px 0 0;}
 .useronline{background:#67cb34;}
 .useroffline{background:#bbb;}
 

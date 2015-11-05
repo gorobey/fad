@@ -37,7 +37,7 @@ $(document).ready(function () {
 		}
 	});
 	
-	$('#new_user, #new_attr, #user_edit, #new_content_filter').on("submit", function(e) {
+	$('#new_user, #new_attr, #user_edit, #new_content_filter, #new_content').on("submit", function(e) {
 		e.preventDefault();
 		var action = $(this).attr('action');
 		var data = $(this).serialize(); // check to show that all form data is being submitted
@@ -46,13 +46,18 @@ $(document).ready(function () {
 			url: action,
 			data: data,
 			dataType: "html",
+			beforeSend: function(){
+				$(".content-box-message").empty();
+				$(".content-box-message").addClass('preload-comfirm');
+				$(".comfirm-box").slideDown('fast');
+			},
 			error: function(){
+				$(".content-box-message").removeClass('preload-comfirm');
 				$(".content-box-message").html('<div class="alert alert-danger" role="alert"><?php echo _('Error: Contact system administrator!');?></div>');
-				$(".comfirm-box").slideDown('fast');
-			},					
+			},
 			success: function (result) {
+				$(".content-box-message").removeClass('preload-comfirm');
 				$(".content-box-message").html(result);
-				$(".comfirm-box").slideDown('fast');
 			}
 		});
 		$('.modal').modal('hide');
