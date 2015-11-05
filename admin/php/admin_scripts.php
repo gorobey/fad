@@ -37,7 +37,7 @@ $(document).ready(function () {
 		}
 	});
 	
-	$('#new_user, #new_attr, #user_edit, #new_content_filter').on("submit", function(e) {
+	$('#new_user, #new_attr, #user_edit, #new_content_filter, #new_content').on("submit", function(e) {
 		e.preventDefault();
 		var action = $(this).attr('action');
 		var data = $(this).serialize(); // check to show that all form data is being submitted
