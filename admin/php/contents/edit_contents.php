@@ -19,7 +19,7 @@ if($_POST['action']=="n" || $_POST['action']=="e" || $_POST['action']=="d" && ct
 			}
 		}elseif($_POST['action'] == "e"){
 			$query = "UPDATE";
-		}elseif($_POST['action'] == "d"){//vedere come spostare contenuti in nuova taxonomy //la query va sistemata è solo un esempio rubato su stackoverflow
+		}elseif($_POST['action'] == "d"){//vedere come spostare contenuti in nuova taxonomy //la query va sistemata
 			$delte_taxonomy = mysqli_query(
 			"DELETE ".$_CONFIG['t_taxonomy'].", ".$_CONFIG['t_item'].", ".$_CONFIG['t_locale']."
 			FROM ".$_CONFIG['t_taxonomy']."
@@ -33,8 +33,19 @@ if($_POST['action']=="n" || $_POST['action']=="e" || $_POST['action']=="d" && ct
 		}		
 	}elseif($_POST['level'] == 2){
 		if($_POST['action'] == "n"){
-			$query = "INSERT INTO ".$_CONFIG['t_item'];
-			$query = "INSERT INTO ".$_CONFIG['t_locale'];
+			$item_part = "";
+			print_r($_POST);
+			foreach($_POST['content'] as  $key=>$value){
+				$item_part .= "INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `lang`, `key`, `value`) VALUE ('".$_POST['rel']."', '2', '".$_SESSION['locale']."', '".$key."', '".$value."');";
+			}
+			$insert_item = mysqli_multi_query($db_conn,"INSERT INTO ".$_CONFIG['t_item']." (`rel`, `author`, `publish`) VALUES ('".$_POST['rel']."', '".$user_id."', '".TRUE."');".$item_part);
+			
+			if($insert_item === true){
+				echo '<div class="alert alert-success" role="alert">'._("New").' '._("content published!").'</div>';
+			}else{
+				echo '<div class="text-center alert alert-danger" role="alert">'._("Error:")." "._("content can't be published!").'</div>';
+			}
+			
 		}elseif($_POST['action'] == "e"){
 			$query = "UPDATE ".$_CONFIG['t_item'];	
 			$query = "UPDATE ".$_CONFIG['t_locale'];
@@ -44,10 +55,10 @@ if($_POST['action']=="n" || $_POST['action']=="e" || $_POST['action']=="d" && ct
 						WHERE (n.type = 'monster')";
 		}
 	}
-}elseif($_GET['action'] == "a" && ctype_digit($_GET['level']) && isset($_GET['type'])){ ?>
+}elseif($_GET['action'] == "a" && isset($_GET['subtype'])){ ?>
 <div class="row">
 	<div class="col-md-12" id="dashboard">
-	     <h2><?php echo ucfirst($_GET['type']); ?></h2>
+	     <h2><?php echo ucfirst($_GET['subtype']); ?></h2>
 	     <div class="comfirm-box fa fa-times"></div>
 		 <hr />
 	</div>
@@ -58,12 +69,10 @@ if($_POST['action']=="n" || $_POST['action']=="e" || $_POST['action']=="d" && ct
 	            <button type="submit" class="right btn btn-primary btn-xs"><?php echo _('Pubblish Now');?></button>
 	        </div>
 	        <div class="panel-body">
-			    <ul class="nav nav-tabs">
-			    	<?php lang_menu("tab"); ?>
-			    </ul>
-			    <br />
 					<?php echo render_page('admin', $_GET['type'], $_GET['subtype'], $user_id, $_GET['id']); ?>
-					<input type="hidden" name="action" value="<?php echo $_GET['action'];?>" />
+					<input type="hidden" name="action" value="n" />
+					<input type="hidden" name="rel" value="<?php echo intval($_GET['id']);?>" />
+					<input type="hidden" name="level" value="2" />
 					<input type="hidden" name="lang" value="<?php echo $_SESSION['locale'];?>" />
 	        </div>
 	    </div>
@@ -71,6 +80,6 @@ if($_POST['action']=="n" || $_POST['action']=="e" || $_POST['action']=="d" && ct
 </div><!-- /. ROW  -->
 	<?php
 }else{
-		echo "Error: contact the admin!";
+	echo '<div class="text-center alert alert-danger" role="alert">'._("Error:")." "._("Contant the admin!").'</div>';
 }
 ?>

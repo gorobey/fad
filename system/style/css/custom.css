@@ -216,7 +216,7 @@ opacity:.5;
 }
 
 /*online user status php ok, html non implementato*/
-.useronline, .useroffline{border-radius:10px;height:10px;width:10px;display:inline-block;margin:0 0 0 10px;}
+.useronline, .useroffline{border-radius:10px;height:10px;width:10px;display:inline-block;margin:0 10px 0 0;}
 .useronline{background:#67cb34;}
 .useroffline{background:#bbb;}
 

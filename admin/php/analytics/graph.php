@@ -1,16 +1,28 @@
 <?php
 if($status !== AUTH_LOGGED){ die(); }
 
-$unique_access_data = mysqli_query($db_conn, "SELECT start_time, count(DAY(start_time)) as count FROM (SELECT start_time FROM ".$_CONFIG['t_analytics']." WHERE start_time >= (now()-interval 1 month) GROUP BY DAY(start_time), uid) as b GROUP BY DAY(start_time) ORDER BY MONTH(start_time) , DAY(start_time) ASC");
+if(!isset($_GET['range'])){
+	$range = 0;
+}else{
+	if($_GET['range']<0){
+		$range = $_GET['range'];
+	}else{
+		$range = "+".$_GET['range'];
+	}
+}
 
-$page_view_data = mysqli_query($db_conn, "SELECT start_time, count(DAY(start_time)) as count FROM (SELECT start_time FROM ".$_CONFIG['t_analytics']." WHERE start_time >= (now()-interval 1 month) AND content != 0 ORDER BY MONTH(start_time) , DAY(start_time) ASC) as b GROUP BY DAY(start_time) ORDER BY MONTH(start_time) , DAY(start_time) ASC");
+$unique_access_data = mysqli_query($db_conn, "SELECT start_time, count(DAY(start_time)) as count 
+FROM (SELECT start_time FROM ".$_CONFIG['t_analytics']." WHERE start_time >= (DATE_SUB(NOW(), INTERVAL ".$range." DAY) -interval 30 day) GROUP BY DAY(start_time), uid) as b GROUP BY DAY(start_time) ORDER BY MONTH(start_time) , DAY(start_time) ASC");
+
+$page_view_data = mysqli_query($db_conn, "SELECT start_time, count(DAY(start_time)) as count 
+FROM (SELECT start_time FROM ".$_CONFIG['t_analytics']." WHERE start_time >= (DATE_SUB(NOW(), INTERVAL ".$range." DAY) -interval 30 day) AND content != 0 ORDER BY MONTH(start_time) , DAY(start_time) ASC) as b GROUP BY DAY(start_time) ORDER BY MONTH(start_time) , DAY(start_time) ASC");
 
 //range date
-for($i=30;$i>=0;$i--){ $days[$i] = date("d/m/Y",(strtotime(-$i." day", time()))); }
+for($i=30;$i>=0;$i--){ $days[$i] = date("d/m/Y",(strtotime(-$i." day", strtotime($range." day")))); }
  
 $month_days = "'".implode("','", $days)."'";
 
-for($i=30;$i>=0;$i--){ $dates[date("d/m/Y",(strtotime(-$i." day", time())))] = 0; }
+for($i=30;$i>=0;$i--){ $dates[date("d/m/Y",(strtotime(-$i." day", strtotime($range." day"))))] = 0; }
 //override unique access per day
 foreach($unique_access_data as $single_day){ $dates[date("d/m/Y", strtotime($single_day['start_time']))] = $single_day['count']; }
 $unique_access = implode(", ", $dates);
@@ -18,7 +30,7 @@ $unique_access = implode(", ", $dates);
 $max_unique_connections = max($dates);
 
 unset($dates);
-for($i=30;$i>=0;$i--){ $dates[date("d/m/Y",(strtotime(-$i." day", time())))] = 0; }
+for($i=30;$i>=0;$i--){ $dates[date("d/m/Y",(strtotime(-$i." day", strtotime($range." day"))))] = 0; }
 //override page view per day
 foreach($page_view_data as $single_day){ $dates[date("d/m/Y", strtotime($single_day['start_time']))] = $single_day['count']; }
 $page_view = implode(", ", $dates);
@@ -29,6 +41,7 @@ $max = array($max_unique_connections, $max_page_view);
 
 ?>
 <style>
+a.range:hover{text-decoration:none;}
 .chart{
 	height:300px;
 }
@@ -86,6 +99,11 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 
 /*# sourceMappingURL=chartist-plugin-tooltip.css.map */
 </style>
+<div class="pull-right">
+	<a href="php/dashboard.php?range=<?php echo $range-30;?>" class="ajax range fa fa-chevron-left"></a>
+	<?php echo "  ".$days[30]." - ".$days[0]."  ";?>
+	<a href="php/dashboard.php?range=<?php echo $range+30;?>" class="ajax range fa fa-chevron-right"></a>
+</div>
 <div class="chart ct-chart"></div>
 
 <script src="../system/js/chartist.min.js"></script>

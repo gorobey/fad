@@ -14,6 +14,9 @@
 	<link href="../system/style/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../system/style/css/chartist.min.css">
 	<link href="../system/style/css/custom.css" rel="stylesheet" />
+    <script src="../system/js/jquery.min.js"></script>
+    <script src="../system/js/jquery.dataTables.min.js"></script>
+    <script src="../system/js/dataTables.bootstrap.js"></script>
 </head>
 <body>
     <div id="wrapper">
@@ -52,9 +55,6 @@
 		                <a class="ajax" href="php/navigation.php"><i class="fa fa-compass fa-2x"></i> <?php echo _('Navigation');?></a>
 		            </li>
 		            <?php } ?>
-					<li>
-						<a data-target="#ModalFile" data-toggle="modal" data-remote="php/media/view_media.php" class="media"><i class="fa fa-cloud-upload fa-2x"></i> <?php echo _('Media');?></a>
-					</li>
 		            <li>
 		                <a href="#"><i class="fa fa-users fa-2x"></i> <?php echo _('Users');?><span class="fa expand-menu fa-minus-circle"></span></a>
 		                <ul class="nav nav-second-level">

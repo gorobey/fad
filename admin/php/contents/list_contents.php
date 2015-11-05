@@ -23,7 +23,7 @@ if(!ctype_digit($_GET['level'])){ die(); } ?>
     <tbody>
 	<?php
 	$i=1;
-	foreach(get_taxonomy($_GET['type']) as $single_content){ ?>
+	foreach(get_contents($_GET['type']) as $single_content){ ?>
 	    <tr>
 			<?php if($_GET['level'] == 1){ ?>
 				<td class="text-center">
