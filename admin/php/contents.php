@@ -4,8 +4,7 @@ if(!isset($status)){
 	require_once( "../../system/includes/auth.lib.php");
 	require_once( "../../system/includes/license.lib.php");
 	require_once("../../system/includes/utils.lib.php");
-	list($status, $user) = auth_get_status();
-	if($status !== AUTH_LOGGED){ die(); }
+	auth_check_point();
 }
 if(!ctype_digit($_GET['level'])){ die(); } ?>
 <div class="row">

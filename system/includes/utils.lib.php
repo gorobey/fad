@@ -113,8 +113,10 @@ function lang_menu($list = false) {
 		}
 		if($list === true){//da fare nuova funzione
 			$li = "<li><a class='fa fa-caret-right' ";$_li = "</li>";
+		printf($li.'href="?%s">'.$_CONFIG['language_codes'][$language].'</a>'.$_li, $query);			
 		}elseif($list == "tab"){
 			$li = "<li class='".$current."'><a class='ajax' ";$_li = "</li>";
+		printf($li.'href="php/contents/edit_contents.php?%s">'.$_CONFIG['language_codes'][$language].'</a>'.$_li, $query);
 		}else{
 			$li = "<a ";
 			if ($translation != end($_SESSION['LANGUAGES'])){
@@ -122,15 +124,11 @@ function lang_menu($list = false) {
 			}else{
 				$_li = "";
 			}
+		printf($li.'href="?%s">'.$_CONFIG['language_codes'][$language].'</a>'.$_li, $query);
 		}
-		printf($li.'href="php/contents/edit_contents.php?%s">'.$_CONFIG['language_codes'][$language].'</a>'.$_li, $query);
+
 	}
 }
-
-function content_lang_switch() {
-	
-}
-
 
 //UTILS
 function gen_rand_string() {
@@ -379,7 +377,7 @@ function get_taxonomy($id){
 		return $taxonomy['type']." / ".$taxonomy['subtype'];
 }
 
-function get_contents($type){
+function get_filter($type){
 	global $_CONFIG, $db_conn;
 	$result = mysqli_query($db_conn, "SELECT distinct(`".$_CONFIG['t_locale']."`.rel), `".$_CONFIG['t_taxonomy']."`.id, `".$_CONFIG['t_taxonomy']."`.subtype, `".$_CONFIG['t_locale']."`.key, `".$_CONFIG['t_locale']."`.value
 				FROM `".$_CONFIG['t_taxonomy']."` 
@@ -392,9 +390,44 @@ function get_contents($type){
 	while($tmp = mysqli_fetch_assoc($result)){
 		array_push($data, $tmp);
 	}
-	
 	return $data;
 }
+
+
+function get_list($subtype){
+	global $_CONFIG, $db_conn;
+	$result = mysqli_query($db_conn, "SELECT distinct(`".$_CONFIG['t_locale']."`.rel), `".$_CONFIG['t_taxonomy']."`.id, `".$_CONFIG['t_taxonomy']."`.subtype, `".$_CONFIG['t_locale']."`.key, `".$_CONFIG['t_locale']."`.value
+				FROM `".$_CONFIG['t_taxonomy']."` 
+				INNER JOIN `".$_CONFIG['t_locale']."`
+				WHERE `".$_CONFIG['t_locale']."`.level = 2
+				AND `".$_CONFIG['t_taxonomy']."`.id = `".$_CONFIG['t_locale']."`.rel
+				AND `".$_CONFIG['t_locale']."`.key = 'title'
+				AND `".$_CONFIG['t_locale']."`.value != ''
+				AND `".$_CONFIG['t_taxonomy']."`.subtype =  '".$subtype."'");
+	$data = array();
+	while($tmp = mysqli_fetch_assoc($result)){
+		array_push($data, $tmp);
+	}
+	return $data;
+}
+
+
+function get_content($subtype){
+	global $_CONFIG, $db_conn;
+	$result = mysqli_query($db_conn, "SELECT distinct(`".$_CONFIG['t_locale']."`.rel), `".$_CONFIG['t_taxonomy']."`.id, `".$_CONFIG['t_taxonomy']."`.subtype, `".$_CONFIG['t_locale']."`.key, `".$_CONFIG['t_locale']."`.value
+				FROM `".$_CONFIG['t_taxonomy']."` 
+				INNER JOIN `".$_CONFIG['t_locale']."`
+				WHERE `".$_CONFIG['t_locale']."`.level = 2
+				AND `".$_CONFIG['t_taxonomy']."`.id = `".$_CONFIG['t_locale']."`.rel
+				AND `".$_CONFIG['t_locale']."`.value != ''
+				AND `".$_CONFIG['t_taxonomy']."`.subtype =  '".$subtype."'");
+	$data = array();
+	while($tmp = mysqli_fetch_assoc($result)){
+		array_push($data, $tmp);
+	}
+	return $data;
+}
+
 
 function get_content_info($rel){
 	global $_CONFIG, $db_conn;

@@ -1,54 +1,62 @@
 <?php
-if(!isset($status)){
-	list($status, $user) = auth_get_status();
-	if($status !== AUTH_LOGGED){ die(); }
-}
+if(!isset($status)){auth_check_point();}
 if(!ctype_digit($_GET['level'])){ die(); } ?>
 <table class="table table-striped table-bordered table-hover" id="table">
     <thead>
         <tr>
 			<?php if($_GET['level'] == 1){ ?>
 				<th class="sort_disabled text-center"><span class="fa fa-trash"></span></th>
-				<th class="center"><?php echo _('Title'); ?></th>
+				<th><?php echo _('Taxonomy'); ?></th>
+				<th><?php echo _('Title'); ?></th>
 				<th class="center"><?php echo _('Count'); ?></th>
 			<?php }elseif($_GET['level'] == 2){ ?>
 				<th class="sort_disabled text-center"><span class="fa fa-trash"></span></th>
 				<th class="text-center"><i class="fa fa-eye"></i></th>
-				<th class="center"><?php echo _('Title'); ?></th>
-				<th class="center"><?php echo _('Author'); ?></th>
-				<th class="center"><?php echo _('Date'); ?></th>
+				<th><?php echo _('Taxonomy'); ?></th>
+				<th><?php echo _('Title'); ?></th>
+				<th><?php echo _('Author'); ?></th>
+				<th><?php echo _('Date'); ?></th>
 			<?php } ?>
         </tr>
     </thead>
     <tbody>
-	<?php
-	$i=1;
-	foreach(get_contents($_GET['type']) as $single_content){ ?>
-	    <tr>
-			<?php if($_GET['level'] == 1){ ?>
+	<?php if($_GET['level'] == 1){
+		$i=1;
+		foreach(get_filter($_GET['type']) as $single_filter){ ?>
+			<tr>
 				<td class="text-center">
-					<a class="delete" data-toggle="confirmation" data-placement="right" data-href="php/contents/edit_content.php?action=d&id=<?php echo $single_content['id']; ?>">
+					<a class="delete" data-toggle="confirmation" data-placement="right" data-href="php/contents/edit_content.php?action=d&id=<?php echo $single_filter['id']; ?>">
 						<span class="fa fa-trash-o"></span>
 					</a>
 				</td>
-				<td><a href="php/contents/edit_contents.php?action=a&level=1&id=<?php echo $single_content['id']; ?>&type=<?php echo $_GET['type']."&subtype=".$single_content['subtype']; ?>" class="ajax"><?php echo $single_content['value'];?></a></td>
-				<td><a href="php/contents/edit_contents.php?action=a&level=1&id=<?php echo $single_content['id']; ?>&type=<?php echo $_GET['type']."&subtype=".$single_content['subtype'];; ?>" class="ajax">Count</a></td>				
-			<?php } elseif($_GET['level'] == 2) { ?>
+				<td><?php echo $_GET['type']; ?></td>
+				<td><a href="php/contents/edit_contents.php?action=a&level=1&id=<?php echo $single_filter['id']; ?>&type=<?php echo $_GET['type']."&subtype=".$single_filter['subtype']; ?>" class="ajax"><?php echo $single_filter['value'];?></a></td>
+				<td class="text-center"><a href="php/contents/edit_contents.php?action=a&level=1&id=<?php echo $single_filter['id']; ?>&type=<?php echo $_GET['type']."&subtype=".$single_filter['subtype']; ?>" class="ajax">Count</a></td>	
+			<?php
+				$i++; ?>
+            </tr>
+			<?php
+		}
+	}elseif($_GET['level'] == 2) {
+		$i=1;
+		foreach(get_list($_GET['type']) as $single_content){
+			$content_info = get_content_info($single_content['id']); ?>
+			<tr>
 				<td class="text-center">
 					<a class="delete" data-toggle="confirmation" data-placement="right" data-href="php/contents/edit_content.php?action=d&id=<?php echo $single_content['rel']; ?>">
 						<span class="fa fa-trash-o"></span>
 					</a>
 				</td>
-				<td><input type="checkbox" /></td>
-				<td><a href="php/contents/edit_contents.php?action=e&level=2&id=<?php echo $single_content['rel']; ?>" class="right btn btn-primary btn-xs ajax">Tilte</a></td>
-				<td>Author</td>
-				<td>Date</td>
-			<?php } ?>
-            </tr>
-
-			<?php	
-				$i++;
-			} ?>
+				<td class="center"><input type="checkbox"<?php if($content_info['publish']){ echo " checked "; }?>/></td>
+				<td><?php echo get_taxonomy($single_content['id']); ?></td>
+				<td><a href="php/contents/edit_contents.php?action=e&level=2&id=<?php echo $single_content['id']; ?>" class="ajax"><?php echo $content_info['title']; ?></a></td>
+				<td><?php echo get_real_name($content_info['author']) ?></td>
+				<td><?php echo RelativeTime($content_info['date']); ?></td>
+			</tr>
+			<?php
+			$i++;
+		}
+	} ?>
     </tbody>
 </table>
 <!-- Modal -->

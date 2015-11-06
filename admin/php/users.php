@@ -3,9 +3,7 @@ require_once( "../../config.php");
 require_once( "../../system/includes/auth.lib.php");
 require_once( "../../system/includes/license.lib.php");
 require_once("../../system/includes/utils.lib.php");
-list($status, $user) = auth_get_status();
-if($status !== AUTH_LOGGED){ die(); }
-$user_id = $user['id']; ?>
+auth_check_point(); ?>
 <div class="row">
 	<div class="col-md-12" id="dashboard">
 	     <h2><?php echo _('Users');?></h2>
@@ -28,7 +26,7 @@ $user_id = $user['id']; ?>
 	                        <th class="sort_disabled text-center"><span class="fa fa-trash"></span></th>
 	                        <th><?php echo _('Name');?></th>
 	                        <th><?php echo _('Surname');?></th>
-	                        <th><?php echo _('E-Mail');?></th>
+	                        <th class="hidden-xs hidden-sm visible-md visible-lg"><?php echo _('E-Mail');?></th>
 	                        <th><?php echo _('Group'); ?></th>
 	                        <th class="hidden-xs hidden-sm visible-md visible-lg"><?php echo _('Registration'); ?></th>
 	                    </tr>
@@ -53,7 +51,7 @@ $user_id = $user['id']; ?>
 						        <td>
 							        <a data-remote="php/users/view_user.php?id=<?php echo $single_user['id']; ?>" data-toggle="modal" data-target="#view_user"><?php echo ucfirst($single_user['surname']); ?></a>
 						        </td>
-						        <td>
+						        <td class="hidden-xs hidden-sm visible-md visible-lg">
 							        <a data-remote="php/users/view_user.php?id=<?php echo $single_user['id']; ?>" data-toggle="modal" data-target="#view_user"><?php echo $single_user['mail']; ?></a>
 						        </td>
 						        <td>
