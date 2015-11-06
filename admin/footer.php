@@ -13,7 +13,7 @@
     <!-- METISMENU SCRIPTS -->
     <script src="../system/js/jquery.metisMenu.js"></script>
       <!-- CUSTOM SCRIPTS -->
-    <script src="../system/js/custom.js"></script>
+    <script src="../system/js/custom.admin.js"></script>
      <!-- Modal -->	
 </body>
 </html>

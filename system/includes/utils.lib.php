@@ -149,6 +149,17 @@ function get_info($key){
 	return $info_row['value'];
 }
 
+function list_info(){
+	global $_CONFIG, $db_conn;
+	$info_dataQ = mysqli_query($db_conn, "SELECT `key`, `value` FROM `".$_CONFIG['t_info']."`");
+	$data = array();
+	while($tmp = mysqli_fetch_array($info_dataQ)){
+		array_push($data, $tmp);
+	}
+	
+	return $data;
+}
+
 function protocol() {
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
     return $protocol;

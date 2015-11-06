@@ -10,7 +10,7 @@ if(!isset($status)){
 ?>
 <div class="row">
 	<div class="col-md-12" id="dashboard">
-	     <h2>Dashboard</h2>
+	     <h2><?php echo _('Dashboard'); ?></h2>
 	     <div class="comfirm-box">
    		     <span class="fa fa-times"></span>
 		     <div class="content-box-message">
@@ -22,7 +22,7 @@ if(!isset($status)){
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 	    <div class="panel panel-default">
-	        <div class="panel-heading"><?php echo _("Statistics"); ?>
+	        <div class="panel-heading"><?php echo _("Analytics"); ?>
 	        <span class="pull-right">
 	        	<strong title="<?php echo _("Active Users"); ?>"><i class="fa fa-wifi"></i> <?php echo get_users_online(); ?></strong> /  
 	        	<strong title="<?php echo _("Users Registred"); ?>"><i class="fa fa-users"></i> <?php echo get_users_count(); ?></strong>

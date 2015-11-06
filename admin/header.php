@@ -77,7 +77,7 @@
 						</ul>
 					</li>
 					<li>
-					<a href="#"><i class="fa fa-cogs fa-2x"></i><?php echo _('Options');?></a>
+					<a class="ajax" href="php/options.php"><i class="fa fa-cogs fa-2x"></i><?php echo _('Options');?></a>
 					</li>
 			      </ul>
 			        <?php if(is_admin($user_id)===true){ echo "<span class='version'>V ".get_info('version')."</span>";} ?>

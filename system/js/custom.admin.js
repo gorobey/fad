@@ -9,7 +9,8 @@ $(document).ready(function () {
 	});
 
 	$('#main-menu').metisMenu({
-	});
+    activeClass: 'active'
+  });
 
 	$(document).on('click','.sidebar-collapse.collapse.in',function(e) {
 	    if( $(e.target).hasClass('ajax') ) {
