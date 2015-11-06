@@ -35,18 +35,7 @@ if($_POST['action']=="n" || $_POST['action']=="e" || $_POST['action']=="d" && ct
 			foreach($_POST['content'] as  $key=>$value){
 				$item_part .= "INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `lang`, `key`, `value`) VALUE ('".$_POST['rel']."', '2', '".$_SESSION['locale']."', '".$key."', '".$value."');";
 			}
-<<<<<<< HEAD
 			$insert_item = mysqli_multi_query($db_conn,"INSERT INTO ".$_CONFIG['t_item']." (`rel`, `author`, `publish`) VALUES ('".$_POST['rel']."', '".$user_id."', '".TRUE."');".$item_part);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> master
-=======
-			$insert_item = mysqli_multi_query($db_conn,"INSERT INTO ".$_CONFIG['t_item']." (`rel`, `author`, `publish`) VALUES ('".mysqli_real_escape_string($_POST['rel'])."', '".mysqli_real_escape_string($user_id)."', '".TRUE."');".$item_part);
->>>>>>> origin/master
-			
->>>>>>> master
 			if($insert_item === true){
 				echo '<div class="alert alert-success" role="alert">'._("New").' '._("content published!").'</div>';
 			}else{
