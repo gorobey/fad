@@ -4,9 +4,7 @@ require_once("../../../system/includes/utils.lib.php");
 require_once( "../../../system/includes/auth.lib.php");
 require_once( "../../../system/includes/license.lib.php");
 require_once("../../../system/includes/reg.lib.php");
-list($status, $user) = auth_get_status();
-
-if($status !== AUTH_LOGGED){ die(); }
+auth_check_point();
 
 $user_id = isset($user['id']) ? $user['id'] : "0";
 $user_edit = isset($_POST['id']) ? $_POST['id'] : "0";

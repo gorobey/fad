@@ -1,5 +1,5 @@
 <?php
-if($status !== AUTH_LOGGED){ die(); }
+if(!isset($status)){auth_check_point();}
 
 if(!isset($_GET['range'])){
 	$range = 0;

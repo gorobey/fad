@@ -60,6 +60,16 @@ function auth_get_uid(){
 	return $uid ? $uid : NULL;
 }
 
+function auth_check_point(){
+list($status, $user) = auth_get_status();
+if($status !== AUTH_LOGGED){ die('<div class="text-center alert alert-danger" role="alert">'._("Error:")." "._("you can not stay here.").'
+	<hr />
+	<a href="'.protocol().get_info('appdir').'">'._('Please, login!').'</a>
+	</div>'); }
+	$user_id = $user['id'];
+	return $user_id;
+}
+
 function auth_get_status(){
 	global $_CONFIG, $db_conn;
 	auth_clean_expired();

@@ -3,9 +3,7 @@ require_once( "../../../config.php");
 require_once( "../../../system/includes/auth.lib.php");
 require_once( "../../../system/includes/license.lib.php");
 require_once("../../../system/includes/utils.lib.php");
-list($status, $user) = auth_get_status();
-if($status !== AUTH_LOGGED){ die(); }
-$user_id = $user['id'];
+if(!isset($status)){$user_id = auth_check_point();}
 if($_POST['action']=="n" || $_POST['action']=="e" || $_POST['action']=="d" && ctype_digit($_POST['level'])){
 	if($_POST['level'] == 1){
 		if($_POST['action'] == "n" && in_array($_POST['subfilter'], arr_item('admin', $_POST['filter']))){
@@ -34,25 +32,20 @@ if($_POST['action']=="n" || $_POST['action']=="e" || $_POST['action']=="d" && ct
 	}elseif($_POST['level'] == 2){
 		if($_POST['action'] == "n"){
 			$item_part = "";
-			print_r($_POST);
 			foreach($_POST['content'] as  $key=>$value){
 				$item_part .= "INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `lang`, `key`, `value`) VALUE ('".$_POST['rel']."', '2', '".$_SESSION['locale']."', '".$key."', '".$value."');";
 			}
 			$insert_item = mysqli_multi_query($db_conn,"INSERT INTO ".$_CONFIG['t_item']." (`rel`, `author`, `publish`) VALUES ('".$_POST['rel']."', '".$user_id."', '".TRUE."');".$item_part);
-			
 			if($insert_item === true){
 				echo '<div class="alert alert-success" role="alert">'._("New").' '._("content published!").'</div>';
 			}else{
 				echo '<div class="text-center alert alert-danger" role="alert">'._("Error:")." "._("content can't be published!").'</div>';
 			}
-			
 		}elseif($_POST['action'] == "e"){
 			$query = "UPDATE ".$_CONFIG['t_item'];	
 			$query = "UPDATE ".$_CONFIG['t_locale'];
-		}elseif($_POST['action'] == "d"){//la query va sistemata è solo un esempio rubato su stackoverflow
-			$query = "DELETE s.* FROM spawnlist s
-						INNER JOIN npc n ON s.npc_templateid = n.idTemplate
-						WHERE (n.type = 'monster')";
+		}elseif($_POST['action'] == "d"){
+			$query = "DELETE ...";
 		}
 	}
 }elseif($_GET['action'] == "a" && isset($_GET['subtype'])){ ?>
@@ -82,4 +75,3 @@ if($_POST['action']=="n" || $_POST['action']=="e" || $_POST['action']=="d" && ct
 }else{
 	echo '<div class="text-center alert alert-danger" role="alert">'._("Error:")." "._("Contant the admin!").'</div>';
 }
-?>

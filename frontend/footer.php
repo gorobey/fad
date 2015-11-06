@@ -14,6 +14,6 @@
     <!-- METISMENU SCRIPTS -->
     <script src="system/js/jquery.metisMenu.js"></script>
       <!-- CUSTOM SCRIPTS -->
-    <script src="system/js/custom.js"></script>
+    <script src="system/js/custom.frontend.js"></script>
 </body>
 </html>
