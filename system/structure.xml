@@ -1,15 +1,18 @@
 <?xml version="1.0"?>
 <contents>
-	<node tree="admin" group="admin">
+	<node tree="admin" group="admin,teacher">
 		<section name="fad" icon="university" group="admin,teacher">
 			<taxonomy name="courses">
 				<item name="lessions">
-					<module role="" script="title"></module>
-					<module role="" script="datetime"></module>
 					<module role="" script="video"></module>
 					<module role="" script="editor"></module>
-					<module role="" script="text"></module>
-					<module role="" script="categories"></module>
+					<module role="" script="tags"></module>
+				</item>
+			</taxonomy>
+			<taxonomy name="courses2">
+				<item name="lessions">
+					<module role="" script="video"></module>
+					<module role="" script="editor"></module>
 					<module role="" script="tags"></module>
 				</item>
 			</taxonomy>
@@ -18,14 +21,11 @@
 			<taxonomy name="publications">
 				<item name="articles">
 					<module role="" script="video"></module>
-					<module role="" script="datetime"></module>
 					<module role="" script="editor"></module>
-					<module role="" script="categories"></module>
 					<module role="" script="tags"></module>
 				</item>
 				<item name="pages">
 					<module role="" script="editor"></module>
-					<module role="" script="categories"></module>
 					<module role="" script="tags"></module>
 				</item>
 			</taxonomy>
@@ -36,25 +36,29 @@
 			<taxonomy name="courses">
 				<item name="lessions">
 					<module script="video"></module>
-					<module script="text"></module>
-					<module script="categories"></module>
+					<module script="editor"></module>
+					<module script="tags"></module>
+				</item>
+			</taxonomy>
+			<taxonomy name="courses2">
+				<item name="lessions">
+					<module script="video"></module>
+					<module script="editor"></module>
 					<module script="tags"></module>
 				</item>
 			</taxonomy>
 		</section>
 		<section name="blog" icon="pencil" group="admin,teacher,writer,student">
-			<taxonomy name="posts">
+			<taxonomy name="posts" role="role1">
 				<item name="articles">
 					<module script="video"></module>
-					<module script="gallery"></module>
-					<module script="text"></module>
-					<module script="categories"></module>
+					<module script="editor"></module>
 					<module script="tags"></module>
 					<module script="comments"></module>
 				</item>
 				<item name="page" group="admin,teacher,writer,student">
-					<module script="gallery"></module>
-					<module script="text"></module>
+					<module script="video"></module>
+					<module script="editor"></module>
 					<module script="categories"></module>
 					<module script="tags"></module>
 				</item>

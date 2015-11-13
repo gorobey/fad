@@ -42,9 +42,9 @@ auth_check_point(); ?>
 										    echo 'odd';
 										} ?>">
 						        <td class="text-center">
-						            <span class="delete" data-toggle="confirmation" data-placement="right" data-href="php/users/edit_user.php?a=d&id=<?php echo $single_user['id']; ?>">
+						            <a class="delete" data-toggle="confirmation" data-placement="right" data-href="php/users/edit_user.php?a=d&id=<?php echo $single_user['id']; ?>">
 						            	<span class="fa fa-trash-o"></span>
-						            </span>
+						            </a>
 						        </td>
 						        <td>
 						        	<a data-remote="php/users/view_user.php?id=<?php echo $single_user['id']; ?>" data-toggle="modal" data-target="#view_user"><?php echo ucfirst($single_user['name']); ?></a>

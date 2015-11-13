@@ -7,13 +7,13 @@
      <!-- /. WRAPPER  -->
     <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
     <!-- JQUERY SCRIPTS -->
-    <script src="system/js/jquery-1.10.2.js"></script>
-    <script src="system/js/jquery.form.min.js"></script>
+    <script src="<?php echo $path; ?>system/js/jquery-1.10.2.js"></script>
+    <script src="<?php echo $path; ?>system/js/jquery.form.min.js"></script>
       <!-- BOOTSTRAP SCRIPTS -->
-    <script src="system/js/bootstrap.min.js"></script>
+    <script src="<?php echo $path; ?>system/js/bootstrap.min.js"></script>
     <!-- METISMENU SCRIPTS -->
-    <script src="system/js/jquery.metisMenu.js"></script>
+    <script src="<?php echo $path; ?>system/js/jquery.metisMenu.js"></script>
       <!-- CUSTOM SCRIPTS -->
-    <script src="system/js/custom.frontend.js"></script>
+    <script src="<?php echo $path; ?>system/js/custom.frontend.js"></script>
 </body>
 </html>

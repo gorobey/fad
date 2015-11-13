@@ -9,12 +9,12 @@
     <title><?php echo get_info('title')." | ".get_info('description'); ?></title>
 	<link rel="shortcut icon" href="system/style/imgs/favicon.png" />
 	<!-- BOOTSTRAP STYLES-->
-    <link href="system/style/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="<?php echo $path; ?>system/style/css/bootstrap.min.css" rel="stylesheet" />
      <!-- FONTAWESOME STYLES-->
-    <link href="system/style/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="<?php echo $path; ?>system/style/css/font-awesome.min.css" rel="stylesheet" />
      <!-- MORRIS CHART STYLES-->
         <!-- CUSTOM STYLES-->
-    <link href="system/style/css/custom.css" rel="stylesheet" />
+    <link href="<?php echo $path; ?>system/style/css/custom.css" rel="stylesheet" />
      <!-- GOOGLE FONTS-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
@@ -46,7 +46,7 @@
 					</li>
 					<?php if(is_admin($user_id)===true){?>
 	                <li>
-	                    <a href="admin/"><i class="fa fa-dashboard fa-2x"></i><?php echo _('Admin Area');?></a>
+	                    <a href="<?php echo $path; ?>admin/"><i class="fa fa-dashboard fa-2x"></i><?php echo _('Admin Area');?></a>
 	                </li>
 					<?php }
 					menu('frontend', $user_id); ?>

@@ -52,20 +52,20 @@ function reg_send_confirmation_mail($name, $surname, $mail, $password, $to, $id)
 	$headers .= 'To: '.$name.' <'.$mail.'>' . "\r\n";
 	$headers .= 'From: '.get_info('title').' <admin@'.$server_name.'>';
 	$to = $name.' '.$surname.' <'.$mail.'>';
-	$subject = get_info('title').": data access for " . $name . " " .$surname;
+	$subject = get_info('title').": "._('data access for')." " . $name . " " .$surname;
 	$message = "
 	<html>
 		<head>
 			<title>".$subject."</title>
 		</head>
 		<body>
-			<p>Hi, " . $name . "!<br />
-			These are the access data:<br />
-			Username: " . $mail . "<br />
-			Password: " . $password . "<br />
-			This is the link for activate your account:<br />
+			<p>"._('Hi').", " . $name . "!<br />
+			"._('These are the access data').":<br />
+			"._('Username').": " . $mail . "<br />
+			"._('Password').": " . $password . "<br />
+			"._('This is the link for activate your account').":<br />
 			<a href='http://".get_info('appdir')."login/confirm.php?id=".$id."'>http://".get_info('appdir')."login/confirm.php?id=".$id."</a><br />
-			Do not forget to change password from your panel profile!</p>
+			"._('Do not forget to change password from your panel profile')."!</p>
 		</body>
 	</html>";
 
@@ -88,18 +88,18 @@ function reg_admin_send_mail($name, $surname, $mail, $password, $to, $id){
 	
 	$headers .= 'From: '.get_info('title').' <admin@'.$server_name.'>';
 	$to = $name.' '.$surname.' <'.$mail.'>';
-	$subject = get_info('title').": data access for " . $name . " " .$surname;
+	$subject = get_info('title').": "._('data access for')." " . $name . " " .$surname;
 	$message = "
 	<html>
 		<head>
 			<title>".$subject."</title>
 		</head>
 		<body>
-			<p>Hi, " . ucfirst($name) . "!<br />
-			These are the access data:<br />
-			Username: " . $mail . "<br />
-			Password: " . $password . "<br />
-			Do not forget to change password from your panel profile!</p>
+			<p>"._('Hi').", " . ucfirst($name) . "!<br />
+			"._('These are the access data').":<br />
+			"._('Username').": " . $mail . "<br />
+			"._('Password').": " . $password . "<br />
+			"._('Do not forget to change password from your panel profile')."!</p>
 		</body>
 	</html>";
 
@@ -138,11 +138,11 @@ function send_edit_link($mail) {
 					<title>".$subject."</title>
 				</head>
 				<body>
-					<p>Hi, " . ucfirst($user_info['name']) . "!<br />
-					If you started the procedure for password recovery, go to this link:<br />
+					<p>"._('Hi').", " . ucfirst($user_info['name']) . "!<br />
+					"._('If you started the procedure for password recovery, go to this link:')."<br />
 					<a href='http://".get_info('appdir')."login/?q=EDIT&uid=".$user_info['uid']."&mail=".$user_info['mail']."'>http://".get_info('appdir')."?q=EDIT&uid=".$user_info['uid']."&mail=".$user_info['mail']."</a><br />
-					Otherwise, ignore this message<br />
-					Do not forget to change password from your panel profile!</p>
+					"._('Otherwise, ignore this message')."<br />
+					"._('Do not forget to change password from your panel profile')."!</p>
 				</body>
 			</html>";
 			// Mail it
