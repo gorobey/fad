@@ -1,5 +1,7 @@
 <script>
 $(document).ready(function () {
+	var table;
+	table = $('#table').dataTable();
 	$('.selectpicker').selectpicker();
 	$('.delete').confirmation({
 		singleton: true,
@@ -28,9 +30,15 @@ $(document).ready(function () {
 				success: function (result) {
 					$(".content-box-message").html(result);
 					$(".comfirm-box").slideDown('fast');
+					if($(".content-box-message div").hasClass('alert-success')){
+						var rowid = $(this).parent().parent().attr('id');
+						var rowNode = table
+						.row( $("#"+rowid).remove() )
+						.remove()
+						.draw();
+					}
 				}
-			});		
-		
+			});
 		},
 		onCancel: function (){
 			$('.delete').confirmation('hide');
@@ -38,6 +46,7 @@ $(document).ready(function () {
 	});
 	
 	$('#new_user, #new_attr, #user_edit, #new_content_filter, #new_content').on("submit", function(e) {
+		alert("submit");
 		e.preventDefault();
 		var action = $(this).attr('action');
 		var data = $(this).serialize(); // check to show that all form data is being submitted
@@ -58,14 +67,34 @@ $(document).ready(function () {
 			success: function (result) {
 				$(".content-box-message").removeClass('preload-comfirm');
 				$(".content-box-message").html(result);
+				
+				
+//					if($(".content-box-message div").hasClass('alert-success')){
+//						var count = $("tbody tr").length;
+//						var rowid = count+1;
+//						var rowNode = table
+//						.row.add( [ '<span class="sort_disabled delete fa fa-trash-o" data-toggle="confirmation" data-placement="right" data-href="?do=delete&file='+hashval+'/'+dir+'">',
+//						'<a class="clickmedia" rel="'+hashval+'/'+dir+'" href="php/media/view_media.php">'+dir+'</a>',
+//						"4096 KB",
+//						'<?php echo _("just now");?>',
+//						'dr-w-x'] )
+//						.draw().node();
+//						$(rowNode).attr("id", "row-"+rowid);
+//						for(i=0;i<3;i++) {
+//							$(rowNode).fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+//						}
+				
+				
+				
+					
 			}
 		});
 		$('.modal').modal('hide');
 			return false;
 	});
 
-	$('#view_user').on('hide.bs.modal', function () {
-	   $('#view_user').removeData();
+	$('.modal').on('hide.bs.modal', function () {
+	   $(this).removeData();
 	});
 });
 </script>

@@ -9,7 +9,8 @@ switch($status){
 		exit;
 	break;
 	case AUTH_LOGGED:
-			$view_user = $user['id'];
+			//$view_user = $user['id'];
+			$view_user = $_GET['id'];
 			if(is_numeric($view_user)) {
 			$user_info = user_get_info($view_user);
 			$user_group = get_user_attr($view_user);

@@ -8,9 +8,7 @@ $(document).ready(function () {
 	  $(".comfirm-box").slideUp('fast');
 	});
 
-	$('#main-menu').metisMenu({
-    activeClass: 'active'
-  });
+	$('#main-menu').metisMenu({ });
 
 	$(document).on('click','.sidebar-collapse.collapse.in',function(e) {
 	    if( $(e.target).hasClass('ajax') ) {

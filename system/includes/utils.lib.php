@@ -29,8 +29,8 @@ function menu($tree, $user_id){
 							}
 							echo '</li>';
 						}
-						echo "</ul>";
 					}
+					echo "</ul>";
 				}//if $first->children()
 				echo '</li>';
 			}
@@ -60,8 +60,31 @@ function arr_item($tree, $taxonomy){
 }
 
 
-function render_page($tree, $type, $subtype, $user_id, $content_id = null){
-	global $_CONFIG;
+function render_editor($tree, $level, $type, $subtype, $user_id, $content_id = 0){
+	global $_CONFIG, $db_conn;
+	if($level == 2){
+		$result = mysqli_query($db_conn, "SELECT date FROM ".$_CONFIG['t_item']." WHERE rel='".$content_id."'");
+		$date_row = mysqli_fetch_assoc($result);
+		$data['date'] = $date_row['date'];
+		$result = mysqli_query($db_conn, "SELECT `key`, `value` FROM `".$_CONFIG['t_locale']."` WHERE `rel` = '".$content_id."' AND `level` = '2' AND `lang` ='".$_SESSION['locale']."'");
+		while($tmp = mysqli_fetch_assoc($result)){
+			$data[$tmp['key']] = $tmp['value'];
+		}
+	}else{
+		$data['date'] = date('d/m/Y H:i:s');
+	}?>
+	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-9 form-group">			
+		<input value="<?php if(isset($data['title'])){echo $data['title'];} ?>" type="text" name="content[title]" placeholder="<?php echo _('Title of content');?>" class="form-control" required />
+	</div>
+	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-group">
+		<div class='input-append input-group date' id='datetimepicker'>
+			<input name="data" type="date" class="form-control text-center" data-format="dd/MM/yyyy hh:mm:ss" value="<?php echo $data['date']; ?>" required />
+			<span class="input-group-addon add-on">
+				<span class="glyphicon glyphicon-calendar"></span>
+			</span>
+		</div>
+	</div>
+	<?php
 	$user_group = get_user_attr($user_id, "g");
 	$user_roles = get_user_attr($user_id, "r");
 	$xml = simplexml_load_file(ROOT.'/system/structure.xml');
@@ -71,25 +94,28 @@ function render_page($tree, $type, $subtype, $user_id, $content_id = null){
 				if(in_array($user_group, explode(",", $first->attributes()->group))){
 					foreach($first->children() as $taxonomy){
 						foreach($taxonomy->children() as $item){
-								if($item->attributes()->name == $subtype){
-									foreach($item->children() as $modules){
-										foreach($modules->attributes() as $key => $val){
-											$module ="";
-											if($key == "role"){
-												$can_interact = count(array_intersect(explode(",", $val), $user_roles));
-											}
-											if($key == "script"){
-												$module = ROOT.'/system/modules/'.$val.'/'.$tree.'.php';
-												$JSmodule = ROOT."/system/modules/".$val."/js/";
-												$CSSmodule = ROOT."/system/modules/".$val."/css/";
-											}									
-											if(($can_interact > 0 || is_admin($user_id) || ($key =="role" && $val=="")) && file_exists($module)){
-												require($module);
-											}
+							if($item->attributes()->name == $subtype){
+								foreach($item->children() as $modules){
+									foreach($modules->attributes() as $key => $val){
+										$module ="";
+										if($key == "role"){
+											$can_interact = count(array_intersect(explode(",", $val), $user_roles));
+										}
+										if($key == "script"){
+											$module = ROOT.'/system/modules/'.$val.'/'.$tree.'.php';
+											$JSmodule = ROOT."/system/modules/".$val."/js/";
+											$CSSmodule = ROOT."/system/modules/".$val."/css/";
+										}									
+										if(($can_interact > 0 || is_admin($user_id) || ($key =="role" && $val=="")) && file_exists($module)){
+											//${$val}= 1;
+											//echo ${$val};
+											require($module);
 										}
 									}
 								}
+							break 2;//limit recursion to 1 subtype
 							}
+						}
 					}
 				}
 			}
@@ -292,7 +318,7 @@ function get_users_online(){
 
 function is_online($id){
 	global $_CONFIG, $db_conn;
-	$result = mysqli_query($db_conn, "SELECT user_id FROM ".$_CONFIG['t_session']. " WHERE user_id=".$id." AND ".time()."- UNIX_TIMESTAMP(creation_date) < 60");
+	$result = mysqli_query($db_conn, "SELECT user_id FROM ".$_CONFIG['t_session']. " WHERE user_id=".$id." AND ".time()."- UNIX_TIMESTAMP(creation_date) < 120");
 	$count = mysqli_num_rows($result);
 	if($count==1){
 		$status = "<i class='useronline'></i>"; 
@@ -412,6 +438,7 @@ function get_list($subtype){
 				INNER JOIN `".$_CONFIG['t_locale']."`
 				WHERE `".$_CONFIG['t_locale']."`.level = 2
 				AND `".$_CONFIG['t_taxonomy']."`.id = `".$_CONFIG['t_locale']."`.rel
+				AND `".$_CONFIG['t_locale']."`.lang = '".$_SESSION['locale']."'
 				AND `".$_CONFIG['t_locale']."`.key = 'title'
 				AND `".$_CONFIG['t_locale']."`.value != ''
 				AND `".$_CONFIG['t_taxonomy']."`.subtype =  '".$subtype."'");

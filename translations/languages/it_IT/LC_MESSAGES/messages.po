@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: test\n"
-"POT-Creation-Date: 2015-06-29 16:45+0100\n"
-"PO-Revision-Date: 2015-06-29 16:52+0100\n"
-"Last-Translator: Giulio Gorobey <giulio@gorobey.it>\n"
+"POT-Creation-Date: 2015-11-10 11:34+0100\n"
+"PO-Revision-Date: 2015-11-10 11:55+0100\n"
+"Last-Translator: Giulio Gorobey <giulio@gorrobey.it>\n"
 "Language-Team: test <tlx83@yahoo.it>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
@@ -13,186 +13,670 @@ msgstr ""
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-SearchPath-0: /home/tlx83/Scrivania/fad\n"
+"X-Poedit-SearchPath-0: ../../../../\n"
 
-#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:280
-msgid "just now"
-msgstr "Ora"
+#: ../../../..//admin/header.php:48
+msgid "Home Page"
+msgstr "Pagina iniziale"
 
-#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:282
-msgid " minutes ago"
-msgstr " minuti fa"
-
-#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:283
-msgid "1 hour ago"
-msgstr "1 ora fa"
-
-#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:284
-msgid " hours ago"
-msgstr " ore fa"
-
-#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:286
-msgid "Yesterday"
-msgstr "Ieri"
-
-#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:287
-msgid " days ago"
-msgstr " giorni fa"
-
-#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:289
-msgid "last month"
-msgstr "lo scorso mese"
-
-#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:298
-msgid "in a minute"
-msgstr "in un minuto"
-
-#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:299
-msgid " minutes"
-msgstr "minuti"
-
-#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:301
-msgid " hours"
-msgstr "ore"
-
-#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:306
-msgid " weeks"
-msgstr "settimane"
-
-#: /home/tlx83/Scrivania/fad/system/includes/utils.lib.php:307
-msgid "next month"
-msgstr "prossimo mese"
-
-#: /home/tlx83/Scrivania/fad/system/includes/auth.lib.php:6
-msgid "Logout"
-msgstr "Esci"
-
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:151
-msgid "Go to your e-mail box for reset instruction!"
-msgstr "Visita la tua posta elettronica per le informazioni di recupero!"
-
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:153
-msgid "Error! Contact the admin!"
-msgstr "Errore! contattare l'amministratore!"
-
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:157
-msgid "Error: Invalid address!"
-msgstr "Errore: indirizzo non valido!"
-
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:175
-msgid "Ok, now your new password is"
-msgstr "Ok, la tua nuova password è"
-
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:177
-msgid "Error: password not reset!"
-msgstr "Errore: password non modificata!"
-
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:198
-msgid "User Delete!"
-msgstr "Utente Eliminato!"
-
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:200
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:205
-#, fuzzy
-msgid "Error: Contact the admin!"
-msgstr "Errore! contattare l'amministratore!"
-
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:203
-msgid "Error: Selected user can't be deleted!"
-msgstr "Errore: l'utente selezionato non può essere modificato!"
-
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:264
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:288
-msgid "E-Mail Edited!"
-msgstr "E-Mail Modificata!"
-
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:266
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:290
-msgid "Error: E-Mail Error!"
-msgstr "Errore: Errore E-Mail!"
-
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:276
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:300
-msgid "Password Edited!"
-msgstr "Password Modificata!"
-
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:278
-#: /home/tlx83/Scrivania/fad/system/includes/reg.lib.php:302
-#, fuzzy
-msgid "Error: Password Don't Match!"
-msgstr "Errore: password non modificata!"
-
-#: /home/tlx83/Scrivania/fad/admin/header.php:43
+#: ../../../..//admin/header.php:51 ../../../..//admin/php/dashboard.php:13
 msgid "Dashboard"
 msgstr "Pannello"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:40
-msgid "Your registration has been confirmed, you can now login!"
-msgstr "Registrazione confermata, ora puoi effettuare il login!"
+#: ../../../..//admin/header.php:55 ../../../..//admin/php/navigation.php:9
+#: ../../../..//admin/php/navigation.php:21
+msgid "Navigation"
+msgstr "Navigatione"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:42
-#, fuzzy
-msgid "Registration can not be confirmed, as has expired!"
-msgstr "Registrazione confermata, ora puoi effettuare il login!"
+#: ../../../..//admin/header.php:59 ../../../..//admin/header.php:62
+#: ../../../..//admin/php/users.php:9
+msgid "Users"
+msgstr "Utenti"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:44
-msgid "Logout successfully performed!"
-msgstr "Disconnesso con successo!"
+#: ../../../..//admin/header.php:65
+msgid "Groups"
+msgstr "Gruppi"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:46
-msgid "Login Failed: you have entered invalid data!"
-msgstr "Accesso fallito: sono stati inseriti dati non validi!"
+#: ../../../..//admin/header.php:68
+#: ../../../..//admin/php/users/view_user.php:43
+#: ../../../..//user/index.php:51
+msgid "Roles"
+msgstr "Ruoli"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:48
-msgid "Internal Error: the system may be unavailable, please try again later!"
-msgstr "Errore interno: il sistema non risponde, riprovare più tardi!"
+#: ../../../..//admin/header.php:74 ../../../..//login/register.php:64
+#: ../../../..//login/connect.php:128 ../../../..//frontend/header.php:54
+msgid "Language"
+msgstr "Lingua"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:50
-msgid "Enter your e-mail for recover your password!"
-msgstr "Inserisci la tua E-mail per recuperare la password!"
+#: ../../../..//admin/header.php:80 ../../../..//admin/php/options.php:10
+msgid "Options"
+msgstr "Optioni"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:52
-msgid "Create a new account!"
-msgstr "Crea un nuovo account!"
+#: ../../../..//admin/php/options.php:21
+msgid "Save options"
+msgstr "Salva opzioni"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:54
-msgid "Too many attempts, user temporarily suspended!"
-msgstr "Troppi tentatitvi, utente temporaneamente sospeso!"
+#: ../../../..//admin/php/contents.php:24
+msgid "List"
+msgstr "Lita"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:62
-#, fuzzy
-msgid "Error: mail can't be empty!"
+#: ../../../..//admin/php/contents.php:27
+#: ../../../..//admin/php/contents.php:39 ../../../..//admin/php/attrs.php:36
+#: ../../../..//admin/php/attrs.php:76
+#: ../../../..//admin/php/contents/edit_contents.php:21
+#: ../../../..//admin/php/contents/edit_contents.php:47
+#: ../../../..//admin/php/contents/list_contents.php:71
+#: ../../../..//system/includes/license.lib.php:164
+#: ../../../..//system/includes/license.lib.php:166
+msgid "New"
+msgstr "Nuovo"
+
+#: ../../../..//admin/php/contents.php:27
+msgid "content filter"
+msgstr "filtro contenuto"
+
+#: ../../../..//admin/php/contents.php:39
+msgid "filter"
+msgstr "filtro"
+
+#: ../../../..//admin/php/contents.php:44
+#: ../../../..//admin/php/contents.php:45 ../../../..//admin/php/users.php:27
+#: ../../../..//admin/php/users.php:84 ../../../..//admin/php/attrs.php:82
+#: ../../../..//admin/php/attrs.php:83
+#: ../../../..//admin/php/media/view_media.php:124
+#: ../../../..//admin/php/contents/list_contents.php:76
+msgid "Name"
+msgstr "Nome"
+
+#: ../../../..//admin/php/contents.php:46
+msgid "type"
+msgstr "tipo"
+
+#: ../../../..//admin/php/contents.php:60 ../../../..//admin/php/users.php:116
+#: ../../../..//admin/php/attrs.php:89
+#: ../../../..//admin/php/contents/list_contents.php:82
+msgid "Add"
+msgstr "Aggiungi"
+
+#: ../../../..//admin/php/contents.php:60
+msgid "new filter"
+msgstr "Nuovo filtro"
+
+#: ../../../..//admin/php/admin_scripts.php:6
+#: ../../../..//admin/php/media/view_media.php:350
+msgid "Are you sure you want to delete?"
+msgstr "Sicuro di eliminare?"
+
+#: ../../../..//admin/php/admin_scripts.php:8
+#: ../../../..//admin/php/media/view_media.php:352
+msgid "Undo"
+msgstr "Annulla"
+
+#: ../../../..//admin/php/admin_scripts.php:9
+#: ../../../..//admin/php/media/view_media.php:353
+msgid "Ok!"
+msgstr "Ok!"
+
+#: ../../../..//admin/php/admin_scripts.php:25
+#: ../../../..//admin/php/admin_scripts.php:56
+#: ../../../..//admin/php/media/view_media.php:319
+#: ../../../..//admin/php/media/view_media.php:369
+msgid "Error: Contact system administrator!"
+msgstr "Errore: contattare l'amministratore!"
+
+#: ../../../..//admin/php/dashboard.php:25
+msgid "Analytics"
+msgstr "Statistiche"
+
+#: ../../../..//admin/php/dashboard.php:27
+msgid "Active Users"
+msgstr "Utenti Attivi"
+
+#: ../../../..//admin/php/dashboard.php:28
+msgid "Users Registred"
+msgstr "Utenti registrati"
+
+#: ../../../..//admin/php/users.php:20
+msgid "Users list"
+msgstr "Lista utenti"
+
+#: ../../../..//admin/php/users.php:20
+msgid "New User"
+msgstr "Nuovo Utente"
+
+#: ../../../..//admin/php/users.php:28 ../../../..//admin/php/users.php:88
+msgid "Surname"
+msgstr "Cognome"
+
+#: ../../../..//admin/php/users.php:29
+msgid "E-Mail"
+msgstr "E-Mail"
+
+#: ../../../..//admin/php/users.php:30 ../../../..//admin/php/attrs.php:44
+#: ../../../..//admin/php/users/view_user.php:42
+#: ../../../..//user/index.php:50
+msgid "Group"
+msgstr "Gruppo"
+
+#: ../../../..//admin/php/users.php:31
+msgid "Registration"
+msgstr "Registrazione"
+
+#: ../../../..//admin/php/users.php:78
+msgid "Add User"
+msgstr "Aggiungi utente"
+
+#: ../../../..//admin/php/users.php:92
+#: ../../../..//admin/php/users/view_user.php:41
+#: ../../../..//user/index.php:49
+msgid "E-mail"
+msgstr "E-mail"
+
+#: ../../../..//admin/php/users.php:104
+msgid "Role"
+msgstr "Ruolo"
+
+#: ../../../..//admin/php/users.php:115
+msgid "Reset"
+msgstr "Resetta"
+
+#: ../../../..//admin/php/attrs.php:21
+msgid ""
+"The groups are the main method to organize users their operation is "
+"vertical. <br />You can not belong to more than one group at the same time."
+msgstr ""
+"I gruppi sono il metodo principale per organizzare gli utenti il loro "
+"funzionamento è verticale.<br />Non è possibile appartenere a più di un "
+"gruppo allo stesso tempo."
+
+#: ../../../..//admin/php/attrs.php:23
+msgid ""
+"The roles are the second method by which users are organized and then the "
+"permissions associated with them. <br /> They are more granular groups and "
+"their operation is horizontal."
+msgstr ""
+"I ruoli sono il secondo metodo con cui sono organizzati gli utenti e quindi "
+"i permessi a loro legati.<br />Sono più granulari dei gruppi e il loro "
+"funzionamento è orizzontale."
+
+#: ../../../..//admin/php/attrs.php:36
+msgid "list"
+msgstr "lista"
+
+#: ../../../..//admin/php/media/view_media.php:17
+msgid "File or Directory Not Found"
+msgstr "File o cartella non trovata"
+
+#: ../../../..//admin/php/media/view_media.php:21
+msgid "Forbidden"
+msgstr "Accesso vietato"
+
+#: ../../../..//admin/php/media/view_media.php:26
+#: ../../../..//admin/php/media/view_media.php:33
+msgid "Error: Element can not be deleted!"
+msgstr "Errore: L'elemento non può essere eliminato!"
+
+#: ../../../..//admin/php/media/view_media.php:29
+msgid "File deleted"
+msgstr "File eliminato"
+
+#: ../../../..//admin/php/media/view_media.php:31
+msgid "Folder deleted"
+msgstr "Cartella eliminata"
+
+#: ../../../..//admin/php/media/view_media.php:39
+msgid "Folder writed on server"
+msgstr "Cartella scritta sul server"
+
+#: ../../../..//admin/php/media/view_media.php:41
+msgid "Error: directory can't be created!"
+msgstr "Errore: La cartella non può essere creata!"
+
+#: ../../../..//admin/php/media/view_media.php:57
+msgid "Error: Please browse for a file before clicking the upload button."
+msgstr ""
+"Errore: devi selezionare un file prima di fare clic sul pulsante Carica ."
+
+#: ../../../..//admin/php/media/view_media.php:59
+msgid "Error: file was too big"
+msgstr "Errore: il file è troppo grande!"
+
+#: ../../../..//admin/php/media/view_media.php:62
+msgid "Error: file type not allowed"
+msgstr "Errore: tipo di file non valido"
+
+#: ../../../..//admin/php/media/view_media.php:65
+msgid "Error: An error occured while processing the file. Try again."
+msgstr "Errore: è incorso un errore nel processare il file. Riprova."
+
+#: ../../../..//admin/php/media/view_media.php:71
+msgid "Error: File not uploaded. Try again."
+msgstr "Errore: file non caricato. Riprova."
+
+#: ../../../..//admin/php/media/view_media.php:73
+msgid "File uploaded!"
+msgstr "File caricato!"
+
+#: ../../../..//admin/php/media/view_media.php:93
+msgid "Drag Files Here To Upload"
+msgstr "Trascina qui i file per avviare il caricamento"
+
+#: ../../../..//admin/php/media/view_media.php:93
+msgid "OR"
+msgstr "O"
+
+#: ../../../..//admin/php/media/view_media.php:115
+msgid "New Folder"
+msgstr "Nuova Cartella"
+
+#: ../../../..//admin/php/media/view_media.php:117
+msgid "Create"
+msgstr "Crea"
+
+#: ../../../..//admin/php/media/view_media.php:125
+msgid "Size"
+msgstr "Dimensioni"
+
+#: ../../../..//admin/php/media/view_media.php:126
+msgid "Modified"
+msgstr "Modificato"
+
+#: ../../../..//admin/php/media/view_media.php:127
+msgid "Permissions"
+msgstr "Permessi"
+
+#: ../../../..//admin/php/media/view_media.php:240
+#: ../../../..//admin/php/media/view_media.php:332
+#: ../../../..//system/includes/utils.lib.php:493
+msgid "just now"
+msgstr "Ora"
+
+#: ../../../..//admin/php/users/view_user.php:17
+#: ../../../..//user/index.php:21
+msgid "No special roles"
+msgstr "Nessun ruolo speciale"
+
+#: ../../../..//admin/php/users/view_user.php:28
+msgid "User informations"
+msgstr "Informazioni utente"
+
+#: ../../../..//admin/php/users/view_user.php:40
+msgid "User"
+msgstr "Utente"
+
+#: ../../../..//admin/php/users/view_user.php:44
+msgid "Member since"
+msgstr "Registrado da"
+
+#: ../../../..//admin/php/users/view_user.php:84
+msgid "Save"
+msgstr "Salva"
+
+#: ../../../..//admin/php/users/edit_user.php:16
+msgid "User updated!"
+msgstr "Utente aggiornato!"
+
+#: ../../../..//admin/php/users/edit_user.php:18
+#: ../../../..//admin/php/users/edit_user.php:30
+#: ../../../..//admin/php/contents/edit_contents.php:24
+#: ../../../..//admin/php/contents/edit_contents.php:28
+#: ../../../..//admin/php/contents/edit_contents.php:50
+#: ../../../..//system/includes/auth.lib.php:65
+#: ../../../..//system/includes/license.lib.php:149
+#: ../../../..//system/includes/license.lib.php:152
+#: ../../../..//system/includes/license.lib.php:166
+msgid "Error:"
+msgstr "Errore:"
+
+#: ../../../..//admin/php/users/edit_user.php:18
+msgid "User mofification failed!"
+msgstr "Modifica utente non riuscita!"
+
+#: ../../../..//admin/php/users/edit_user.php:23
+#: ../../../..//login/register.php:35
+msgid "Error: Registration failed!"
+msgstr "Errore: Registrazione non riuscita!"
+
+#: ../../../..//admin/php/users/edit_user.php:26
+#: ../../../..//login/register.php:45
+msgid "Registration completed, comfirm link sent!"
+msgstr "Registrazione confermata, link di conferma inviato!"
+
+#: ../../../..//admin/php/users/edit_user.php:30
+msgid "Malformed data!"
+msgstr "La richiesta contiene errori!"
+
+#: ../../../..//admin/php/attrs/edit_attr.php:23
+msgid "Error: unsupported action!"
+msgstr "Errore: azione non supportata!"
+
+#: ../../../..//admin/php/contents/edit_contents.php:21
+msgid "filter created!"
+msgstr "Filtro creato!"
+
+#: ../../../..//admin/php/contents/edit_contents.php:24
+msgid "filter can't be creaded!"
+msgstr "il filtro non può essere creato!"
+
+#: ../../../..//admin/php/contents/edit_contents.php:28
+msgid "Not yet implemented!"
+msgstr "Non ancora implementato!"
+
+#: ../../../..//admin/php/contents/edit_contents.php:47
+msgid "content published!"
+msgstr "contenuto pubblicato!"
+
+#: ../../../..//admin/php/contents/edit_contents.php:50
+msgid "content can't be published!"
+msgstr "Il contenuto non può essere pubblicato!"
+
+#: ../../../..//admin/php/contents/edit_contents.php:71
+msgid "Publisher"
+msgstr "Editor dei contenuti"
+
+#: ../../../..//admin/php/contents/edit_contents.php:74
+msgid "send mail to users"
+msgstr "invia mail agli utenti"
+
+#: ../../../..//admin/php/contents/edit_contents.php:77
+msgid "Pubblish Now"
+msgstr "Pubblica ora"
+
+#: ../../../..//admin/php/contents/edit_contents.php:80
+msgid "Update"
+msgstr "Aggiorna"
+
+#: ../../../..//admin/php/contents/list_contents.php:9
+#: ../../../..//admin/php/contents/list_contents.php:15
+#: ../../../..//admin/php/analytics/list.php:5
+msgid "Taxonomy"
+msgstr "Tassonomia"
+
+#: ../../../..//admin/php/contents/list_contents.php:10
+#: ../../../..//admin/php/contents/list_contents.php:16
+#: ../../../..//admin/php/analytics/list.php:6
+msgid "Title"
+msgstr "Titolo"
+
+#: ../../../..//admin/php/contents/list_contents.php:11
+msgid "Count"
+msgstr "Conteggio"
+
+#: ../../../..//admin/php/contents/list_contents.php:17
+#: ../../../..//admin/php/analytics/list.php:7
+msgid "Author"
+msgstr "Autore"
+
+#: ../../../..//admin/php/contents/list_contents.php:18
+msgid "Date"
+msgstr "Data"
+
+#: ../../../..//admin/php/analytics/list.php:8
+msgid "Publication date"
+msgstr "data di pubblicazione"
+
+#: ../../../..//admin/php/analytics/list.php:9
+msgid "Views"
+msgstr "Visualizzazioni"
+
+#: ../../../..//admin/php/analytics/graph.php:116
+msgid "unique users"
+msgstr "utenti unici"
+
+#: ../../../..//admin/php/analytics/graph.php:120
+msgid "Page view"
+msgstr "Visualizzazioni di pagina"
+
+#: ../../../..//system/modules/editor/admin.php:16
+msgid "Title of content"
+msgstr "Titolo del contenuto"
+
+#: ../../../..//system/includes/utils.lib.php:495
+msgid " minutes ago"
+msgstr " minuti fa"
+
+#: ../../../..//system/includes/utils.lib.php:496
+msgid "1 hour ago"
+msgstr "1 ora fa"
+
+#: ../../../..//system/includes/utils.lib.php:497
+msgid " hours ago"
+msgstr " ore fa"
+
+#: ../../../..//system/includes/utils.lib.php:499
+msgid "Yesterday"
+msgstr "Ieri"
+
+#: ../../../..//system/includes/utils.lib.php:500
+msgid " days ago"
+msgstr " giorni fa"
+
+#: ../../../..//system/includes/utils.lib.php:502
+msgid "last month"
+msgstr "lo scorso mese"
+
+#: ../../../..//system/includes/utils.lib.php:511
+msgid "in a minute"
+msgstr "in un minuto"
+
+#: ../../../..//system/includes/utils.lib.php:512
+msgid " minutes"
+msgstr "minuti"
+
+#: ../../../..//system/includes/utils.lib.php:514
+msgid " hours"
+msgstr "ore"
+
+#: ../../../..//system/includes/utils.lib.php:519
+msgid " weeks"
+msgstr "settimane"
+
+#: ../../../..//system/includes/utils.lib.php:520
+msgid "next month"
+msgstr "prossimo mese"
+
+#: ../../../..//system/includes/auth.lib.php:6
+msgid "Logout"
+msgstr "Esci"
+
+#: ../../../..//system/includes/auth.lib.php:65
+msgid "you can not stay here."
+msgstr "Non puoi stare qui"
+
+#: ../../../..//system/includes/auth.lib.php:67
+msgid "Please, login!"
+msgstr "effettua il login!"
+
+#: ../../../..//system/includes/reg.lib.php:150
+msgid "Go to your e-mail box for reset instruction!"
+msgstr "Visita la tua posta elettronica per le informazioni di recupero!"
+
+#: ../../../..//system/includes/reg.lib.php:152
+msgid "Error! Contact the admin!"
+msgstr "Errore! contattare l'amministratore!"
+
+#: ../../../..//system/includes/reg.lib.php:156
+msgid "Error: Invalid address!"
+msgstr "Errore: indirizzo non valido!"
+
+#: ../../../..//system/includes/reg.lib.php:183
+msgid "Ok, now your new password is"
+msgstr "Ok, la tua nuova password è"
+
+#: ../../../..//system/includes/reg.lib.php:185
+msgid "Error: password not reset!"
+msgstr "Errore: password non modificata!"
+
+#: ../../../..//system/includes/reg.lib.php:206
+msgid "User Delete!"
+msgstr "Utente Eliminato!"
+
+#: ../../../..//system/includes/reg.lib.php:208
+#: ../../../..//system/includes/reg.lib.php:213
+#: ../../../..//login/register.php:55
+msgid "Error: Contact the admin!"
+msgstr "Errore: contattare l'amministratore!"
+
+#: ../../../..//system/includes/reg.lib.php:211
+msgid "Error: Selected user can't be deleted!"
 msgstr "Errore: l'utente selezionato non può essere modificato!"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:72
-msgid "New User? Register now!"
-msgstr "Nuovo utente? Registrati ora!"
+#: ../../../..//system/includes/reg.lib.php:246
+msgid "Error!"
+msgstr "Errore!"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:83
+#: ../../../..//system/includes/reg.lib.php:270
+#: ../../../..//system/includes/reg.lib.php:294
+msgid "E-Mail Edited!"
+msgstr "E-Mail Modificata!"
+
+#: ../../../..//system/includes/reg.lib.php:272
+#: ../../../..//system/includes/reg.lib.php:296
+msgid "Error: E-Mail Error!"
+msgstr "Errore: Errore E-Mail!"
+
+#: ../../../..//system/includes/reg.lib.php:282
+#: ../../../..//system/includes/reg.lib.php:306
+msgid "Password Edited!"
+msgstr "Password Modificata!"
+
+#: ../../../..//system/includes/reg.lib.php:284
+#: ../../../..//system/includes/reg.lib.php:308
+msgid "Error: Password Don't Match!"
+msgstr "Errore: La password non corrisponde!"
+
+#: ../../../..//system/includes/license.lib.php:131
+msgid "is in"
+msgstr "è in"
+
+#: ../../../..//system/includes/license.lib.php:133
+msgid "has this"
+msgstr "ha questo"
+
+#: ../../../..//system/includes/license.lib.php:147
+msgid "deleted successfully"
+msgstr "eliminato con successo"
+
+#: ../../../..//system/includes/license.lib.php:149
+msgid "This"
+msgstr "Questo"
+
+#: ../../../..//system/includes/license.lib.php:149
+msgid " can't be deleted!"
+msgstr "non può essere eliminato!"
+
+#: ../../../..//system/includes/license.lib.php:152
+msgid "user/s"
+msgstr "utente/i"
+
+#: ../../../..//system/includes/license.lib.php:152
+msgid " I can not delete!"
+msgstr "Non posso eliminare!"
+
+#: ../../../..//system/includes/license.lib.php:164
+msgid "created successfully"
+msgstr "creato con successo"
+
+#: ../../../..//system/includes/license.lib.php:166
+msgid " can't be created!"
+msgstr "non può essere creato!"
+
+#: ../../../..//login/register.php:40 ../../../..//login/connect.php:96
 msgid "Lost password?"
 msgstr "Password smarrita?"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:91
-msgid "Send New password"
-msgstr "Invia nuova password"
-
-#: /home/tlx83/Scrivania/fad/login/connect.php:92
-#: /home/tlx83/Scrivania/fad/login/connect.php:102
-msgid "Login"
-msgstr "Accedi"
-
-#: /home/tlx83/Scrivania/fad/login/connect.php:101
+#: ../../../..//login/register.php:50 ../../../..//login/connect.php:112
 msgid "Register"
 msgstr "Registrati"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:110
+#: ../../../..//login/register.php:51 ../../../..//login/connect.php:104
+#: ../../../..//login/connect.php:113
+msgid "Login"
+msgstr "Accedi"
+
+#: ../../../..//login/register.php:61 ../../../..//login/connect.php:125
 msgid "This Software is licensed under"
 msgstr "Questo software è concesso sotto licenza"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:111
+#: ../../../..//login/register.php:62 ../../../..//login/connect.php:126
 msgid "Please! Help to develop"
 msgstr "Aiuta lo sviluppo di questo software"
 
-#: /home/tlx83/Scrivania/fad/login/connect.php:111
+#: ../../../..//login/register.php:62 ../../../..//login/connect.php:126
 msgid "Report Bugs"
 msgstr "Sgnala errori"
+
+#: ../../../..//login/connect.php:53
+msgid "New User? Register now!"
+msgstr "Nuovo utente? Registrati ora!"
+
+#: ../../../..//login/connect.php:58
+msgid "System upgrade, please be patient!"
+msgstr "Sistema in aggiornamento, mantenere la calma!"
+
+#: ../../../..//login/connect.php:61
+msgid "Your registration has been confirmed, you can now login!"
+msgstr "Registrazione confermata, ora puoi effettuare il login!"
+
+#: ../../../..//login/connect.php:63
+msgid "Registration can not be confirmed, as has expired!"
+msgstr "Registrazione non può essere confermata, perché scaduta!"
+
+#: ../../../..//login/connect.php:65
+msgid "Logout successfully performed!"
+msgstr "Disconnesso con successo!"
+
+#: ../../../..//login/connect.php:67
+msgid "Login Failed: you have entered invalid data!"
+msgstr "Accesso fallito: sono stati inseriti dati non validi!"
+
+#: ../../../..//login/connect.php:69
+msgid "Internal Error: the system may be unavailable, please try again later!"
+msgstr "Errore interno: il sistema non risponde, riprovare più tardi!"
+
+#: ../../../..//login/connect.php:71
+msgid "Enter your e-mail for recover your password!"
+msgstr "Inserisci la tua E-mail per recuperare la password!"
+
+#: ../../../..//login/connect.php:73
+msgid "Create a new account!"
+msgstr "Crea un nuovo account!"
+
+#: ../../../..//login/connect.php:75
+msgid "Too many attempts, user temporarily suspended!"
+msgstr "Troppi tentatitvi, utente temporaneamente sospeso!"
+
+#: ../../../..//login/connect.php:81
+msgid "Error: mail can't be empty!"
+msgstr "Errore: l'email non può essere vuota!"
+
+#: ../../../..//login/connect.php:103
+msgid "Reset password"
+msgstr "Resetta password"
+
+#: ../../../..//login/connect.php:143
+msgid "Key paste into password input"
+msgstr "Chiave copiata nel campo password"
+
+#: ../../../..//frontend/header.php:49
+msgid "Admin Area"
+msgstr "Area di amministrazione"
+
+#: ../../../..//user/index.php:48
+msgid "Registered"
+msgstr "Registrato"
+
+#: ../../../..//user/php/upload.php:33
+msgid "Profile image Updated!"
+msgstr "Immagine di profilo aggiornata!"
+
+#: ../../../..//user/php/upload.php:35
+msgid "Error: Contact Admin"
+msgstr "Errore: contattare l'amministratore!"
+
+#: ../../../..//user/php/upload.php:38
+msgid "Warning: Image file size max 1 MB"
+msgstr "Attenzione: dimensione massima immagine 1MB"
+
+#~ msgid "Send New password"
+#~ msgstr "Invia nuova password"

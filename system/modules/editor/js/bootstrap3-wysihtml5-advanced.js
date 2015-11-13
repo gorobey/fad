@@ -22,7 +22,7 @@
  *
  *    foo <br clear="both"> bar
  *    ... becomes ...
- *    foo <br class="wysiwyg-clear-both"> bar
+ *    foo <br class="both"> bar
  *
  *    <div>hello <iframe src="http://google.com"></iframe></div>
  *    ... becomes ...
@@ -38,36 +38,36 @@ var wysihtml5ParserRules = {
      * Following CSS classes won't be removed when parsed by the wysihtml5 HTML parser
      */
     "classes": {
-        "wysiwyg-clear-both": 1,
-        "wysiwyg-clear-left": 1,
-        "wysiwyg-clear-right": 1,
-        "wysiwyg-color-aqua": 1,
-        "wysiwyg-color-black": 1,
-        "wysiwyg-color-blue": 1,
-        "wysiwyg-color-fuchsia": 1,
-        "wysiwyg-color-gray": 1,
-        "wysiwyg-color-green": 1,
-        "wysiwyg-color-lime": 1,
-        "wysiwyg-color-maroon": 1,
-        "wysiwyg-color-navy": 1,
-        "wysiwyg-color-olive": 1,
-        "wysiwyg-color-purple": 1,
-        "wysiwyg-color-red": 1,
-        "wysiwyg-color-silver": 1,
-        "wysiwyg-color-teal": 1,
-        "wysiwyg-color-white": 1,
-        "wysiwyg-color-yellow": 1,
-        "wysiwyg-float-left": 1,
-        "wysiwyg-float-right": 1,
-        "wysiwyg-font-size-large": 1,
-        "wysiwyg-font-size-larger": 1,
-        "wysiwyg-font-size-medium": 1,
-        "wysiwyg-font-size-small": 1,
-        "wysiwyg-font-size-smaller": 1,
-        "wysiwyg-font-size-x-large": 1,
-        "wysiwyg-font-size-x-small": 1,
-        "wysiwyg-font-size-xx-large": 1,
-        "wysiwyg-font-size-xx-small": 1,
+        "both": 1,
+        "left": 1,
+        "right": 1,
+        "aqua": 1,
+        "black": 1,
+        "blue": 1,
+        "fuchsia": 1,
+        "gray": 1,
+        "green": 1,
+        "lime": 1,
+        "maroon": 1,
+        "navy": 1,
+        "olive": 1,
+        "purple": 1,
+        "red": 1,
+        "silver": 1,
+        "teal": 1,
+        "white": 1,
+        "yellow": 1,
+        "pull-left": 1,
+        "pull-right": 1,
+        "font-size-large": 1,
+        "font-size-larger": 1,
+        "font-size-medium": 1,
+        "font-size-small": 1,
+        "font-size-smaller": 1,
+        "font-size-x-large": 1,
+        "font-size-x-small": 1,
+        "font-size-xx-large": 1,
+        "font-size-xx-small": 1,
         "wysiwyg-text-align-center": 1,
         "wysiwyg-text-align-justify": 1,
         "wysiwyg-text-align-left": 1,
@@ -137,8 +137,8 @@ var wysihtml5ParserRules = {
      *                        The following methods are implemented in wysihtml5.dom.parse:
      *                          - align_text:  converts align attribute values (right/left/center/justify) to their corresponding css class "wysiwyg-text-align-*")
      *                            <p align="center">foo</p> ... becomes ... <p> class="wysiwyg-text-align-center">foo</p>
-     *                          - clear_br:    converts clear attribute values left/right/all/both to their corresponding css class "wysiwyg-clear-*"
-     *                            <br clear="all"> ... becomes ... <br class="wysiwyg-clear-both">
+     *                          - clear_br:    converts clear attribute values left/right/all/both to their corresponding css class "*"
+     *                            <br clear="all"> ... becomes ... <br class="both">
      *                          - align_img:    converts align attribute values (right/left) on <img> to their corresponding css class "wysiwyg-float-*"
      *                          
      *    - remove:             removes the element and its content
@@ -203,7 +203,7 @@ var wysihtml5ParserRules = {
         },
         "small": {
             "rename_tag": "span",
-            "set_class": "wysiwyg-font-size-smaller"
+            "set_class": "font-size-smaller"
         },
         "area": {
 
@@ -339,7 +339,7 @@ var wysihtml5ParserRules = {
         },
         "big": {
             "rename_tag": "span",
-            "set_class": "wysiwyg-font-size-larger"
+            "set_class": "font-size-larger"
         },
         "button": {
             "rename_tag": "span"
