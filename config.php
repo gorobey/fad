@@ -8,9 +8,9 @@ $_CONFIG["MAINTENANCE_MODE"] = TRUE;
 
 //DB CONNECTION CONFIG
 define( 'DB_HOST', 'localhost' ); // set database host
-define( 'DB_USER', 'mittelab_org' ); // set database user
-define( 'DB_NAME', 'mittelab_org' ); // set database name
-define( 'DB_PASS', 'cahGVBB8yDdVBsr' ); // set database password
+define( 'DB_USER', '' ); // set database user
+define( 'DB_NAME', '' ); // set database name
+define( 'DB_PASS', '' ); // set database password
 
 //DEFINITION TABLE PREFIX
 $_CONFIG['table_prefix'] = "fad_";
