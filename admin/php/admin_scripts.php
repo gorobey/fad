@@ -24,7 +24,7 @@ $(document).ready(function () {
 				data: vars,
 				dataType: "html",
 				error: function(){		
-					$(".content-box-message").html('<div class="alert alert-danger" role="alert"><?php echo _('Error: Contact system administrator!');?></div>');
+					$(".content-box-message").html('<div class="alert alert-danger" role="alert"><?php echo _("Error: Contact system administrator!");?></div>');
 					$(".comfirm-box").slideDown('fast');
 				},					
 				success: function (result) {
@@ -37,7 +37,7 @@ $(document).ready(function () {
 						.remove()
 						.draw();
 					}
-				}
+				}			
 			});
 		},
 		onCancel: function (){
@@ -45,8 +45,7 @@ $(document).ready(function () {
 		}
 	});
 	
-	$('#new_user, #new_attr, #user_edit, #new_content_filter, #new_content').on("submit", function(e) {
-		alert("submit");
+	$('#new_user, #new_attr, #user_edit, #new_content_filter, #new_content, #save, #save_navigation').on("submit", function(e) {
 		e.preventDefault();
 		var action = $(this).attr('action');
 		var data = $(this).serialize(); // check to show that all form data is being submitted
@@ -62,35 +61,15 @@ $(document).ready(function () {
 			},
 			error: function(){
 				$(".content-box-message").removeClass('preload-comfirm');
-				$(".content-box-message").html('<div class="alert alert-danger" role="alert"><?php echo _('Error: Contact system administrator!');?></div>');
+				$(".content-box-message").html('<div class="alert alert-danger" role="alert"><?php echo _("Error: Contact system administrator!");?></div>');
 			},
 			success: function (result) {
 				$(".content-box-message").removeClass('preload-comfirm');
-				$(".content-box-message").html(result);
-				
-				
-//					if($(".content-box-message div").hasClass('alert-success')){
-//						var count = $("tbody tr").length;
-//						var rowid = count+1;
-//						var rowNode = table
-//						.row.add( [ '<span class="sort_disabled delete fa fa-trash-o" data-toggle="confirmation" data-placement="right" data-href="?do=delete&file='+hashval+'/'+dir+'">',
-//						'<a class="clickmedia" rel="'+hashval+'/'+dir+'" href="php/media/view_media.php">'+dir+'</a>',
-//						"4096 KB",
-//						'<?php echo _("just now");?>',
-//						'dr-w-x'] )
-//						.draw().node();
-//						$(rowNode).attr("id", "row-"+rowid);
-//						for(i=0;i<3;i++) {
-//							$(rowNode).fadeTo('slow', 0.5).fadeTo('slow', 1.0);
-//						}
-				
-				
-				
-					
+				$(".content-box-message").html(result);				
 			}
 		});
 		$('.modal').modal('hide');
-			return false;
+		return false;
 	});
 
 	$('.modal').on('hide.bs.modal', function () {

@@ -18,9 +18,9 @@ $dimension = $_GET['a'];
 	     <p>
 	     <?php
 	     if($_GET['a']=="groups"){
-		     echo _('I gruppi sono il metodo principale per organizzare gli utenti il loro funzionamento è verticale.<br />Non è possibile appartenere a più di un gruppo allo stesso tempo.');
+		     echo _('The groups are the primary method for Organizing Users Their operation is vertical.<br />You can not belong to a group of More the Same time.');
 	     }else{
-		     echo _('I ruoli sono il secondo metodo con cui sono organizzati gli utenti e quindi i permessi a loro legati.<br />Sono più granulari dei gruppi e il loro funzionamento è orizzontale.');
+		     echo _('The roles are the second method by which users are organized and then the permissions associated with them.<br />They are more granular groups and their operation is horizontal.');
 	     } ?>
 	     </p>
 	     <div class="comfirm-box">

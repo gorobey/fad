@@ -9,19 +9,40 @@ textarea{resize:vertical;}
 <div class="col-xs-12 form-group">
 	<textarea name="content[content]" class="textarea" style="width: 100%; height: 500px; font-size: 14px; line-height: 18px;"></textarea>
 </div>
-<script src="../system/modules/editor/js/bootstrap3-wysihtml5-advanced.js"></script>
-<script src="../system/modules/editor/js/bootstrap3-wysihtml5.all.min.js"></script>
-
+<script src="../system/modules/<?php echo $val; ?>/js/bootstrap3-wysihtml5-advanced.js"></script>
+<script src="../system/modules/<?php echo $val; ?>/js/bootstrap3-wysihtml5.all.min.js"></script>
+<script type="text/javascript" src="../system/js/moment.min.js"></script>
+<script type="text/javascript" src="../system/js/bootstrap-datetimepicker.min.js"></script>
 <script>
+$(function() {
+	$('.wysihtml5-supported .bootstrap-datetimepicker-widget').remove();
+	$('#datetimepicker').datetimepicker({
+	    pickDate: true,                 //en/disables the date picker
+	    pickTime: true,                 //en/disables the time picker
+	    useMinutes: true,               //en/disables the minutes picker
+	    useSeconds: true,               //en/disables the seconds picker
+	    useCurrent: true,               //when true, picker will set the value to the current date/time
+	    minuteStepping:1,               //set the minute stepping
+	    minDate:"1/1/1900",               //set a minimum date
+	  //  maxDate: ,     //set a maximum date (defaults to today +100 years)
+	    language:'en',                  //sets language locale
+	    defaultDate:"",                 //sets a default date, accepts js dates, strings and moment objects
+	    disabledDates:[],               //an array of dates that cannot be selected
+	    enabledDates:[],                //an array of dates that can be selected
+	    useStrict: false,               //use "strict" when validating dates  
+	    sideBySide: true,              //show the date and time picker side by side
+	    daysOfWeekDisabled:[]          //for example use daysOfWeekDisabled: [0,6] to disable weekends
+	});
+});
+
+
 function load_image_gallery(obj) {
         $(".bootstrap-wysihtml5-insert-image-modal .img-library").load("../admin/php/media/view_media.php?include");
         $("#ModalMedia").modal({
 	        show: true
         });
         
-        $('#ModalMedia').on('hidden', function(){
-			$(this).data('modal', null);
-		});
+
       }
       
       var buttons = {
@@ -93,6 +114,7 @@ $('.textarea').wysihtml5({
     'ctrl+y meta+y meta+shift+z': 'redo'
   }
 
-});
-  $('.textarea').html('<?php if(isset($data['content'])){echo $data['content'];}?>');//DbToHtml
+}); 
+
+$('.textarea').html('<?php if(isset($data['content'])){echo $data['content'];}?>');//DbToHtml
 </script>
