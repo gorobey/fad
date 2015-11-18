@@ -5,50 +5,8 @@ require_once( "../../system/includes/auth.lib.php");
 require_once( "../../system/includes/license.lib.php");
 require_once("../../system/includes/utils.lib.php");
 if(!isset($status)){auth_check_point();} ?>
-<link rel="stylesheet" type="text/css" href="jquery.domenu.css"/>
-<style>
-    .cf:after {
-        visibility: hidden;
-        display: block;
-        font-size: 0;
-        content: " ";
-        clear: both;
-        height: 0;
-    }
+<link rel="stylesheet" type="text/css" href="../system/style/css/jquery.domenu.css"/>
 
-    * html .cf {zoom: 1;}
-
-    *:first-child+html .cf {zoom: 1;}
-
-    html {
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        font-size: 100%;
-        margin: 50px;
-        font-family: 'Helvetica Neue', Arial, sans-serif;
-    }
-
-    h1 {
-        font-size: 1.75em;
-        margin: 0 0 0.6em 0;
-    }
-
-    a {color: #2996cc;}
-
-    a:hover {text-decoration: none;}
-
-    p {line-height: 1.5em;}
-
-    .small {
-        color: #666;
-        font-size: 0.875em;
-    }
-
-    .large {font-size: 1.25em;}
-</style>
 <div class="row">
 	<div class="col-md-12" id="dashboard">
 	     <h2><?php echo _('Navigation'); ?></h2>
@@ -63,76 +21,66 @@ if(!isset($status)){auth_check_point();} ?>
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 	    <div class="panel panel-default">
-	        <div class="panel-heading">
-		        <?php echo _("Navigation"); ?>
-			</div>
+	        <div class="panel-heading"><?php echo _("Navigation"); ?>
+	        <button type="submit" class="btn btn-primary btn-xs save-menu pull-right"><?php echo _('Save now!');?></button>
+	        </div>
+			<div class="panel-body">
 
+				<div class="dd" id="domenu">
 
-            <div class="dd" id="domenu-1">
-
-                <button id="domenu-add-item-btn" class="dd-new-item">+</button>
-                <!-- .dd-item-blueprint is a template for all .dd-item's -->
-                <li class="dd-item-blueprint">
-                    <div class="dd-handle dd3-handle">Drag</div>
-                    <div class="dd3-content">
-                        <span>[item_name]</span>
-                        <!-- @migrating-from 0.13.29 button container-->
-                        <div class="button-container">
-                            <!-- @migrating-from 0.13.29 add button-->
-                            <button class="item-add">+</button>
-                            <button class="item-remove" data-confirm-class="item-remove-confirm">&times;</button>
-                        </div>
-                        <div class="dd-edit-box" style="display: none;">
-                            <!-- data-placeholder has a higher priority than placeholder -->
-                            <!-- data-placeholder can use token-values; when not present will be set to "" -->
-                            <!-- data-default-value specifies a default value for the input; when not present will be set to "" -->
-                            <input type="text" name="title" autocomplete="off" placeholder="Item" data-placeholder="Any nice idea for the title?" data-default-value="doMenu List Item. {?numeric.increment}">
-                            <input type="text" name="tagline" autocomplete="off" placeholder="tagline" data-placeholder="">
-<?php
-	$taxQ = mysqli_query($db_conn, "SELECT id, type, subtype FROM `".$_CONFIG['t_taxonomy']."`");
-	echo "<select name='superselect'>
-		<option>"._('Select...')."</option>";
-	while($taxonomy = mysqli_fetch_assoc($taxQ)){
-		$itemsQ = mysqli_query($db_conn,"SELECT `".$_CONFIG['t_item']."`.rel, `".$_CONFIG['t_locale']."`.value FROM `".$_CONFIG['t_item']."` INNER JOIN `".$_CONFIG['t_locale']."` WHERE `".		$_CONFIG['t_item']."`.rel = ".$taxonomy['id']." AND `".$_CONFIG['t_item']."`.rel = `".$_CONFIG['t_locale']."`.rel AND `".$_CONFIG['t_locale']."`.key = 'title'");
-		$num_items = mysqli_num_rows($itemsQ);
-		if($num_items>0){
-			echo "<optgroup label='".$taxonomy['type']." / ".$taxonomy['subtype']."'>";
-			while($item = mysqli_fetch_assoc($itemsQ)){
-				$content_info = get_content_info($item['rel']);
-
-				echo '<option>'.$content_info['title'].'</option>';
-			}
-			echo '</optgroup>';
-		}
-	}
-	echo "</select>";
-	?>
-                            <!-- @migrating-from 0.13.29 an element ".end-edit" within ".dd-edit-box" exists the edit mode on click -->
-                            <i class="end-edit">&#x270e;</i>
-                        </div>
-                    </div>
-                </li>
-
-                <ol class="dd-list"></ol>
-            </div>
-
-
-
-
-
-				</div>		
-			</div>
-	</div>
+					<button id="domenu-add-item-btn" class="dd-new-item">+</button>
+					<!-- .dd-item-blueprint is a template for all .dd-item's -->
+					<li class="dd-item-blueprint">
+						<div class="dd-handle dd3-handle"></div>
+						<div class="dd3-content">
+							<span>[item_name]</span>
+							<div class="button-container">
+								<button class="item-add">+</button>
+								<button class="item-remove" data-confirm-class="item-remove-confirm">&times;</button>
+							</div>
+							<div class="dd-edit-box" style="display: none;">
+								<input type="text" name="title" autocomplete="off" placeholder="Item" data-placeholder="<?php echo _('Label'); ?>" data-default-value="<?php echo _('menu voice'); ?> {?numeric.increment}">
+								<input type="text" name="classname" autocomplete="off" placeholder="Classname" data-placeholder="">
+								<?php
+								$taxQ = mysqli_query($db_conn, "SELECT id, type, subtype FROM `".$_CONFIG['t_taxonomy']."`");
+								echo "<select name='link'>
+								<option>/</option>";
+								while($taxonomy = mysqli_fetch_assoc($taxQ)){
+									$get_list = get_list($taxonomy['type'], $taxonomy['subtype']);
+									if(count($get_list)>0){
+										echo '<option value="'.str_replace(" ", "-", $taxonomy['type']).'/">'.str_replace(" ", "-", $taxonomy['type']).'/</option>';
+										foreach($get_list as $single_content){
+											if(count($single_content)>0){
+												$content_info = get_content_info($single_content['id']);
+												echo '<option value="'.str_replace(" ", "-", get_taxonomy($single_content['id'], 2)).'">'.str_replace(" ", "-", get_taxonomy($single_content['id'], 2)).'</option>';//.'/'.$taxonomy['subtype']
+												echo '<option value="'.str_replace(" ", "-", get_taxonomy($single_content['id'], 2).$content_info['title']).'">'.str_replace(" ", "-", get_taxonomy($single_content['id'], 2).$content_info['title']).'</option>';//.'/'.$taxonomy['subtype']
+											}
+										}
+									}
+								}
+								echo "</select>";
+								?>
+								<i class="end-edit">&#x270e;</i>
+							</div>
+						</div>
+					</li><!-- end template -->
+					<ol class="dd-list"></ol>
+				</div>
+			</div>		
+		</div>
+		</div>
+		</div>
+		<form id="save_navigation" method="POST" action="php/navigation/edit_navigation.php">
+			<input class="nav-tree" type="hidden" name="nav-tree" value="" />
+		</form>
 </div>
 
     <script src="../system/js/jquery.domenu.js"></script>
     <script>
 
-    $(document).ready(function()
-    {
-
-        var updateOutput = function(e)
-        {
+    $(document).ready(function() {
+	    
+        var updateOutput = function(e) {
             var list   = e.length ? e : $(e.target),
                 output = list.data('output');
             if (window.JSON) {
@@ -142,58 +90,18 @@ if(!isset($status)){auth_check_point();} ?>
             }
         };
 
-        $('#domenu-1').domenu({
+        $('#domenu').domenu({
             slideAnimationDuration: 0,
             onDomenuInitialized: [function() {
-                console.log('event: onDomenuInitialized', 'arguments:', arguments, 'context:', this);
+                //console.log('event: onDomenuInitialized', 'arguments:', arguments, 'context:', this);
             }],
-            data: '[{"id":11,"title":"doMenu List Item","http":"","superselect":"2"},{"id":10,"title":"News","http":"","superselect":"1"},{"id":9,"title":"Categories","http":"","superselect":"1"},{"id":6,"title":"Shop","http":"","children":[{"id":5,"title":"Glass","http":"","superselect":"1"},{"title":"Other","superselect":"select something..."}],"superselect":"select something..."},{"id":1,"title":"About","http":"","superselect":"select something..."}]'
-        }).parseJson()
-                .onParseJson(function() {
-                    console.log('event: onFromJson', 'arguments:', arguments, 'context:', this);
-                })
-                .onToJson(function() {
-                    console.log('event: onToJson', 'arguments:', arguments, 'context:', this);
-                })
-                .onSaveEditBoxInput(function() {
-                    console.log('event: onSaveEditBoxInput', 'arguments:', arguments, 'context:', this);
-                })
-                .onItemDrag(function() {
-                    console.log('event: onItemDrag', 'arguments:', arguments, 'context:', this);
-                })
-                .onItemDrop(function() {
-                    console.log('event: onItemDrop', 'arguments:', arguments, 'context:', this);
-                })
-                .onItemAdded(function() {
-                    console.log('event: onItemAdded', 'arguments:', arguments, 'context:', this);
-                })
-                .onItemRemoved(function() {
-                    console.log('event: onItemRemoved', 'arguments:', arguments, 'context:', this);
-                })
-                .onItemStartEdit(function() {
-                    console.log('event: onItemStartEdit', 'arguments:', arguments, 'context:', this);
-                })
-                .onItemEndEdit(function() {
-                    console.log('event: onItemEndEdit', 'arguments:', arguments, 'context:', this);
-                })
-                .onItemAddChildItem(function() {
-                    console.log('event: onItemAddChildItem', 'arguments:', arguments, 'context:', this);
+            data: '<?php echo get_info('nav-'.$_SESSION['locale']);?>'// insert here the data
+        }).parseJson();
+                $('.save-menu').on('click', function(){
+	                $('input.nav-tree').val($('#domenu').domenu().toJson());
+	                $('#save_navigation').submit();	           
                 });
+                
     });
     </script>
-
-
-<?php
-//$tree - menu data array
-//$parent - 0
-function get_menu($tree, $parent){
-        $tree2 = array();
-        foreach($tree as $i => $item){
-            if($item['parent_id'] == $parent){
-                $tree2[$item['id']] = $item;
-                $tree2[$item['id']]['submenu'] = get_menu($tree, $item['id']);
-            }
-        }
-
-        return $tree2;
-    }
+<?php require('admin_scripts.php');

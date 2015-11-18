@@ -80,7 +80,7 @@
 					<a class="ajax" href="php/options.php"><i class="fa fa-cogs fa-2x"></i><?php echo _('Options');?></a>
 					</li>
 			      </ul>
-			        <?php if(is_admin($user_id)===true){ echo "<span class='version'>V ".get_info('version')."</span>";} ?>
+			        <?php if(is_admin($user_id)===true){ echo "<span class='version'><a href='https://github.com/tlx83/fad' target='_blank'>V ".get_info('version')."</a></span>";} ?>
 			    </div>
 			</nav>
 			<!-- /. NAV SIDE  -->

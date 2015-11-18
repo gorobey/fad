@@ -8,7 +8,7 @@ $(document).ready(function () {
 	  $(".comfirm-box").slideUp('fast');
 	});
 
-	$('#main-menu').metisMenu({ });
+	$('#main-menu').metisMenu({});
 
 	$(document).on('click','.sidebar-collapse.collapse.in',function(e) {
 	    if( $(e.target).hasClass('ajax') ) {
@@ -40,6 +40,7 @@ $(document).ready(function () {
 
 $(document).on('click', 'a.ajax', function(e) {
 	e.preventDefault();
+	//bootstrap-wysihtml5-insert-image-url
 	var href = $(this).attr('href');
 	var load_here = $(".load-here");
 	$.ajax({
@@ -60,15 +61,12 @@ $(document).on('click', 'a.ajax', function(e) {
 			load_here.removeClass('preload-content').html(result);
 		}
 	});
+	$('.bootstrap-wysihtml5-insert-image-modal').remove();
+	$('.bootstrap-datetimepicker-widget').remove();	
 });
 
 $(document).on('click', '.comfirm-box span', function(e) {
 		$(".comfirm-box").slideUp('fast');
-});
-
-$('#ModalFile, #ModalMedia').on('hidden', function(){
-	$(this).data('modal', null);
-	$('.modal-dialog .modal-body.img-library').empty();
 });
 
 

@@ -23,7 +23,7 @@ function menu($tree, $user_id){
 								echo '<ul class="nav nav-third-level">';
 								foreach($second->children() as $third){
 									$item = str_replace(" ", "-", $third->attributes()->name);
-										echo '<li><a class="ajax fa fa-angle-right" href="'.protocol().ROOT_URL.$path_repair.'php/contents.php?level=2&type='.$item.'"> '.ucfirst(_($third->attributes()->name)) .'</a>';	
+										echo '<li><a class="ajax fa fa-angle-right" href="'.protocol().ROOT_URL.$path_repair.'php/contents.php?level=2&type='.$taxonomy.'&subtype='.$item.'"> '.ucfirst(_($third->attributes()->name)) .'</a>';	
 								}
 								echo '</ul>';
 							}
@@ -78,7 +78,7 @@ function render_editor($tree, $level, $type, $subtype, $user_id, $content_id = 0
 	</div>
 	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-group">
 		<div class='input-append input-group date' id='datetimepicker'>
-			<input name="data" type="date" class="form-control text-center" data-format="dd/MM/yyyy hh:mm:ss" value="<?php echo $data['date']; ?>" required />
+			<input name="data" type="text" class="form-control text-center" data-format="dd/MM/yyyy hh:mm:ss" value="<?php echo date("d/m/Y H:i:s ", strtotime($data["date"])); ?>" required />
 			<span class="input-group-addon add-on">
 				<span class="glyphicon glyphicon-calendar"></span>
 			</span>
@@ -107,8 +107,6 @@ function render_editor($tree, $level, $type, $subtype, $user_id, $content_id = 0
 											$CSSmodule = ROOT."/system/modules/".$val."/css/";
 										}									
 										if(($can_interact > 0 || is_admin($user_id) || ($key =="role" && $val=="")) && file_exists($module)){
-											//${$val}= 1;
-											//echo ${$val};
 											require($module);
 										}
 									}
@@ -121,6 +119,98 @@ function render_editor($tree, $level, $type, $subtype, $user_id, $content_id = 0
 			}
 		}
 	}
+}
+
+
+
+function render_page($tree, $level, $type, $subtype, $user_id, $content_id = 0){
+	global $_CONFIG, $db_conn;
+	if($content_id == 0){die("404");}
+	if($level == 2){
+		$result = mysqli_query($db_conn, "SELECT date FROM ".$_CONFIG['t_item']." WHERE rel='".$content_id."'");
+		$date_row = mysqli_fetch_assoc($result);
+		$data['date'] = $date_row['date'];
+		$result = mysqli_query($db_conn, "SELECT `key`, `value` FROM `".$_CONFIG['t_locale']."` WHERE `rel` = '".$content_id."' AND `level` = '2' AND `lang` ='".$_SESSION['locale']."'");
+		while($tmp = mysqli_fetch_assoc($result)){
+			$data[$tmp['key']] = $tmp['value'];
+		}
+	}else{
+		$data['date'] = date('d/m/Y H:i:s');
+	}
+	$user_group = get_user_attr($user_id, "g");
+	$user_roles = get_user_attr($user_id, "r");
+	$xml = simplexml_load_file(ROOT.'/system/structure.xml');
+	foreach($xml->children() as $node){ 
+		if($node->attributes()->tree == $tree){
+			foreach($node as $first){ 
+				if(in_array($user_group, explode(",", $first->attributes()->group))){
+					foreach($first->children() as $taxonomy){
+						foreach($taxonomy->children() as $item){
+							if($item->attributes()->name == $subtype){
+								foreach($item->children() as $modules){
+									foreach($modules->attributes() as $key => $val){
+										$module ="";
+										if($key == "role"){
+											$can_interact = count(array_intersect(explode(",", $val), $user_roles));
+										}
+										if($key == "script"){
+											$module = ROOT.'/system/modules/'.$val.'/'.$tree.'.php';
+											$JSmodule = ROOT."/system/modules/".$val."/js/";
+											$CSSmodule = ROOT."/system/modules/".$val."/css/";
+										}									
+										if(($can_interact > 0 || is_admin($user_id) || ($key =="role" && $val=="")) && file_exists($module)){
+											require($module);
+										}
+									}
+								}
+							break 2;//limit recursion to 1 subtype
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+//$tree - menu data array
+//$parent - 0
+function get_menu($tree, $parent){//non so se è in uso
+    $tree2 = array();
+    foreach($tree as $i => $item){
+        if($item['parent_id'] == $parent){
+            $tree2[$item['id']] = $item;
+            $tree2[$item['id']]['submenu'] = get_menu($tree, $item['id']);
+        }
+    }
+    return $tree2;
+}
+
+function edit_navigation($lang, $tree){
+	global $_CONFIG, $db_conn;
+	$info_dataQ = mysqli_query($db_conn, "INSERT INTO `".$_CONFIG['t_info']."` VALUES ('', 'nav-".$lang."', '".$tree."') ON DUPLICATE KEY UPDATE value='".$tree."'");
+}
+function insert_content($content, $rel, $user_id){
+	global $_CONFIG, $db_conn;
+	$item_part = "";
+	foreach($content as  $key=>$value){
+		$item_part .= "INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `lang`, `key`, `value`) VALUE ('".$rel."', '2', '".$_SESSION['locale']."', '".$key."', '".$value."');";
+	}
+	echo "INSERT INTO ".$_CONFIG['t_item']." (`rel`, `author`, `publish`) VALUES ('".$rel."', '".$user_id."', '".TRUE."');".$item_part;
+	$insert_item = mysqli_multi_query($db_conn,"INSERT INTO ".$_CONFIG['t_item']." (`rel`, `author`, `publish`) VALUES ('".$rel."', '".$user_id."', '".TRUE."');".$item_part);
+	if($insert_item === true){
+		echo '<div class="alert alert-success" role="alert">'._("New").' '._("content published!").'</div>';
+		exit;
+	}else{
+		echo '<div class="text-center alert alert-danger" role="alert">'._("Error:")." "._("content can't be published!").'</div>';
+		exit;
+	}
+}
+
+function update_content(){
+	
+	
 }
 
 function lang_menu($list = false) {
@@ -157,6 +247,10 @@ function lang_menu($list = false) {
 }
 
 //UTILS
+function isJson($string) {
+ json_decode($string);
+ return (json_last_error() == JSON_ERROR_NONE);
+}
 function gen_rand_string() {
     $length = 10;
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ-_.,;)@(/?!';
@@ -370,7 +464,7 @@ function profile_img($id, $type="list") {
 		$resize.="?w=".$size."&h=".$size."&img=";
 		$style='style="float:left;margin:1px;width:'.$size.'px;height:'.$size.'px;"';
 	}elseif($type=="clear"){
-		$size=150;
+		$size=100;
 		$resize.="?w=".$size."&h=".$size."&img=";
 		$style='style="width:'.$size.'px;height:'.$size.'px;"';
 	}
@@ -407,11 +501,17 @@ function formatBytes($bytes, $precision = 2) {
 
 
 //CONTENTS
-function get_taxonomy($id){
+function get_taxonomy($id, $level=1){
 	global $_CONFIG, $db_conn;
-	$result = mysqli_query($db_conn, "SELECT type, subtype FROM ".$_CONFIG['t_taxonomy']." WHERE id = '".$id."'");
-		$taxonomy = mysqli_fetch_assoc($result);
-		return $taxonomy['type']." / ".$taxonomy['subtype'];
+	$taxonomyQ = mysqli_query($db_conn, "SELECT type, subtype FROM ".$_CONFIG['t_taxonomy']." WHERE id = '".$id."'");
+	$filter= "";
+	if($level==2){
+		$filterQ = mysqli_query($db_conn, "SELECT `value` FROM `".$_CONFIG['t_locale']."` WHERE `rel` = ".$id." and `key` ='taxonomy' limit 1");
+		$filter = mysqli_fetch_assoc($filterQ);
+		$filter = $filter['value']."/";
+	}
+	$taxonomy = mysqli_fetch_assoc($taxonomyQ);
+	return "/".$taxonomy['type']."/".$filter;
 }
 
 function get_filter($type){
@@ -431,7 +531,7 @@ function get_filter($type){
 }
 
 
-function get_list($subtype){
+function get_list($type, $subtype){
 	global $_CONFIG, $db_conn;
 	$result = mysqli_query($db_conn, "SELECT distinct(`".$_CONFIG['t_locale']."`.rel), `".$_CONFIG['t_taxonomy']."`.id, `".$_CONFIG['t_taxonomy']."`.subtype, `".$_CONFIG['t_locale']."`.key, `".$_CONFIG['t_locale']."`.value
 				FROM `".$_CONFIG['t_taxonomy']."` 
@@ -441,7 +541,8 @@ function get_list($subtype){
 				AND `".$_CONFIG['t_locale']."`.lang = '".$_SESSION['locale']."'
 				AND `".$_CONFIG['t_locale']."`.key = 'title'
 				AND `".$_CONFIG['t_locale']."`.value != ''
-				AND `".$_CONFIG['t_taxonomy']."`.subtype =  '".$subtype."'");
+				AND `".$_CONFIG['t_taxonomy']."`.type =  '".$type."'
+				AND `".$_CONFIG['t_taxonomy']."`.subtype =  '".$subtype."'");	
 	$data = array();
 	while($tmp = mysqli_fetch_assoc($result)){
 		array_push($data, $tmp);

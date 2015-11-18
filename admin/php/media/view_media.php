@@ -13,12 +13,20 @@ if(isset($_POST['file']) && substr( $_POST['file'], 0, 7 ) === "uploads"){
 }
 $bind_path = strpos($file, $up_root);	
 
-if(!file_exists($file)){
-	$error = _('File or Directory Not Found'); //exit;
+
+if($video===true){
+	$allowed = strtoupper(implode("|", $_CONFIG['video_ext']));
+	$allowed_ext = ".".implode(",.", $_CONFIG['video_ext']);
+	$allowed_arr = $_CONFIG['video_ext'];
+}else{
+	$allowed = strtoupper(implode("|", $_CONFIG['imgs_ext']));
+	$allowed_ext = ".".implode(",.", $_CONFIG['imgs_ext']);
+	$allowed_arr = $_CONFIG['imgs_ext'];	
 }
 
-if($bind_path===false){
-	$error = _("Forbidden"); //exit;
+$ajax_link = "php/media/view_media.php";
+if(isset($_GET['include'])){
+	$ajax_link .= "?include";
 }
 
 if ($_POST['do'] == 'delete') {
@@ -42,8 +50,6 @@ if ($_POST['do'] == 'delete') {
 	}
 exit;
 } elseif ($_POST['do'] == 'upload') {
-	$allowed = strtoupper(implode("|", $_CONFIG['extensions']));
-	
 	$fileName = $_FILES["file_data"]["name"];
 	$fileTmpLoc = $_FILES["file_data"]["tmp_name"];
 	$fileType = $_FILES["file_data"]["type"];
@@ -88,9 +94,7 @@ if(!isset($_POST['do'])){ ?>
 		 </div>
 
 		<div id="file_drop_target" class="text-center">
-			<?php
-			$allowed_ext = ".".implode(",.", $_CONFIG['extensions']); ?>
-			<?php echo _('Drag Files Here To Upload'); ?><br /><b><?php echo _('OR');?></b><input name="file_data" id="file_data" class="text-center" type="file" accept="<?php echo $allowed_ext;?>" multiple />
+			<?php echo _('Drag Files Here To Upload'); ?><br /><b><?php echo _('OR');?></b><input name="file_data" id="file_data" class="text-center" type="file" accept="<?php echo $allowed;?>" multiple />
 		</div>
 		<div id="upload_progress"></div><hr />
 
@@ -106,7 +110,7 @@ if(!isset($_POST['do'])){ ?>
 				}
 				$path .= $crumb;
 				if(($sub_dirs+1) == $crumb_level){ $current_dir = " current_dir";}else{$current_dir = "";}
-				echo "<a class='clickmedia".$current_dir."' rel='".$path."' href='php/media/view_media.php'>".trim(str_replace(array(".php","_"),array("",""),$crumb).'')."</a> / ";
+				echo "<a class='clickmedia".$current_dir."' rel='".$path."' href='".$ajax_link."'>".trim(str_replace(array(".php","_"),array("",""),$crumb).'')."</a> / ";
 				$sub_dirs++;
 			} ?>
 		</span>
@@ -117,7 +121,7 @@ if(!isset($_POST['do'])){ ?>
 				<input class="btn btn-primary btn-xs" id="dircreate" type="submit" value="<?php echo _('Create'); ?>" />
 			</form>
         </div>
-		     <table class="table table-striped table-bordered table-hover text-center media" id="MediaTable<?php echo "Inc";?>">
+		     <table class="table table-striped table-bordered table-hover text-center media" id="MediaTable<?php if($video === true) echo "Video";?>">
 		        <thead>
 		            <tr>
 		                <th class="sort_disabled text-center"><span class="fa fa-trash"><i class="text-zero">x</i></span></th>
@@ -136,7 +140,11 @@ if(!isset($_POST['do'])){ ?>
 				$row_n = 1;
 			    foreach($files as $entry) if($entry !== basename(__FILE__)) {
 		    		$i = $directory . '/' . $entry;
-			    	$stat = stat($i); ?>
+			    	$stat = stat($i);
+			
+					$file = explode(".", $entry);
+					$type = strtolower(end($file));
+					if(in_array($type, $allowed_arr) || is_dir($i)){ ?>
 		            <tr id="<?php echo "row-".$row_n;?>">
 		            	<td><?php
 		                	if((is_dir_empty($i) || !is_dir($i)) && is_writable($directory)){ ?>
@@ -144,14 +152,10 @@ if(!isset($_POST['do'])){ ?>
 		                	<?php } ?></td>
 		                <td>
 		                <?php if(is_dir($i)){ ?> 
-			                <a class="clickmedia" rel="<?php echo str_replace("../../../", "", $i);?>" href="php/media/view_media.php"><?php echo $entry;?></a>                
-		                <?php } else{
-			                $file = explode(".", $entry);
-			                $type = strtolower(end($file));
-			                $images = array("jpg", "jpeg", "gif", "png");
-		                ?>
+			                <a class="clickmedia" rel="<?php echo str_replace("../../../", "", $i);?>" href="<?php echo $ajax_link; ?>"><?php echo $entry;?></a>                
+		                <?php } else{ ?>
 			                <a href="<?php echo str_replace("../../../", protocol().get_info('appdir'), $i); ?>" target="_blank"
-				               class="<?php if(isset($_GET['include']) && in_array($type, $images)){
+				               class="<?php if(isset($_GET['include'])){
 					               echo "image-url";
 								}else{
 									echo "";	
@@ -168,6 +172,7 @@ if(!isset($_POST['do'])){ ?>
 			                ?></td>
 		            </tr>
 					<?php
+				}
 					$row_n++;
 			    }
 			} ?>
@@ -177,7 +182,7 @@ if(!isset($_POST['do'])){ ?>
 <script type="text/javascript">
 $(function() {
 	var table;
-	table = $('#MediaTableInc').DataTable({
+	table = $('#MediaTable<?php if($video === true) echo "Video";?>').DataTable({
 		"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 0 ] }],
 		"drawCallback": function() {
         	draw_delete();
@@ -224,7 +229,7 @@ $(function() {
 		//fd.append('xsrf',XSRF);
 		fd.append('do','upload');
 		var xhr = new XMLHttpRequest();
-		xhr.open('POST', 'php/media/view_media.php', true);
+		xhr.open('POST', '<?php echo $ajax_link; ?>', true);
 		xhr.onload = function() {
 			$(".content-box-message").html(this.responseText);
 			$(".comfirm-box").slideDown('fast');
@@ -276,11 +281,6 @@ $(function() {
 		e.preventDefault();
 		var file = $(this).attr('rel');
 		var load_here = $(".img-library");
-		<?php
-			$ajax_link = "php/media/view_media.php";
-			 if(isset($_GET['include'])){
-			$ajax_link .= "?include";
-		} ?>
 		$.ajax({
 			dataType: "html",
 			type: "POST",
@@ -327,7 +327,7 @@ $(function() {
 						var rowid = count+1;
 						var rowNode = table
 						.row.add( [ '<span class="sort_disabled delete fa fa-trash-o" data-toggle="confirmation" data-placement="right" data-href="?do=delete&file='+hashval+'/'+dir+'">',
-						'<a class="clickmedia" rel="'+hashval+'/'+dir+'" href="php/media/view_media.php">'+dir+'</a>',
+						'<a class="clickmedia" rel="'+hashval+'/'+dir+'" href="<?php echo $ajax_link; ?>">'+dir+'</a>',
 						"4096 KB",
 						'<?php echo _("just now");?>',
 						'dr-w-x'] )
@@ -387,7 +387,7 @@ $(function() {
 	draw_delete();
 	
 	
-	$('#ModalFile').on('hide.bs.modal', function () {//bug fix (http://datatables.net/manual/tech-notes/3)
+	$('#ModalMedia').on('hide.bs.modal', function () {//bug fix (http://datatables.net/manual/tech-notes/3)
 	   table.destroy();
 	});
 });

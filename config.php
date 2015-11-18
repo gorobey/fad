@@ -8,9 +8,9 @@ $_CONFIG["MAINTENANCE_MODE"] = TRUE;
 
 //DB CONNECTION CONFIG
 define( 'DB_HOST', 'localhost' ); // set database host
-define( 'DB_USER', 'mittelab_org' ); // set database user
-define( 'DB_NAME', 'mittelab_org' ); // set database name
-define( 'DB_PASS', 'cahGVBB8yDdVBsr' ); // set database password
+define( 'DB_USER', '' ); // set database user
+define( 'DB_NAME', '' ); // set database name
+define( 'DB_PASS', '' ); // set database password
 
 //DEFINITION TABLE PREFIX
 $_CONFIG['table_prefix'] = "fad_";
@@ -31,7 +31,8 @@ $_CONFIG['expire'] = 60*60*24; //end session
 $_CONFIG['regexpire'] = 168; //end confirm time
 
 //ROLES FILES FOR UPLOAD
-$_CONFIG['extensions'] = array("jpg", "jpeg", "gif", "png", "pdf");
+$_CONFIG['imgs_ext'] = array("jpg", "jpeg", "gif", "png");
+$_CONFIG['video_ext'] = array("mp4", "mpg", "mpeg");
 $_CONFIG['max_file_size'] = 52428800; //5MB
 
 //FOR ENABLE GOOGLE ANALYTICS SERVICE PAST YOUR MONITORATION CODE IN '/analyticstracking.php' AND SAVE IT!
