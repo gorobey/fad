@@ -116,5 +116,6 @@ $('.textarea').wysihtml5({
 
 }); 
 
-$('.textarea').html('<?php if(isset($data['content'])){echo $data['content'];}?>');//DbToHtml
+var content = "<?php if(isset($data['content'])){echo $data['content'];}?>";
+$('.textarea').html(content);//DbToHtml
 </script>

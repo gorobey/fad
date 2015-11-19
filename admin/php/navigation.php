@@ -19,13 +19,18 @@ if(!isset($status)){auth_check_point();} ?>
 	</div>
 </div><!-- /. ROW  -->
 <div class="row">
-	<div class="col-md-12 col-sm-12 col-xs-12">
+	<div class="col-xs-12">
 	    <div class="panel panel-default">
 	        <div class="panel-heading"><?php echo _("Navigation"); ?>
 	        <button type="submit" class="btn btn-primary btn-xs save-menu pull-right"><?php echo _('Save now!');?></button>
 	        </div>
 			<div class="panel-body">
-
+				<div class="col-xs-12">
+					<ul class="nav nav-tabs">
+						<?php lang_menu("tab"); ?>
+					</ul>
+					<br />
+				</div>
 				<div class="dd" id="domenu">
 
 					<button id="domenu-add-item-btn" class="dd-new-item">+</button>
@@ -95,7 +100,7 @@ if(!isset($status)){auth_check_point();} ?>
             onDomenuInitialized: [function() {
                 //console.log('event: onDomenuInitialized', 'arguments:', arguments, 'context:', this);
             }],
-            data: '<?php echo get_info('nav-'.$_SESSION['locale']);?>'// insert here the data
+            data: '<?php $Jmenu = get_info('nav-'.$_SESSION['locale']); if( isJson($Jmenu)){ echo $Jmenu; }else{ echo "[{}]";} ?>'// insert here the data
         }).parseJson();
                 $('.save-menu').on('click', function(){
 	                $('input.nav-tree').val($('#domenu').domenu().toJson());
