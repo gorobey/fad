@@ -9,7 +9,6 @@ function menu($tree, $user_id){
 	}
 	$xml = simplexml_load_file(ROOT.'/system/structure.xml');
 	foreach($xml->children() as $item){
-		//print_r(get_user_attr($user_id, "r"));
 		if($item->attributes()->tree == $tree){
 			foreach($item as $first){
 				echo '<li><a href="#"><i class="fa fa-'.$first->attributes()->icon.' fa-2x"></i> '.ucfirst(_($first->attributes()->name)).'<span class="fa expand-menu fa-minus-circle"></span></a>';
@@ -70,15 +69,13 @@ function render_editor($tree, $level, $type, $subtype, $user_id, $content_id = 0
 		while($tmp = mysqli_fetch_assoc($result)){
 			$data[$tmp['key']] = $tmp['value'];
 		}
-	}else{
-		$data['date'] = date('d/m/Y H:i:s');
-	}?>
+	}else{ $data['date'] = date("d/m/Y H:i:s");	} ?>
 	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-9 form-group">			
 		<input value="<?php if(isset($data['title'])){echo $data['title'];} ?>" type="text" name="content[title]" placeholder="<?php echo _('Title of content');?>" class="form-control" required />
 	</div>
 	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-group">
 		<div class='input-append input-group date' id='datetimepicker'>
-			<input name="data" type="text" class="form-control text-center" data-format="dd/MM/yyyy hh:mm:ss" value="<?php echo date("d/m/Y H:i:s ", strtotime($data["date"])); ?>" required />
+			<input name="date" type="text" class="form-control text-center" data-format="dd/MM/yyyy hh:mm:ss" value="<?php echo $data['date']; ?>" required />
 			<span class="input-group-addon add-on">
 				<span class="glyphicon glyphicon-calendar"></span>
 			</span>
@@ -121,11 +118,10 @@ function render_editor($tree, $level, $type, $subtype, $user_id, $content_id = 0
 	}
 }
 
-
-
-function render_page($tree, $level, $type, $subtype, $user_id, $content_id = 0){
+function render_page($user_id, $tree, $level, $content_link){
 	global $_CONFIG, $db_conn;
-	if($content_id == 0){die("404");}
+	$result = mysqli_query($db_conn, "SELECT `rel` FROM `fad_locale` WHERE `key` = 'title' AND `value` = 'test en' AND `lang` = '".$_SESSION['locale']."'" );
+	$content_link;
 	if($level == 2){
 		$result = mysqli_query($db_conn, "SELECT date FROM ".$_CONFIG['t_item']." WHERE rel='".$content_id."'");
 		$date_row = mysqli_fetch_assoc($result);
@@ -134,8 +130,6 @@ function render_page($tree, $level, $type, $subtype, $user_id, $content_id = 0){
 		while($tmp = mysqli_fetch_assoc($result)){
 			$data[$tmp['key']] = $tmp['value'];
 		}
-	}else{
-		$data['date'] = date('d/m/Y H:i:s');
 	}
 	$user_group = get_user_attr($user_id, "g");
 	$user_roles = get_user_attr($user_id, "r");
@@ -173,20 +167,6 @@ function render_page($tree, $level, $type, $subtype, $user_id, $content_id = 0){
 	}
 }
 
-
-//$tree - menu data array
-//$parent - 0
-function get_menu($tree, $parent){//non so se è in uso
-    $tree2 = array();
-    foreach($tree as $i => $item){
-        if($item['parent_id'] == $parent){
-            $tree2[$item['id']] = $item;
-            $tree2[$item['id']]['submenu'] = get_menu($tree, $item['id']);
-        }
-    }
-    return $tree2;
-}
-
 function edit_navigation($lang, $tree){
 	global $_CONFIG, $db_conn;
 	$info_dataQ = mysqli_query($db_conn, "INSERT INTO `".$_CONFIG['t_info']."` VALUES ('', 'nav-".$lang."', '".$tree."') ON DUPLICATE KEY UPDATE value='".$tree."'");
@@ -208,14 +188,10 @@ function insert_content($content, $rel, $user_id){
 	}
 }
 
-function update_content(){
-	
-	
-}
+
 
 function lang_menu($list = false) {
 	global $_CONFIG;
-
 	$current = "";
 
 	foreach($_SESSION['LANGUAGES'] as $translation){
@@ -227,12 +203,12 @@ function lang_menu($list = false) {
 		}else{
 			$current = "";
 		}
-		if($list === true){//da fare nuova funzione
+		if($list === true){
 			$li = "<li><a class='fa fa-caret-right' ";$_li = "</li>";
-		printf($li.'href="?%s">'.$_CONFIG['language_codes'][$language].'</a>'.$_li, $query);			
+		sprintf($li.'href="?%s">'.$_CONFIG['language_codes'][$language].'</a>'.$_li, $query);			
 		}elseif($list == "tab"){
 			$li = "<li class='".$current."'><a class='ajax' ";$_li = "</li>";
-		printf($li.'href="php/contents/edit_contents.php?%s">'.$_CONFIG['language_codes'][$language].'</a>'.$_li, $query);
+		echo sprintf($li.'href="'.protocol().$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'].'?%s">'.$_CONFIG['language_codes'][$language].'</a>'.$_li, $query);
 		}else{
 			$li = "<a ";
 			if ($translation != end($_SESSION['LANGUAGES'])){
@@ -248,8 +224,7 @@ function lang_menu($list = false) {
 
 //UTILS
 function isJson($string) {
- json_decode($string);
- return (json_last_error() == JSON_ERROR_NONE);
+	return is_string($string) && is_array(json_decode($string, true)) ? true : false;
 }
 function gen_rand_string() {
     $length = 10;
@@ -523,6 +498,7 @@ function get_filter($type){
 				AND `".$_CONFIG['t_taxonomy']."`.id = `".$_CONFIG['t_locale']."`.rel
 				AND `".$_CONFIG['t_locale']."`.value != ''
 				AND `".$_CONFIG['t_taxonomy']."`.type =  '".$type."'");
+				
 	$data = array();
 	while($tmp = mysqli_fetch_assoc($result)){
 		array_push($data, $tmp);
@@ -570,6 +546,16 @@ function get_content($subtype){
 
 function get_content_info($rel){
 	global $_CONFIG, $db_conn;
+	
+	echo "
+	SELECT `".$_CONFIG['t_item']."`.author as author, `".$_CONFIG['t_item']."`.publish as publish, `".$_CONFIG['t_item']."`.date as date, `".$_CONFIG['t_locale']."`.value as title
+	FROM `".$_CONFIG['t_item']."`
+	inner join `".$_CONFIG['t_locale']."`
+	where `".$_CONFIG['t_item']."`.rel = `".$_CONFIG['t_locale']."`.rel
+	and `".$_CONFIG['t_locale']."`.key = 'title'
+	and `".$_CONFIG['t_item']."`.rel = ".$rel;
+	
+	
 	$result = mysqli_query($db_conn, "
 	SELECT `".$_CONFIG['t_item']."`.author as author, `".$_CONFIG['t_item']."`.publish as publish, `".$_CONFIG['t_item']."`.date as date, `".$_CONFIG['t_locale']."`.value as title
 	FROM `".$_CONFIG['t_item']."`

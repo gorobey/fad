@@ -7,59 +7,61 @@
 	<meta http-equiv="robots" content="noindex,nofollow" />
 	<meta name="author" Content="Giulio Gorobey">
     <title><?php echo get_info('title')." | ".get_info('description'); ?></title>
-	<link rel="shortcut icon" href="system/style/imgs/favicon.png" />
-	<!-- BOOTSTRAP STYLES-->
+	<link rel="shortcut icon" href="<?php echo $path; ?>system/style/imgs/favicon.png" />
     <link href="<?php echo $path; ?>system/style/css/bootstrap.min.css" rel="stylesheet" />
-     <!-- FONTAWESOME STYLES-->
     <link href="<?php echo $path; ?>system/style/css/font-awesome.min.css" rel="stylesheet" />
-     <!-- MORRIS CHART STYLES-->
-        <!-- CUSTOM STYLES-->
-    <link href="<?php echo $path; ?>system/style/css/custom.css" rel="stylesheet" />
-     <!-- GOOGLE FONTS-->
+    <link href="<?php echo $path; ?>frontend/style/css/custom.css" rel="stylesheet" />
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-</head>
-<body>
-    <div id="wrapper">
-        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <span class="navbar-brand"><?php echo get_info('title'); ?></span>
-                <?php login_out(); ?>
-            </div>
-        </nav>   
-           <!-- /. NAV TOP  -->
-                <nav class="navbar-default navbar-side" role="navigation">
-            <div class="sidebar-collapse">
-                <ul class="nav" id="main-menu">
-					<li class="text-center">
-	                    <?php echo profile_img($user_id, "clear");?>
-	                    	<div id="photo_profile_load"></div>
-							<form enctype="multipart/form-data" name="upload" id="upload" method="post" action="user/php/upload.php">
-						    		<input type="file" name="image" id="editp" />
-							</form>
-							<div id="up_img_p"><span class="fa fa-camera-retro fa-2x"></span></div>
-					</li>
-					<?php if(is_admin($user_id)===true){?>
-	                <li>
-	                    <a href="<?php echo $path; ?>admin/"><i class="fa fa-dashboard fa-2x"></i><?php echo _('Admin Area');?></a>
-	                </li>
-					<?php }
-					menu('frontend', $user_id); ?>
-					<li>
-						<a href="#"><i class="fa fa-language fa-2x"></i> <?php echo _('Language');?><span class="fa expand-menu fa-minus-circle"></span></a>
-						<ul class="nav nav-second-level">
-							<?php lang_menu(true); ?>
-						</ul>
-					</li>
-				</ul>
-			        <?php if(is_admin($user_id)===true){ echo "<span class='version'>V ".get_info('version')."</span>";} ?>
-			    </div>
-			</nav>
-        <!-- /. NAV SIDE  -->
-                <div id="page-wrapper">
-            <div id="page-inner" class="load-here">
+	</head>
+	<body>
+	<nav class="navbar navbar-static">
+	    <div class="container">
+	      <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+	        <span class="glyphicon glyphicon-chevron-down"></span>
+	      </a>
+	      <div class="nav-collapse collase">
+			<?php
+			$menu_arr = json_decode(get_info('nav-'.$_SESSION['locale']), true);
+			function MakeMenu($Array){
+				$Output = '<ul class="nav navbar-nav">';
+				foreach($Array as $Key => $Value){			
+					$Output .= "<li class='".$Value['classname']."'><a href='".$Value['link']."'>".$Value['title']."</a>";
+					if(is_array($Value['children'])){
+						$Output .= MakeMenu($Value['children']);
+					}
+					$Output .= '</li>';
+				}
+				$Output .= '</ul>';
+				return $Output;
+			}
+			echo MakeMenu($menu_arr); ?>    
+	      </div>
+			<form class="form-inline pull-right">
+			   <div class="input-group">
+			     <input type="text" class="form-control" placeholder="Search">
+			     <div class="input-group-btn">
+				       <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+			     </div>
+			  </div>
+			</form>
+	     		
+	    </div>
+	</nav><!-- /.navbar -->
+
+<header class="masthead">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+			<img src="../../system/style/imgs/logo.png" />
+			<h1>Entra nel mondo de L'Ippogrifo <sup>&reg;</sup>
+          <p class="lead">PIATTAFORMA PER LA FORMAZIONE A DISTANZA</p></h1>
+
+      </div>
+    </div>
+  </div>
+</header>
+
+
+		<?php lang_menu(true); ?>
+				
+		
