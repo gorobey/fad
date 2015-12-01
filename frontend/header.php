@@ -10,58 +10,19 @@
 	<link rel="shortcut icon" href="<?php echo $path; ?>system/style/imgs/favicon.png" />
     <link href="<?php echo $path; ?>system/style/css/bootstrap.min.css" rel="stylesheet" />
     <link href="<?php echo $path; ?>system/style/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="<?php echo $path; ?>frontend/style/css/jquery.scrollbar.css" rel="stylesheet" />
     <link href="<?php echo $path; ?>frontend/style/css/custom.css" rel="stylesheet" />
-   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+	<script src="<?php echo $path; ?>system/js/jquery.min.js"></script>
 	</head>
 	<body>
-	<nav class="navbar navbar-static">
-	    <div class="container">
-	      <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-	        <span class="glyphicon glyphicon-chevron-down"></span>
-	      </a>
-	      <div class="nav-collapse collase">
-			<?php
-			$menu_arr = json_decode(get_info('nav-'.$_SESSION['locale']), true);
-			function MakeMenu($Array){
-				$Output = '<ul class="nav navbar-nav">';
-				foreach($Array as $Key => $Value){			
-					$Output .= "<li class='".$Value['classname']."'><a href='".$Value['link']."'>".$Value['title']."</a>";
-					if(is_array($Value['children'])){
-						$Output .= MakeMenu($Value['children']);
-					}
-					$Output .= '</li>';
-				}
-				$Output .= '</ul>';
-				return $Output;
-			}
-			echo MakeMenu($menu_arr); ?>    
-	      </div>
-			<form class="form-inline pull-right">
-			   <div class="input-group">
-			     <input type="text" class="form-control" placeholder="Search">
-			     <div class="input-group-btn">
-				       <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-			     </div>
-			  </div>
-			</form>
-	     		
-	    </div>
-	</nav><!-- /.navbar -->
-
-<header class="masthead">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12 text-center">
-			<img src="../../system/style/imgs/logo.png" />
-			<h1>Entra nel mondo de L'Ippogrifo <sup>&reg;</sup>
-          <p class="lead">PIATTAFORMA PER LA FORMAZIONE A DISTANZA</p></h1>
-
-      </div>
-    </div>
-  </div>
+<!-- /menu vertical -->
+<div class="container">
+<header>
+	<div class="row">
+		<div class="col-md-9">
+				<img class="pull-right hidden-xs hidden-sm" src="<?php echo $path; ?>frontend/style/imgs/ippogrifo.png">
+				<img class="pull-right visible-xs visible-sm" src="<?php echo $path; ?>frontend/style/imgs/ippogrifo_small.png">
+		</div>
+		<div class="col-md-3"></div>
+	</div>
 </header>
-
-
-		<?php lang_menu(true); ?>
-				
-		

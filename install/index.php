@@ -53,12 +53,12 @@ if($tableExists>0){
 	rename(dirname(__FILE__), $newname);
 }
 
-$link = mysqli_connect($_CONFIG['db_host'], $_CONFIG['db_user'], $_CONFIG['db_pass']);
-if (!$link) {
-	echo $cerror."Could not connect to the server '" . $_CONFIG['db_host'] . "'<hr />
-	<small>".mysqli_error()."</small></div>";
-	array_push($errors, "1");
-}
+//$link = mysqli_connect($_CONFIG['DB_HOST'], $_CONFIG['DB_USER'], $_CONFIG['DB_PASS']);
+//if (!$link) {
+//	echo $cerror."Could not connect to the server '" . $_CONFIG['DB_HOST'] . "'<hr />
+//	<small>".mysqli_error()."</small></div>";
+//	array_push($errors, "1");
+//}
 
 if(function_exists('apache_get_modules')){
 	$modules = apache_get_modules();

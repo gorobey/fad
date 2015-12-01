@@ -1,8 +1,8 @@
 $(document).ready(function () {
 	//AJAX REQUEST GLOBAL CONFIG
-	$.ajaxSetup({
-		timeout: 7500
-	});
+//	$.ajaxSetup({
+//		timeout: 7500
+//	});
 
 	$(document).ajaxStart(function() {
 	  $(".comfirm-box").slideUp('fast');

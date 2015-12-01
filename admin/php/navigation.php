@@ -1,5 +1,4 @@
 <?php
-//http://wizardinternetsolutions.com/articles/web-programming/single-query-dynamic-multi-level-menu
 require_once( "../../config.php");
 require_once( "../../system/includes/auth.lib.php");
 require_once( "../../system/includes/license.lib.php");
@@ -49,17 +48,21 @@ if(!isset($status)){auth_check_point();} ?>
 								<?php
 								$taxQ = mysqli_query($db_conn, "SELECT id, type, subtype FROM `".$_CONFIG['t_taxonomy']."`");
 								echo "<select name='link'>
-								<option>/</option>";
+								<option value='#'>#</option>
+								<option value='/'>/</option>";
 								while($taxonomy = mysqli_fetch_assoc($taxQ)){
 									$get_list = get_list($taxonomy['type'], $taxonomy['subtype']);
 									if(count($get_list)>0){
+										$loop = 0;
 										echo '<option value="'.str_replace(" ", "-", $taxonomy['type']).'/">'.str_replace(" ", "-", $taxonomy['type']).'/</option>';
 										foreach($get_list as $single_content){
 											if(count($single_content)>0){
-												$content_info = get_content_info($single_content['id']);
-												echo '<option value="'.str_replace(" ", "-", get_taxonomy($single_content['id'], 2)).'">'.str_replace(" ", "-", get_taxonomy($single_content['id'], 2)).'</option>';//.'/'.$taxonomy['subtype']
-												echo '<option value="'.str_replace(" ", "-", get_taxonomy($single_content['id'], 2).$content_info['title']).'">'.str_replace(" ", "-", get_taxonomy($single_content['id'], 2).$content_info['title']).'</option>';//.'/'.$taxonomy['subtype']
+												$content_info = get_content_info($single_content['id'], $single_content['value']);
+												if($loop == 0){
+												echo '<option value="'.str_replace(" ", "-", get_taxonomy($single_content['id'], 2)).'">'.str_replace(" ", "-", get_taxonomy($single_content['id'], 2))."/".'</option>';}
+												echo '<option value="'.str_replace(" ", "-", get_taxonomy($single_content['id'], 2)."/".$content_info['title'])."/".'">'.str_replace(" ", "-", get_taxonomy($single_content['id'], 2)."/".$content_info['title'])."/".'</option>';
 											}
+										$loop++;
 										}
 									}
 								}
@@ -79,34 +82,31 @@ if(!isset($status)){auth_check_point();} ?>
 			<input class="nav-tree" type="hidden" name="nav-tree" value="" />
 		</form>
 </div>
+<script src="../system/js/jquery.domenu.js"></script>
+<script>
+$(document).ready(function() {
+    var updateOutput = function(e) {
+        var list   = e.length ? e : $(e.target),
+            output = list.data('output');
+        if (window.JSON) {
+            output.val(window.JSON.stringify(list.domenu('serialize')));//, null, 2));
+        } else {
+            output.val('JSON browser support required for this demo.');
+        }
+    };
 
-    <script src="../system/js/jquery.domenu.js"></script>
-    <script>
-
-    $(document).ready(function() {
-	    
-        var updateOutput = function(e) {
-            var list   = e.length ? e : $(e.target),
-                output = list.data('output');
-            if (window.JSON) {
-                output.val(window.JSON.stringify(list.domenu('serialize')));//, null, 2));
-            } else {
-                output.val('JSON browser support required for this demo.');
-            }
-        };
-
-        $('#domenu').domenu({
-            slideAnimationDuration: 0,
-            onDomenuInitialized: [function() {
-                //console.log('event: onDomenuInitialized', 'arguments:', arguments, 'context:', this);
-            }],
-            data: '<?php $Jmenu = get_info('nav-'.$_SESSION['locale']); if( isJson($Jmenu)){ echo $Jmenu; }else{ echo "[{}]";} ?>'// insert here the data
-        }).parseJson();
-                $('.save-menu').on('click', function(){
-	                $('input.nav-tree').val($('#domenu').domenu().toJson());
-	                $('#save_navigation').submit();	           
-                });
-                
-    });
-    </script>
+    $('#domenu').domenu({
+        slideAnimationDuration: 0,
+        onDomenuInitialized: [function() {
+            //console.log('event: onDomenuInitialized', 'arguments:', arguments, 'context:', this);
+        }],
+        data: '<?php $Jmenu = get_info('nav-'.$_SESSION['locale']); if( isJson($Jmenu)){ echo $Jmenu; }else{ echo "[{}]";} ?>'// insert here the data
+    }).parseJson();
+            $('.save-menu').on('click', function(){
+                $('input.nav-tree').val($('#domenu').domenu().toJson());
+                $('#save_navigation').submit();	           
+            });
+            
+});
+</script>
 <?php require('admin_scripts.php');

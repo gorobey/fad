@@ -50,16 +50,18 @@ if($_POST['install'] == "install"){
 				// Read in entire file
 				$lines = file($sqlinstaller);
 				// Replace tables names
+				$lines = str_replace($_CONFIG['info'], $_CONFIG['t_info'], $lines);
 				$lines = str_replace($_CONFIG['users'], $_CONFIG['t_users'], $lines);
 				$lines = str_replace($_CONFIG['attr'], $_CONFIG['t_attr'], $lines);
 				$lines = str_replace($_CONFIG['roles'], $_CONFIG['t_roles'], $lines);
 				$lines = str_replace($_CONFIG['groups'], $_CONFIG['t_groups'], $lines);
 				$lines = str_replace($_CONFIG['login'], $_CONFIG['t_login'], $lines);
 				$lines = str_replace($_CONFIG['session'], $_CONFIG['t_session'], $lines);
-				$lines = str_replace($_CONFIG['info'], $_CONFIG['t_info'], $lines);
 				$lines = str_replace($_CONFIG['taxonomy'], $_CONFIG['t_taxonomy'], $lines);
 				$lines = str_replace($_CONFIG['item'], $_CONFIG['t_item'], $lines);
-				$lines = str_replace($_CONFIG['module'], $_CONFIG['t_module'], $lines);
+				$lines = str_replace($_CONFIG['locale'], $_CONFIG['t_locale'], $lines);
+				$lines = str_replace($_CONFIG['analytics'], $_CONFIG['t_analytics'], $lines);		
+				
 				// Loop through each line
 				foreach ($lines as $line){
 					// Skip it if it's a comment
@@ -124,14 +126,6 @@ if($_POST['install'] == "install"){
 						VALUES ('version','".$_POST['version']."')
 					");
 				
-					if(!file_exists("../uploads/")){
-						if (!mkdir("../uploads/", 0700, true)) {
-							array_push($errors, "upload folder not created");
-						}else{
-							array_push($infos, "upload folder created");
-						}
-					}
-	
 					reg_register($user_admin, true);
 	
 					if(count($warnings)==0 && count($errors)==0){

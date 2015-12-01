@@ -43,7 +43,7 @@ if(!ctype_digit($_GET['level'])){ die(); } ?>
 		        <div class="form-group">
 		        	<label for="name"><?php echo _('Name'); ?>:</label>
 		            <input type="text" name="name" placeholder="<?php echo _('Name');?>" class="form-control" required>
-					<label for="group"><?php echo _('type'); ?>:</label><!--forse meglio con check box...-->
+					<label for="group"><?php echo _('Child filter'); ?>:</label><!--forse meglio con check box...-->
 					<select class="form-control selectpicker show-tick" id="subfilter" name="subfilter" required>
 					<?php
 					foreach(arr_item('admin',$_GET['type']) AS $single_item){

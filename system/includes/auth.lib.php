@@ -2,7 +2,8 @@
 $_AUTH = array("TRANSICTION METHOD" => AUTH_USE_COOKIE);
 
 function login_out($path = "") {
-	if(isset($_COOKIE['uid'])){
+	global $user_id;
+	if($user_id!=-1){
 		echo '<a href="'.$path.'login/logout.php" class="logout btn btn-danger square-btn-adjust">'._("Logout").'</a>';
 	}else{
 		echo '<a href="'.$path.'login/" class="logout btn btn-danger square-btn-adjust">'.("Login").'</a>';

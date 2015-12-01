@@ -30,7 +30,7 @@ if(!ctype_digit($_GET['level'])){ die(); } ?>
 					</a>
 				</td>
 				<td><?php echo get_taxonomy($single_filter['id']); ?></td>		
-				<td><a href="php/contents/edit_contents.php?action=a&level=1&id=<?php echo $single_filter['id']; ?>&type=<?php echo $_GET['type']."&subtype=".$single_filter['subtype']; ?>&link_content=<?php echo get_taxonomy($single_filter['id']).$single_filter['value']."/";?>" class="ajax"><?php echo $single_filter['value'];?></a></td>
+				<td><a href="php/contents/edit_contents.php?action=a&level=1&id=<?php echo $single_filter['id']; ?>&type=<?php echo $_GET['type']."&subtype=".$single_filter['subtype']; ?>&link_content=<?php echo $single_filter['link'];?>" class="ajax"><?php echo $single_filter['value'];?></a></td>
 				<td class="text-center"><a href="php/contents/edit_contents.php?action=a&level=1&id=<?php echo $single_filter['id']; ?>&type=<?php echo $_GET['type']."&subtype=".$single_filter['subtype']; ?>" class="ajax"><?php echo count(get_list($_GET['type'], $single_filter['subtype'])); ?></a></td>
 			<?php $i++; ?>
             </tr>
@@ -39,13 +39,14 @@ if(!ctype_digit($_GET['level'])){ die(); } ?>
 	}elseif($_GET['level'] == 2) {
 		$i=1;
 		foreach(get_list($_GET['type'], $_GET['subtype']) as $single_content){
-		
-			$content_info = get_content_info($single_content['id']);
+		print_r($single_content);
+			$content_info = get_content_info($single_content['id'], $single_content['value']);
 			
-			print_r($content_info);
+			print_r($content_info);echo "<br />";
 			
 			$taxonomy = get_taxonomy($single_content['id']);
 			list($type, $subtype) = explode("/", $taxonomy);
+			$taxonomy = get_taxonomy($single_content['id'], 2)."/";
 		 ?>
 			<tr>
 				<td class="text-center">
@@ -54,8 +55,8 @@ if(!ctype_digit($_GET['level'])){ die(); } ?>
 					</a>
 				</td>
 				<td class="center"><input name="publish" type="checkbox"<?php if($content_info['publish']){ echo " checked "; }?>/></td>
-				<td><?php echo get_taxonomy($single_content['id'], 2); ?></td>
-				<td><a href="php/contents/edit_contents.php?action=o&level=2&id=<?php echo $single_content['id']."&type=".$_GET['type']."&subtype=".$_GET['subtype']; ?>&link_content=/<?php echo get_taxonomy($single_content['id'], 2).str_replace(" ", "-", $content_info['title'])."/"; ?>" class="ajax"><?php echo $content_info['title']; ?></a></td>
+				<td><?php echo get_taxonomy($single_content['id'], 2)."/"; ?></td>
+				<td><a href="php/contents/edit_contents.php?action=o&level=2&id=<?php echo $single_content['id']."&type=".$_GET['type']."&subtype=".$_GET['subtype']; ?>&link_content=<?php echo str_replace("title/", "", $content_info['link']); ?>" class="ajax"><?php echo $content_info['title']; ?></a></td>
 				<td><?php echo get_real_name($content_info['author']) ?></td>
 				<td><?php echo RelativeTime($content_info['date']); ?></td>
 			</tr>

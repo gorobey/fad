@@ -1,27 +1,211 @@
-/* bootstrap 3 helpers */
+/* theme */
+@import url(http://fonts.googleapis.com/css?family=Abel);
+body {
+  color:#333;
+  background-color:#f3f3f3;
+  font-family: "Abel",sans-serif;
+}
 
+a,a:hover {
+	color:#ca0b0f;
+  	text-decoration:none;
+}
+
+
+#menu {
+  background-color: #fff;
+  z-index: 10;
+  color: #000;
+  top: 0;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+
+}
+
+
+@media (min-width: 992px){
+	#menu li{
+		background:#f3f3f3;
+		border-radius:3px;
+	}
+	#menu ul li{
+	border-bottom:0px solid transparent;
+	margin: 5px 0;
+	}
+	
+	#menu ul a:hover,
+	#menu ul a.active{
+		  border-radius: 3px;
+	}
+}
+
+@media (max-width: 991px){
+.panel.navigation{
+	border:none;
+	height:0px;
+	padding:0px;
+	margin:0px;
+}
+
+	#menu{
+	  height: 100%;
+	  position: fixed;
+	  width: 250px;
+	  border-right:1px solid #ccc;
+	}
+	#menu ul li a {
+		border-bottom: 1px solid #ccc;
+	}
+}
+
+
+
+
+
+#menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0
+}
+
+#menu ul li a {
+  color: inherit;
+  font-size: 16px;
+  display: block;
+  padding: 8px 0 8px 10px;
+  text-decoration: none;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  text-transform:capitalize;
+}
+
+#menu ul a i {
+  margin-top: 3px;
+  margin-right: 10px;
+}
+
+#menu ul a i[class*='-circle'] { float: right; }
+
+#menu ul a:hover,
+#menu ul a.active {
+  background-color: #333;
+  color: #fff;
+}
+
+#menu ul a:hover i:first-child { color: #ffffff; }
+
+/* Submenu */
+
+#menu ul li a.active+ul { display: block }
+
+#menu ul li ul {
+  margin-top: 0;
+  display: none;
+}
+
+#menu ul li ul li { border-bottom: none; }
+
+#menu ul li ul li a { padding-left: 15px; }
+
+/* /Submenu */
+
+
+/* Cuando este a la Izq, para esconderlo posicionarlo a la Izq a -width */
+
+.left { left: -250px; }
+
+.show { left: 0; }
+
+#showmenu {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #d9534f;
+    font-size: 2.3em;
+    left: 15px;
+    margin: 15px 15px 0 100%;
+    padding: 0 10px;
+    position: absolute;
+    top: 0;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+
+#showmenu:selected, #showmenu:hover{
+	color:#ca0b0f;
+}
+
+
+
+/*upload profile image (da sistemare)*/
+#editp{display:none;}
+#photo_profile a img{border-bottom:2px solid #181818;}
+.profile_cmd{position: relative;margin:-62px -5px 0 0;}
+.profile_cmd > li{margin:10px;text-align:right;font-variant:small-caps;}
+.profile_cmd li span{background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #181818;cursor: pointer;padding: 1px 3px;}
+
+.img_sid{
+	margin-top:18px;
+}
+
+#up_img_p {
+    color: #000000;
+    cursor: pointer;
+    display: block;
+    margin: -60px auto 0;
+    padding: 10px;
+    transition: opacity 0.2s ease 0s;
+    width: 100%;
+    opacity:0;
+}
+
+#up_img_p:hover{
+opacity:.5;
+}
+
+
+/*online user status php ok, html non implementato*/
+.useronline, .useroffline{border-radius:10px;height:10px;width:10px;display:inline-block;margin:0 10px 0 0;}
+.useronline{background:#67cb34;}
+.useroffline{background:#bbb;}
+
+
+.user-image {
+margin: 5px auto;
+-webkit-border-radius: 100%;
+-moz-border-radius: 100%;
+border-radius: 100%;
+max-height:150px;
+max-width:150px !important;/*rewrite bootstrap max width*/
+border: 2px solid;
+}
+
+/* bootstrap 3 helpers */
 .navbar-form input, .form-inline input {
 	width:auto;
 }
-
 /* end */
 
 /* custom theme */
-
 header {
-	min-height:230px;
-  	margin-bottom:5px;
+	padding:15px 0;
 }
 
 @media (min-width: 979px) {
+  .right-sidebar{
+	  position:relative;
+  }
   #sidebar.affix-top {
       position: static;
   }
   
   #sidebar.affix {
       position: fixed;
-      top: 0;
-      width:21.2%;
+      top: 15px;
   }
 }
 
@@ -29,17 +213,7 @@ header {
    position:static;
 }
 
-/* theme */
 
-body {
-  color:#828282;
-  background-color:#eee;
-}
-
-a,a:hover {
-	color:#ca0b0f;
-  	text-decoration:none;
-}
 
 .highlight-bk {
 	background-color:#ca0b0f;
@@ -117,8 +291,7 @@ h3.highlight  {
 }
 
 .panel {
-	padding-left:27px;
-    padding-right:27px;
+	padding:25px;
 }
 
 /* end theme */

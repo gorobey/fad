@@ -1,6 +1,21 @@
 <?php
 require_once(ROOT.'/translations/locale.php');
 
+function path(){
+	//create path for mod_rewrite
+	$install_dir = str_replace($_SERVER['HTTP_HOST'], "", ROOT_URL);
+	$tree = explode("/", ltrim(str_replace($install_dir, "", rtrim($_SERVER['REQUEST_URI'], "/")), "/"));
+	$link_content = str_replace($install_dir, "/",$_SERVER['REQUEST_URI']);
+	$dir_count = count($tree);
+	$path="";
+	if($tree[0] != str_replace("/", "", $install_dir)){
+		for($i=1;$i<=$dir_count;$i++){
+			$path .= "../";
+		}
+	}
+	return $path;
+}
+
 function menu($tree, $user_id){
 	if($tree != "admin"){
 		$path_repair = $tree."/";
@@ -59,13 +74,14 @@ function arr_item($tree, $taxonomy){
 }
 
 
-function render_editor($tree, $level, $type, $subtype, $user_id, $content_id = 0){
+function render_editor($tree, $level, $type, $subtype, $user_id, $content_id = 0, $link_content = "/"){
 	global $_CONFIG, $db_conn;
 	if($level == 2){
 		$result = mysqli_query($db_conn, "SELECT date FROM ".$_CONFIG['t_item']." WHERE rel='".$content_id."'");
 		$date_row = mysqli_fetch_assoc($result);
 		$data['date'] = $date_row['date'];
-		$result = mysqli_query($db_conn, "SELECT `key`, `value` FROM `".$_CONFIG['t_locale']."` WHERE `rel` = '".$content_id."' AND `level` = '2' AND `lang` ='".$_SESSION['locale']."'");
+		$result = mysqli_query($db_conn, "SELECT `key`, `value` FROM `".$_CONFIG['t_locale']."` WHERE `rel` = '".$content_id."' AND `level` = '2' AND `link` LIKE '".$link_content."%' AND `lang` ='".$_SESSION['locale']."'");
+	
 		while($tmp = mysqli_fetch_assoc($result)){
 			$data[$tmp['key']] = $tmp['value'];
 		}
@@ -118,19 +134,23 @@ function render_editor($tree, $level, $type, $subtype, $user_id, $content_id = 0
 	}
 }
 
-function render_page($user_id, $tree, $level, $content_link){
+function render_page($user_id, $tree, $level, $link_content){
 	global $_CONFIG, $db_conn;
-	$result = mysqli_query($db_conn, "SELECT `rel` FROM `fad_locale` WHERE `key` = 'title' AND `value` = 'test en' AND `lang` = '".$_SESSION['locale']."'" );
-	$content_link;
-	if($level == 2){
-		$result = mysqli_query($db_conn, "SELECT date FROM ".$_CONFIG['t_item']." WHERE rel='".$content_id."'");
-		$date_row = mysqli_fetch_assoc($result);
-		$data['date'] = $date_row['date'];
-		$result = mysqli_query($db_conn, "SELECT `key`, `value` FROM `".$_CONFIG['t_locale']."` WHERE `rel` = '".$content_id."' AND `level` = '2' AND `lang` ='".$_SESSION['locale']."'");
-		while($tmp = mysqli_fetch_assoc($result)){
-			$data[$tmp['key']] = $tmp['value'];
-		}
+	
+	$result = mysqli_query($db_conn, "SELECT `rel` FROM `".$_CONFIG['t_locale']."` WHERE `key` = 'title' AND `link` LIKE '".$link_content."%' AND `lang` = '".$_SESSION['locale']."'" );
+	$content_rel = mysqli_fetch_assoc($result);
+
+	$result = mysqli_query($db_conn, "SELECT `type`, `subtype` FROM `".$_CONFIG['t_taxonomy']."` WHERE `id` = '".$content_rel['rel']."'" );
+	$content_type = mysqli_fetch_assoc($result);	
+		
+	$result = mysqli_query($db_conn, "SELECT date FROM ".$_CONFIG['t_item']." WHERE rel='".$content_rel['rel']."'");
+	$date_row = mysqli_fetch_assoc($result);
+	$data['date'] = $date_row['date'];
+	$result = mysqli_query($db_conn, "SELECT `key`, `value` FROM `".$_CONFIG['t_locale']."` WHERE `rel` = '".$content_rel['rel']."' AND link LIKE '".$link_content."%' AND `level` = '2' AND `lang` ='".$_SESSION['locale']."'");
+	while($tmp = mysqli_fetch_assoc($result)){
+		$data[$tmp['key']] = $tmp['value'];
 	}
+
 	$user_group = get_user_attr($user_id, "g");
 	$user_roles = get_user_attr($user_id, "r");
 	$xml = simplexml_load_file(ROOT.'/system/structure.xml');
@@ -140,7 +160,7 @@ function render_page($user_id, $tree, $level, $content_link){
 				if(in_array($user_group, explode(",", $first->attributes()->group))){
 					foreach($first->children() as $taxonomy){
 						foreach($taxonomy->children() as $item){
-							if($item->attributes()->name == $subtype){
+							if($item->attributes()->name == $content_type['subtype']){
 								foreach($item->children() as $modules){
 									foreach($modules->attributes() as $key => $val){
 										$module ="";
@@ -167,17 +187,56 @@ function render_page($user_id, $tree, $level, $content_link){
 	}
 }
 
+
+function link_filter($user_id, $tree, $level, $link_content){
+	global $_CONFIG, $db_conn, $user_id;
+	if($link_content == "/" && $link_content == "#"){return 1;}
+	$result = mysqli_query($db_conn, "SELECT `rel` FROM `".$_CONFIG['t_locale']."` WHERE `key` = 'title' AND `link` LIKE '".$link_content."%' AND `lang` = '".$_SESSION['locale']."'" );
+	
+	
+	$content_rel = mysqli_fetch_assoc($result);
+
+		$result = mysqli_query($db_conn, "SELECT `type`, `subtype` FROM `".$_CONFIG['t_taxonomy']."` WHERE `id` = '".$content_rel['rel']."'" );
+		$content_type = mysqli_fetch_assoc($result);	
+			
+		$user_group = get_user_attr($user_id, "g");
+		$xml = simplexml_load_file(ROOT.'/system/structure.xml');
+		foreach($xml->children() as $node){
+			if($node->attributes()->tree == $tree){
+				//echo $node->attributes()->name;
+				foreach($node as $first){
+					$first->attributes()->name;
+					foreach($first->children() as $second){
+						echo $second->attributes()->name."||".$content_type['type']."->";
+						if($second->attributes()->name == $content_type['type']){
+							echo $second->attributes()->group;
+							if(in_array($user_group, explode(",", $second->attributes()->group))){
+								return 1; 
+							}
+						}else{
+							return 0; 
+						}
+					}
+					
+				}
+			}
+		}
+
+}
+
+
 function edit_navigation($lang, $tree){
 	global $_CONFIG, $db_conn;
 	$info_dataQ = mysqli_query($db_conn, "INSERT INTO `".$_CONFIG['t_info']."` VALUES ('', 'nav-".$lang."', '".$tree."') ON DUPLICATE KEY UPDATE value='".$tree."'");
 }
+
 function insert_content($content, $rel, $user_id){
 	global $_CONFIG, $db_conn;
 	$item_part = "";
 	foreach($content as  $key=>$value){
 		$item_part .= "INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `lang`, `key`, `value`) VALUE ('".$rel."', '2', '".$_SESSION['locale']."', '".$key."', '".$value."');";
 	}
-	echo "INSERT INTO ".$_CONFIG['t_item']." (`rel`, `author`, `publish`) VALUES ('".$rel."', '".$user_id."', '".TRUE."');".$item_part;
+	//echo "INSERT INTO ".$_CONFIG['t_item']." (`rel`, `author`, `publish`) VALUES ('".$rel."', '".$user_id."', '".TRUE."');".$item_part;
 	$insert_item = mysqli_multi_query($db_conn,"INSERT INTO ".$_CONFIG['t_item']." (`rel`, `author`, `publish`) VALUES ('".$rel."', '".$user_id."', '".TRUE."');".$item_part);
 	if($insert_item === true){
 		echo '<div class="alert alert-success" role="alert">'._("New").' '._("content published!").'</div>';
@@ -187,8 +246,6 @@ function insert_content($content, $rel, $user_id){
 		exit;
 	}
 }
-
-
 
 function lang_menu($list = false) {
 	global $_CONFIG;
@@ -312,15 +369,15 @@ function get_user_attr($user_id, $attr = "g"){ //$attr = g per gruppo, r per ruo
 
 	$result = mysqli_query($db_conn, "
 	SELECT
-	DISTINCT(".$table_with_join.".name)
+	DISTINCT(`".$table_with_join."`.name)
 	FROM ".$_CONFIG['t_attr']."
-	INNER JOIN ".$table_with_join."
+	INNER JOIN `".$table_with_join."`
 	WHERE
-	".$_CONFIG['t_attr'].".id = ".$user_id."
+	`".$_CONFIG['t_attr']."`.id = ".$user_id."
 	AND
-	".$_CONFIG['t_attr'].".type = '".$attr."'
+	`".$_CONFIG['t_attr']."`.type = '".$attr."'
 	AND
-	".$_CONFIG['t_attr'].".value = ".$table_with_join.".id
+	`".$_CONFIG['t_attr']."`.value = `".$table_with_join."`.id
 	".$limit);
 
 	if($attr == "g"){
@@ -435,7 +492,7 @@ function profile_img($id, $type="list") {
 		$style="";
 		$resize.="?w=".$type."&h=".$type."&img=";
 	}elseif($type=="list"){
-		$size=38;
+		$size=20;
 		$resize.="?w=".$size."&h=".$size."&img=";
 		$style='style="float:left;margin:1px;width:'.$size.'px;height:'.$size.'px;"';
 	}elseif($type=="clear"){
@@ -483,7 +540,7 @@ function get_taxonomy($id, $level=1){
 	if($level==2){
 		$filterQ = mysqli_query($db_conn, "SELECT `value` FROM `".$_CONFIG['t_locale']."` WHERE `rel` = ".$id." and `key` ='taxonomy' limit 1");
 		$filter = mysqli_fetch_assoc($filterQ);
-		$filter = $filter['value']."/";
+		$filter = $filter['value'];
 	}
 	$taxonomy = mysqli_fetch_assoc($taxonomyQ);
 	return "/".$taxonomy['type']."/".$filter;
@@ -491,7 +548,7 @@ function get_taxonomy($id, $level=1){
 
 function get_filter($type){
 	global $_CONFIG, $db_conn;
-	$result = mysqli_query($db_conn, "SELECT distinct(`".$_CONFIG['t_locale']."`.rel), `".$_CONFIG['t_taxonomy']."`.id, `".$_CONFIG['t_taxonomy']."`.subtype, `".$_CONFIG['t_locale']."`.key, `".$_CONFIG['t_locale']."`.value
+	$result = mysqli_query($db_conn, "SELECT distinct(`".$_CONFIG['t_locale']."`.rel), `".$_CONFIG['t_locale']."`.link, `".$_CONFIG['t_taxonomy']."`.id, `".$_CONFIG['t_taxonomy']."`.subtype, `".$_CONFIG['t_locale']."`.key, `".$_CONFIG['t_locale']."`.value
 				FROM `".$_CONFIG['t_taxonomy']."` 
 				INNER JOIN `".$_CONFIG['t_locale']."`
 				WHERE `".$_CONFIG['t_locale']."`.level = 1
@@ -507,13 +564,18 @@ function get_filter($type){
 }
 
 
-function get_list($type, $subtype){
+function get_list($type, $subtype, $link = ""){
 	global $_CONFIG, $db_conn;
+	$luke_link = "";
+	if($link != "" ){
+		$luke_link = "AND `".$_CONFIG['t_locale']."`.link LIKE '".$link."%'";
+	}
 	$result = mysqli_query($db_conn, "SELECT distinct(`".$_CONFIG['t_locale']."`.rel), `".$_CONFIG['t_taxonomy']."`.id, `".$_CONFIG['t_taxonomy']."`.subtype, `".$_CONFIG['t_locale']."`.key, `".$_CONFIG['t_locale']."`.value
 				FROM `".$_CONFIG['t_taxonomy']."` 
 				INNER JOIN `".$_CONFIG['t_locale']."`
 				WHERE `".$_CONFIG['t_locale']."`.level = 2
 				AND `".$_CONFIG['t_taxonomy']."`.id = `".$_CONFIG['t_locale']."`.rel
+				".$luke_link."
 				AND `".$_CONFIG['t_locale']."`.lang = '".$_SESSION['locale']."'
 				AND `".$_CONFIG['t_locale']."`.key = 'title'
 				AND `".$_CONFIG['t_locale']."`.value != ''
@@ -544,25 +606,16 @@ function get_content($subtype){
 }
 
 
-function get_content_info($rel){
+function get_content_info($rel, $title){
 	global $_CONFIG, $db_conn;
-	
-	echo "
-	SELECT `".$_CONFIG['t_item']."`.author as author, `".$_CONFIG['t_item']."`.publish as publish, `".$_CONFIG['t_item']."`.date as date, `".$_CONFIG['t_locale']."`.value as title
-	FROM `".$_CONFIG['t_item']."`
-	inner join `".$_CONFIG['t_locale']."`
-	where `".$_CONFIG['t_item']."`.rel = `".$_CONFIG['t_locale']."`.rel
-	and `".$_CONFIG['t_locale']."`.key = 'title'
-	and `".$_CONFIG['t_item']."`.rel = ".$rel;
-	
-	
 	$result = mysqli_query($db_conn, "
-	SELECT `".$_CONFIG['t_item']."`.author as author, `".$_CONFIG['t_item']."`.publish as publish, `".$_CONFIG['t_item']."`.date as date, `".$_CONFIG['t_locale']."`.value as title
+	SELECT `".$_CONFIG['t_item']."`.author as author, `".$_CONFIG['t_item']."`.publish as publish, `".$_CONFIG['t_item']."`.date as date, `".$_CONFIG['t_locale']."`.value as title, `".$_CONFIG['t_locale']."`.link as link
 	FROM `".$_CONFIG['t_item']."`
 	inner join `".$_CONFIG['t_locale']."`
 	where `".$_CONFIG['t_item']."`.rel = `".$_CONFIG['t_locale']."`.rel
 	and `".$_CONFIG['t_locale']."`.key = 'title'
-	and `".$_CONFIG['t_item']."`.rel = ".$rel);
+	and `".$_CONFIG['t_item']."`.rel = ".$rel."
+	and `".$_CONFIG['t_locale']."`.value = '".$title."'");
 	$data = mysqli_fetch_assoc($result);
 	return $data;
 }

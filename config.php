@@ -13,7 +13,7 @@ define( 'DB_NAME', '' ); // set database name
 define( 'DB_PASS', '' ); // set database password
 
 //DEFINITION TABLE PREFIX
-$_CONFIG['table_prefix'] = "fad_";
+$_CONFIG['table_prefix'] = "fad1_";
 
 //FOR SECURE MODULE INCLUDE
 $_CONFIG['salt'] = "x_<VHI!Qj_HH:.Y{O(>AvB0=LVeu(.Zpt51+vU?Pj_o]=Mm&FwK=Y|;D$,YE-K>]";
@@ -23,7 +23,7 @@ $_CONFIG['pepper'] = "+.d+Nl+gsQ+:1+`5~t69U#HK})xQ4O4-kl[ur}[|WnJb@w-p^u~e5rlES-
 $_SESSION['LANGUAGES']=array("en_US","it_IT");
 
 //ENABLE / DISABLE REGITRATION
-$_CONFIG['register']=TRUE;
+$_CONFIG['register']=FALSE;
 $_CONFIG['primary_group']="subscriber"; #default "subscriber" (admin, subscriber ...other group have you created)
 
 //USER LOGIN / COMFIRM TIME DEFINITION

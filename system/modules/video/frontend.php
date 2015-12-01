@@ -1,1 +1,2 @@
-i am the video frontend module please program me!
+<?php if(!isset($status)){auth_check_point();}?>
+
