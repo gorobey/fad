@@ -65,7 +65,7 @@ $(document).ready(function () {
 			},
 			success: function (result) {
 				$(".content-box-message").removeClass('preload-comfirm');
-				$(".content-box-message").html(result);				
+				$(".content-box-message").html(result);	
 			}
 		});
 		$('.modal').modal('hide');

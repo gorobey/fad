@@ -29,21 +29,8 @@ switch($status){
 			}
 			?>
 
-<div class="row">
-	<div class="col-md-12" id="dashboard">
-	     <h2><?php echo is_online($view_user)." ".get_real_name($view_user);?></h2>
-	     <div class="comfirm-box">
-   		     <span class="fa fa-times"></span>
-		     <div class="content-box-message">
-		     </div>
-	     </div>
-		 <hr />
-	</div>
-	<div class="col-md-12 col-sm-12 col-xs-12">                     
-	    <div class="panel panel-default">
-	        <div class="panel-heading">
-				<?php echo profile_img($view_user, "clear", "../"); ?>
-			</div>
+
+	    <h2><span><?php echo profile_img($view_user, "list", "../")."&nbsp;".get_real_name($view_user);?></span></h2>
 					<hr />
 					<ul>
 					<li><strong class="left"><?php echo _("Registered"); ?>:</strong><span class="right"><?php echo date("d/m/Y", $user_info['regdate']);?></span></li>

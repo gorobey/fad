@@ -10,7 +10,9 @@ if(file_exists("./install/")){
 	
 	switch($status){
 		case AUTH_NOT_LOGGED:
-			header('Location:login');
+			$user_id = -1;
+			if($_CONFIG['register']!==TRUE){header("Location:".protocol().ROOT_URL.'login');}
+			else{require_once('frontend/index.php');}
 		break;
 		case AUTH_LOGGED:
 			$user_id = $user['id'];
@@ -18,4 +20,3 @@ if(file_exists("./install/")){
 		break;
 	}
 }
-?>

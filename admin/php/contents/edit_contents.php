@@ -12,14 +12,7 @@ if($level == 1 && ($_POST['action']=="n" || $_POST['action']=="e" || $_POST['act
 	if($_POST['action'] == "n" && in_array($_POST['subfilter'], arr_item('admin', $_POST['filter']))){
 		$insert_taxonomy = mysqli_multi_query($db_conn,
 		"INSERT INTO ".$_CONFIG['t_taxonomy']." (`type`, `subtype`) VALUES ('".mysqli_real_escape_string($db_conn, $_POST['filter'])."', '".mysqli_real_escape_string($db_conn, $_POST['subfilter'])."');
-		INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `link`, `lang`, `key`, `value`) VALUES (LAST_INSERT_ID(), '1', '".str_replace(" ", "-", mysqli_real_escape_string($db_conn, $_POST['filter']."/".$_POST['name']))."' ,'".$_POST['locale']."', 'taxonomy', '".mysqli_real_escape_string($db_conn, $_POST['name'])."')");
-		
-		
-		echo "INSERT INTO ".$_CONFIG['t_taxonomy']." (`type`, `subtype`) VALUES ('".mysqli_real_escape_string($db_conn, $_POST['filter'])."', '".mysqli_real_escape_string($db_conn, $_POST['subfilter'])."');
-		INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `link`, `lang`, `key`, `value`) VALUES (LAST_INSERT_ID(), '1', '".str_replace(" ", "-", mysqli_real_escape_string($db_conn, $_POST['filter']."/".$_POST['name']))."' ,'".$_POST['locale']."', 'taxonomy', '".mysqli_real_escape_string($db_conn, $_POST['name'])."')";
-		
-		
-		
+		INSERT INTO ".$_CONFIG['t_locale']." (`rel`, `level`, `link`, `lang`, `key`, `value`) VALUES (LAST_INSERT_ID(), '1', '"."/".str_replace(" ", "-", mysqli_real_escape_string($db_conn, $_POST['filter']."/".$_POST['name']))."/' ,'".$_POST['locale']."', 'taxonomy', '".mysqli_real_escape_string($db_conn, $_POST['name'])."')");
 		if($insert_taxonomy === true){
 			echo '<div class="alert alert-success" role="alert">'._("New").' '._("filter created!").'</div>'; exit;
 		}else{
@@ -39,26 +32,18 @@ if($level == 1 && ($_POST['action']=="n" || $_POST['action']=="e" || $_POST['act
 		AND ".$_CONFIG['t_locale'].".rel = '".mysqli_real_escape_string($db_conn, $_POST['id'])."'");
 	}	
 }elseif($level == 2 && ($_POST['action']=="a" || $_POST['action']=="d" || $_POST['action']=="o")){
-	
 	if($_POST['action']=="a"){
-		
 		$dtime = DateTime::createFromFormat("d/m/Y H:i:s", $_POST['date']);
 		$timestamp = $dtime->getTimestamp();
 		$new_date = date('Y-m-d H:i:s', $timestamp);
-
-		
-		
 		mysqli_query($db_conn, "INSERT INTO ".$_CONFIG['t_item']." (`rel`, `author`, `publish`, `date`) VALUES ('".mysqli_real_escape_string($db_conn, $_POST['rel'])."', '".mysqli_real_escape_string($db_conn,$user_id)."', '".TRUE."', '".$new_date."')");
-		
-	echo "INSERT INTO ".$_CONFIG['t_item']." (`rel`, `author`, `publish`, `date`) VALUES ('".mysqli_real_escape_string($db_conn, $_POST['rel'])."', '".mysqli_real_escape_string($db_conn,$user_id)."', '".TRUE."', '".$new_date."')";	
-		
-		
 	}
 	if($_POST['action'] == "a" || $_POST['action'] == "o"){
-		$item_part = "";	
+		$item_part = "";
 		foreach($_POST['content'] as  $key=>$value){
-			$path_key = str_replace(" ", "-", $key."/");
-			$item_part .= "INSERT INTO `".$_CONFIG['t_locale']."` (`rel`, `level`, `link`, `lang`, `key`, `value`) VALUES ('".$_POST['rel']."', '2', '".mysqli_real_escape_string($db_conn, $_POST['link_content']).$path_key."', '".$_SESSION['locale']."', '".$key."', '".$value."') ON DUPLICATE KEY UPDATE `key` = '".$key."', `link` = '".mysqli_real_escape_string($db_conn, $_POST['link_content']).$path_key."', `value` = '".$value."'; ";
+			$path_key = "/".str_replace(" ", "-", $key."/");
+			$complete_path = str_replace("//", "/", mysqli_real_escape_string($db_conn, $_POST['link_content']).str_replace(' ', '-', $_POST['content']['title']).$path_key);
+			$item_part .= "INSERT INTO `".$_CONFIG['t_locale']."` (`rel`, `level`, `link`, `lang`, `key`, `value`) VALUES ('".$_POST['rel']."', '2', '".$complete_path."', '".$_SESSION['locale']."', '".$key."', '".$value."') ON DUPLICATE KEY UPDATE `key` = '".$key."', `link` = '".$complete_path."', `value` = '".$value."'; ";
 		}
 		$insert_content = mysqli_multi_query($db_conn, $item_part);
 		if($insert_content === true){
@@ -87,7 +72,11 @@ if($_GET['action'] == 'a' || $_GET['action'] == 'o') { ?>
 <div class="row">
 	<div class="col-md-12" id="dashboard">
 	     <h2><?php echo ucfirst($_GET['subtype']); ?></h2>
-	     <div class="comfirm-box fa fa-times"></div>
+	     <div class="comfirm-box">
+   		     <span class="fa fa-times"></span>
+		     <div class="content-box-message">
+		     </div>
+	     </div>
 		 <hr />
 	</div>
 	<form class="new_content col-md-12 col-sm-12 col-xs-12" id="new_content" method="POST" action="php/contents/edit_contents.php">               
@@ -113,7 +102,7 @@ if($_GET['action'] == 'a' || $_GET['action'] == 'o') { ?>
 					</ul>
 					<br />
 				</div>
-				<?php echo render_editor('admin', $_GET['level'], $_GET['type'], $_GET['subtype'], $user_id, $_GET['id']); ?>
+				<?php echo render_editor('admin', $_GET['level'], $_GET['type'], $_GET['subtype'], $user_id, $_GET['id'], $_GET['link_content']); ?>
 				<input type="hidden" name="action" value="<?php echo $_GET['action']; ?>" />
 				<input type="hidden" name="type" value="<?php echo $_GET['type']; ?>" />
 				<input type="hidden" name="subtype" value="<?php echo $_GET['subtype']; ?>" />
@@ -124,6 +113,13 @@ if($_GET['action'] == 'a' || $_GET['action'] == 'o') { ?>
 	        </div>
 	    </div>
 	</form>
+	<!-- Modal -->
+	<div class="modal fade" id="custom-field" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		</div>
+	  </div>
+	</div>	
 </div>
 <?php require('../admin_scripts.php');
 }

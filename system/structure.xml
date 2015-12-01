@@ -32,18 +32,18 @@
 		</section>
 	</node>
 	<node tree="frontend" home="">
-		<section name="fad" icon="university" group="admin,teacher,writer,student">
-			<taxonomy name="courses">
+		<section name="fad" icon="university">
+			<taxonomy name="courses" group="admin,teacher,writer,student">
 				<item name="lessions">
 					<module script="video"></module>
 					<module script="editor"></module>
 					<module script="tags"></module>
 				</item>
 			</taxonomy>
-			<taxonomy name="courses2">
+			<taxonomy name="courses2" group="admin,teacher,writer,student">
 				<item name="lessions">
-					<module script="video"></module>
 					<module script="editor"></module>
+					<module script="video"></module>
 					<module script="tags"></module>
 				</item>
 			</taxonomy>
@@ -51,8 +51,8 @@
 		<section name="blog" icon="pencil" group="admin,teacher,writer,student">
 			<taxonomy name="posts" role="role1">
 				<item name="articles">
-					<module script="video"></module>
 					<module script="editor"></module>
+					<module script="video"></module>
 					<module script="tags"></module>
 					<module script="comments"></module>
 				</item>
